@@ -1,4 +1,4 @@
-const API_URL = 'https://noor-academy-backend.vercel.app';
+const API_URL = 'https://noor-academy-backend.vercel.app/api';
 
 class API {
     static getToken() {
@@ -19,17 +19,29 @@ class API {
                 headers: this.getHeaders()
             });
 
+            // Agar backend crash ho jaye ya route galat ho aur HTML return ho rha ho
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                const textError = await response.text();
+                console.error("Non-JSON Response received:", textError);
+                throw new Error("Server error: Response is not JSON. Check backend logs.");
+            }
+
             const data = await response.json();
 
-            if (response.status === 401) {
-                localStorage.clear();
-                window.location.href = '/index.html';
-                return;
+            // Agar backend se koi error response aaye (jaise 400, 404, 500)
+            if (!response.ok) {
+                if (response.status === 401) {
+                    localStorage.clear();
+                    window.location.href = '/index.html';
+                    return;
+                }
+                throw new Error(data.message || 'Something went wrong');
             }
 
             return data;
         } catch (error) {
-            console.error('API Error:', error);
+            console.error('API Error Details:', error);
             throw error;
         }
     }
