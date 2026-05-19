@@ -1,0 +1,2928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Noor Quran Academy - Learn Quran Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a5c38;
+            --primary-light: #2d8653;
+            --primary-dark: #0d3d25;
+            --secondary: #f0a500;
+            --secondary-light: #ffc107;
+            --accent: #00897b;
+            --blue: #3182ce;
+            --white: #ffffff;
+            --bg: #f8fffe;
+            --text-dark: #1a1a2e;
+            --text-mid: #4a5568;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #38a169;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+            --radius: 16px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.97);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(26,92,56,0.3);
+        }
+
+        .nav-logo-text h2 {
+            font-size: 17px; font-weight: 800;
+            color: var(--white); line-height: 1.1;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .nav-logo-text h2 { color: var(--primary); }
+
+        .nav-logo-text p {
+            font-family: 'Amiri', serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .nav-logo-text p { color: var(--text-light); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled .nav-links a { color: var(--text-mid); }
+        .nav-links a:hover { background: rgba(255,255,255,0.15); color: white; }
+        .navbar.scrolled .nav-links a:hover { background: rgba(26,92,56,0.08); color: var(--primary); }
+
+        .nav-btns {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-nav-login {
+            padding: 9px 22px;
+            border: 2px solid rgba(255,255,255,0.7);
+            border-radius: 10px;
+            color: white;
+            font-size: 13px; font-weight: 600;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        .navbar.scrolled .btn-nav-login {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-nav-login:hover { background: rgba(255,255,255,0.2); }
+        .navbar.scrolled .btn-nav-login:hover { background: rgba(26,92,56,0.08); }
+
+        .btn-nav-start {
+            padding: 9px 22px;
+            background: var(--secondary);
+            border: none;
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-size: 13px; font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        .btn-nav-start:hover {
+            background: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240,165,0,0.4);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .navbar.scrolled .hamburger { color: var(--primary); }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 75px; left: 0; right: 0;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 999;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text-mid);
+            font-size: 15px; font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .mobile-nav a:hover { background: rgba(26,92,56,0.08); color: var(--primary); }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d2a1a 0%, #1a5c38 40%, #0d3d25 70%, #0a2a40 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 5% 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(240,165,0,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,137,123,0.08) 0%, transparent 40%),
+                radial-gradient(circle at 60% 80%, rgba(26,92,56,0.15) 0%, transparent 40%);
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.015) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-float {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.07;
+            animation: heroFloat linear infinite;
+        }
+
+        .hero-float:nth-child(1) { width:400px;height:400px;background:var(--secondary);top:-150px;right:-100px;animation-duration:30s; }
+        .hero-float:nth-child(2) { width:250px;height:250px;background:var(--accent);bottom:10%;left:-80px;animation-duration:22s;animation-delay:-8s; }
+        .hero-float:nth-child(3) { width:180px;height:180px;background:var(--primary-light);top:30%;right:25%;animation-duration:18s;animation-delay:-4s; }
+
+        @keyframes heroFloat {
+            0%   { transform: translateY(0) rotate(0deg); }
+            50%  { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(240,165,0,0.15);
+            border: 1px solid rgba(240,165,0,0.35);
+            color: var(--secondary-light);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px; font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .hero-badge span { animation: blink 2s infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        .hero-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .hero-title {
+            font-size: 52px;
+            font-weight: 800;
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, var(--secondary), var(--secondary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            margin-bottom: 35px;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn-hero-primary {
+            padding: 15px 32px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 12px;
+            font-size: 15px; font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(240,165,0,0.45);
+        }
+
+        .btn-hero-secondary {
+            padding: 15px 32px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.35);
+            border-radius: 12px;
+            font-size: 15px; font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .hero-stat h3 {
+            font-size: 26px; font-weight: 800;
+            color: var(--secondary-light);
+        }
+
+        .hero-stat p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .hero-card-main {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 35px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card-main::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        .quran-verse { text-align: center; margin-bottom: 25px; }
+        .quran-verse .arabic-big {
+            font-family: 'Amiri', serif;
+            font-size: 30px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 10px;
+        }
+        .quran-verse .translation { font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; }
+        .quran-verse .reference { font-size: 11px; color: var(--secondary-light); font-weight: 600; margin-top: 6px; }
+
+        .live-classes { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-top: 20px; }
+
+        .live-class-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .live-class-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .live-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #38a169;
+            animation: livePulse 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes livePulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(56,161,105,0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(56,161,105,0); }
+        }
+
+        .live-class-info { flex: 1; }
+        .live-class-info h4 { font-size: 13px; font-weight: 600; }
+        .live-class-info p { font-size: 11px; color: rgba(255,255,255,0.6); }
+        .live-time { font-size: 12px; color: var(--secondary-light); font-weight: 600; }
+
+        .float-badge {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: badgeFloat 4s ease-in-out infinite;
+        }
+
+        .float-badge-1 { top: -20px; right: -20px; animation-delay: 0s; }
+        .float-badge-2 { bottom: -15px; left: -20px; animation-delay: 2s; }
+
+        @keyframes badgeFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-badge .badge-icon { font-size: 24px; }
+        .float-badge .badge-txt h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .float-badge .badge-txt p { font-size: 10px; color: var(--text-light); }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 90px 5%; }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(26,92,56,0.08);
+            color: var(--primary);
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 13px; font-weight: 700;
+            margin-bottom: 15px;
+            border: 1px solid rgba(26,92,56,0.15);
+        }
+
+        .section-title {
+            font-size: 40px; font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .section-title span { color: var(--primary); }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .section-header { margin-bottom: 55px; }
+        .section-header.center { text-align: center; }
+        .section-header.center .section-desc { margin: 0 auto; }
+
+        /* ===== FEATURES ===== */
+        .features-section { background: var(--bg); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 35px 28px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            transition: height 0.4s ease;
+        }
+
+        .feature-card:hover::before { height: 4px; }
+
+        .feature-icon-wrap {
+            width: 65px; height: 65px;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-icon-wrap { transform: scale(1.1) rotate(5deg); }
+
+        .fc-green  { background: rgba(26,92,56,0.1); }
+        .fc-gold   { background: rgba(240,165,0,0.1); }
+        .fc-blue   { background: rgba(49,130,206,0.1); }
+        .fc-teal   { background: rgba(0,137,123,0.1); }
+        .fc-purple { background: rgba(107,70,193,0.1); }
+        .fc-orange { background: rgba(221,107,32,0.1); }
+
+        .feature-card h3 { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+        .feature-card p  { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+        /* ===== COURSES ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s;
+            border: 1px solid var(--border);
+        }
+
+        .course-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+
+        .course-header {
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-header::before {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .ch-green  { background: linear-gradient(135deg, #0d3d25, #1a5c38); }
+        .ch-blue   { background: linear-gradient(135deg, #1a3a6b, #2d5aa0); }
+        .ch-teal   { background: linear-gradient(135deg, #004d40, #00897b); }
+        .ch-purple { background: linear-gradient(135deg, #2d1b69, #6b46c1); }
+        .ch-gold   { background: linear-gradient(135deg, #7b4f00, #c07d00); }
+        .ch-navy   { background: linear-gradient(135deg, #0d1b2e, #1a3a6b); }
+
+        .course-icon { font-size: 38px; margin-bottom: 12px; }
+        .course-header h3 { font-size: 19px; font-weight: 700; margin-bottom: 5px; }
+        .course-header p  { font-size: 12px; opacity: 0.8; }
+
+        .course-body { padding: 22px; }
+
+        .course-features { list-style: none; margin-bottom: 18px; }
+
+        .course-features li {
+            display: flex; align-items: center; gap: 9px;
+            font-size: 13px; color: var(--text-mid);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .course-features li:last-child { border-bottom: none; }
+        .course-features li i { color: var(--success); font-size: 12px; }
+
+        .course-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 22px 22px;
+        }
+
+        .course-level { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+        .cl-beginner     { background: rgba(26,92,56,0.1);  color: var(--primary); }
+        .cl-intermediate { background: rgba(240,165,0,0.1);  color: #7b4f00; }
+        .cl-advanced     { background: rgba(49,130,206,0.1); color: var(--blue); }
+        .cl-all          { background: rgba(107,70,193,0.1); color: #2d1b69; }
+
+        .btn-enroll {
+            padding: 9px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-enroll:hover { background: var(--primary-light); transform: translateY(-2px); }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-section { background: var(--bg); }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 40px; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 0;
+        }
+
+        .step-card { text-align: center; position: relative; z-index: 1; }
+
+        .step-num {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(26,92,56,0.2);
+            transition: all 0.3s;
+        }
+
+        .step-card:hover .step-num { background: var(--primary); transform: scale(1.1); }
+        .step-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
+        .step-card p  { font-size: 13px; color: var(--text-light); line-height: 1.7; }
+
+        /* ===== TEACHERS ===== */
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .teacher-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .teacher-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+
+        .teacher-avatar {
+            height: 160px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ta-green  { background: linear-gradient(135deg, #0d3d25, #1a5c38); }
+        .ta-blue   { background: linear-gradient(135deg, #1a3a6b, #2d5aa0); }
+        .ta-teal   { background: linear-gradient(135deg, #004d40, #00897b); }
+        .ta-purple { background: linear-gradient(135deg, #2d1b69, #6b46c1); }
+
+        .teacher-card-body { padding: 20px; }
+        .teacher-card-body h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .teacher-card-body .teacher-title { font-size: 12px; color: var(--primary); font-weight: 600; margin-bottom: 8px; }
+        .teacher-card-body .teacher-spec  { font-size: 11px; color: var(--text-light); margin-bottom: 12px; }
+
+        .stars { color: var(--secondary); font-size: 13px; margin-bottom: 5px; }
+        .rating-txt { font-size: 11px; color: var(--text-light); }
+
+        .teacher-tags { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
+        .teacher-tag { padding: 3px 10px; background: rgba(26,92,56,0.08); color: var(--primary); border-radius: 20px; font-size: 10px; font-weight: 600; }
+
+        /* ===== PRICING ===== */
+        .pricing-section { background: var(--bg); }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 22px;
+            padding: 35px 30px;
+            border: 2px solid var(--border);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(26,92,56,0.03), white);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 18px; right: -25px;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            font-size: 11px; font-weight: 700;
+            padding: 5px 35px;
+            transform: rotate(40deg);
+        }
+
+        .plan-icon { font-size: 38px; margin-bottom: 15px; }
+        .plan-name { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px; }
+        .plan-desc { font-size: 13px; color: var(--text-light); margin-bottom: 20px; }
+
+        .plan-price { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px dashed var(--border); }
+        .price-amount { font-size: 42px; font-weight: 800; color: var(--primary); line-height: 1; }
+        .price-amount span { font-size: 18px; font-weight: 500; color: var(--text-light); }
+        .price-period { font-size: 13px; color: var(--text-light); margin-top: 3px; }
+
+        .plan-features { list-style: none; margin-bottom: 28px; }
+        .plan-features li {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; color: var(--text-mid);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .plan-features li:last-child { border-bottom: none; }
+        .plan-features li i { width: 18px; font-size: 13px; }
+        .plan-features li i.fa-check { color: var(--success); }
+        .plan-features li i.fa-times  { color: #cbd5e0; }
+
+        .btn-plan {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px; font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-plan-outline { background: none; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-plan-outline:hover { background: var(--primary); color: white; }
+
+        .btn-plan-filled { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; }
+        .btn-plan-filled:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(26,92,56,0.4); }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .testimonial-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 15px; left: 22px;
+            font-size: 70px;
+            color: rgba(26,92,56,0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .test-text { font-size: 14px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px; position: relative; z-index: 1; margin-top: 15px; }
+
+        .test-author { display: flex; align-items: center; gap: 12px; }
+        .test-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .test-info h4 { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+        .test-info p  { font-size: 12px; color: var(--text-light); }
+        .test-stars { color: var(--secondary); font-size: 12px; margin-top: 4px; }
+
+        /* ===== STATS ===== */
+        .stats-section {
+            background: linear-gradient(135deg, #0d2a1a, #1a5c38, #0d3d25);
+            padding: 70px 5%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item { color: white; }
+        .stat-item h2 { font-size: 48px; font-weight: 800; color: var(--secondary-light); margin-bottom: 5px; }
+        .stat-item p  { font-size: 14px; opacity: 0.8; }
+
+        /* ===== FAQ ===== */
+        .faq-section { background: var(--bg); }
+
+        .faq-container { max-width: 750px; margin: 0 auto; }
+
+        .faq-item {
+            background: white;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.open { border-color: var(--primary); }
+
+        .faq-question {
+            padding: 20px 22px;
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; gap: 15px;
+        }
+
+        .faq-question h4 { font-size: 15px; font-weight: 600; color: var(--text-dark); flex: 1; }
+
+        .faq-icon {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; color: var(--text-light);
+            flex-shrink: 0; transition: all 0.3s;
+        }
+
+        .faq-item.open .faq-icon { background: var(--primary); color: white; transform: rotate(45deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 22px;
+            font-size: 14px; color: var(--text-light); line-height: 1.8;
+        }
+
+        .faq-answer.open { max-height: 200px; padding: 0 22px 20px; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 90px 5%;
+            background: linear-gradient(135deg, #0d2a1a 0%, #1a5c38 50%, #0d3d25 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before { content: '☪'; position: absolute; font-size: 300px; opacity: 0.04; top: -80px; right: -50px; color: white; }
+        .cta-section::after  { content: '📖'; position: absolute; font-size: 150px; opacity: 0.06; bottom: -30px; left: 5%; }
+
+        .cta-arabic { font-family: 'Amiri', serif; font-size: 30px; color: rgba(255,255,255,0.85); margin-bottom: 15px; }
+
+        .cta-section h2 { font-size: 44px; font-weight: 800; color: white; margin-bottom: 15px; line-height: 1.2; }
+        .cta-section h2 span { color: var(--secondary-light); }
+        .cta-section p  { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 35px; max-width: 550px; margin-left: auto; margin-right: auto; }
+
+        .cta-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-cta-primary {
+            padding: 16px 38px;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; font-family: 'Poppins', sans-serif;
+            transition: all 0.3s; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .btn-cta-primary:hover { background: var(--secondary-light); transform: translateY(-3px); box-shadow: 0 12px 35px rgba(240,165,0,0.4); }
+
+        .btn-cta-secondary {
+            padding: 16px 38px;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 12px;
+            font-size: 16px; font-weight: 600;
+            cursor: pointer; font-family: 'Poppins', sans-serif;
+            transition: all 0.3s; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .btn-cta-secondary:hover { background: rgba(255,255,255,0.15); border-color: white; }
+
+        /* ===== FOOTER ===== */
+        footer { background: #0d1b0d; color: white; padding: 70px 5% 30px; }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-brand .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .footer-brand .logo .icon { width: 46px; height: 46px; background: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .footer-brand .logo h3 { font-size: 17px; font-weight: 700; }
+        .footer-brand .logo p  { font-family: 'Amiri', serif; font-size: 12px; opacity: 0.7; }
+        .footer-brand p { font-size: 13px; opacity: 0.7; line-height: 1.8; margin-bottom: 20px; }
+
+        .social-links { display: flex; gap: 10px; }
+        .social-link {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 15px;
+            transition: all 0.3s; text-decoration: none;
+        }
+        .social-link:hover { background: var(--primary); transform: translateY(-3px); }
+
+        .footer-col h4 { font-size: 15px; font-weight: 700; margin-bottom: 18px; color: var(--secondary-light); }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 13px; transition: all 0.3s; display: flex; align-items: center; gap: 7px; }
+        .footer-links a:hover { color: white; padding-left: 5px; }
+        .footer-links a i { font-size: 10px; color: var(--primary-light); }
+
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 13px; color: rgba(255,255,255,0.65); }
+        .footer-contact-item i { color: var(--secondary-light); margin-top: 2px; flex-shrink: 0; }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 12px; color: rgba(255,255,255,0.45);
+            flex-wrap: wrap; gap: 10px;
+        }
+
+        .footer-bottom-arabic { font-family: 'Amiri', serif; font-size: 15px; color: rgba(255,255,255,0.55); }
+
+        /* ===== PRAYER TICKER ===== */
+        .prayer-ticker {
+            background: linear-gradient(90deg, #0d3d25, #1a5c38);
+            color: white;
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .ticker-label {
+            flex-shrink: 0;
+            font-size: 12px; font-weight: 700;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .ticker-content {
+            display: flex;
+            gap: 35px;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .ticker-item { display: flex; align-items: center; gap: 8px; font-size: 13px; white-space: nowrap; }
+        .ticker-item span { color: var(--secondary-light); font-weight: 700; }
+
+        /* ===== SCROLL TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 48px; height: 48px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(26,92,56,0.4);
+            transition: all 0.3s;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.show { display: flex; }
+        .scroll-top:hover { transform: translateY(-4px); background: var(--primary-light); }
+
+        /* ===== WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 90px; right: 30px;
+            width: 52px; height: 52px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+            z-index: 999;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            animation: waBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes waBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        /* ========================================
+           ===== CHATBOT STYLES =====
+           ======================================== */
+
+        /* Chat Toggle Button */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 155px;
+            right: 30px;
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(26,92,56,0.45);
+            transition: all 0.3s;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: chatPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes chatPulse {
+            0%,100% { box-shadow: 0 6px 25px rgba(26,92,56,0.45); }
+            50% { box-shadow: 0 6px 35px rgba(26,92,56,0.7), 0 0 0 8px rgba(26,92,56,0.12); }
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            animation: none;
+            box-shadow: 0 10px 35px rgba(26,92,56,0.6);
+        }
+
+        /* Notification badge */
+        .chat-notif {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            animation: notifPop 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes notifPop { from { transform: scale(1); } to { transform: scale(1.2); } }
+
+        /* Chat Window */
+        .chatbot-window {
+            position: fixed;
+            bottom: 225px;
+            right: 30px;
+            width: 380px;
+            height: 560px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.18);
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0) translateY(20px);
+            transform-origin: bottom right;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(26,92,56,0.12);
+        }
+
+        .chatbot-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-header::before {
+            content: '';
+            position: absolute;
+            top: -20px; right: -20px;
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+        }
+
+        .chat-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid rgba(255,255,255,0.3);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .chat-avatar-status {
+            position: absolute;
+            bottom: 1px; right: 1px;
+            width: 11px; height: 11px;
+            background: #38a169;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .chat-header-info { flex: 1; }
+        .chat-header-info h4 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 2px; }
+        .chat-header-info p  { font-size: 11px; color: rgba(255,255,255,0.75); }
+
+        .chat-header-actions { display: flex; gap: 6px; }
+
+        .chat-action-btn {
+            width: 32px; height: 32px;
+            background: rgba(255,255,255,0.12);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chat-action-btn:hover { background: rgba(255,255,255,0.25); }
+
+        /* Quick Replies Bar */
+        .quick-replies-bar {
+            background: linear-gradient(90deg, rgba(26,92,56,0.05), rgba(26,92,56,0.02));
+            padding: 10px 15px;
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border);
+            scrollbar-width: none;
+        }
+
+        .quick-replies-bar::-webkit-scrollbar { display: none; }
+
+        .qr-chip {
+            flex-shrink: 0;
+            padding: 6px 13px;
+            background: white;
+            border: 1.5px solid rgba(26,92,56,0.2);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+        }
+
+        .qr-chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Messages Area */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: #f9fffe;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(26,92,56,0.2) transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(26,92,56,0.2); border-radius: 4px; }
+
+        /* Message bubbles */
+        .msg {
+            display: flex;
+            gap: 9px;
+            align-items: flex-end;
+            animation: msgSlide 0.35s ease;
+        }
+
+        @keyframes msgSlide {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg.user { flex-direction: row-reverse; }
+
+        .msg-avatar {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .bot-avatar-sm  { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .user-avatar-sm { background: linear-gradient(135deg, #3182ce, #63b3ed); }
+
+        .msg-bubble {
+            max-width: 78%;
+            padding: 11px 15px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .msg.bot .msg-bubble {
+            background: white;
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(26,92,56,0.08);
+        }
+
+        .msg.user .msg-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-time {
+            font-size: 10px;
+            opacity: 0.55;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .msg.user .msg-time { text-align: right; color: rgba(255,255,255,0.75); }
+        .msg.bot  .msg-time { color: var(--text-light); }
+
+        /* Quick reply buttons inside messages */
+        .msg-quick-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .msg-qbtn {
+            padding: 6px 12px;
+            background: rgba(26,92,56,0.08);
+            border: 1.5px solid rgba(26,92,56,0.2);
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .msg-qbtn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: flex-end;
+            gap: 9px;
+        }
+
+        .typing-dots {
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            padding: 12px 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(26,92,56,0.08);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .typing-dots span {
+            width: 7px; height: 7px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            animation: typingBounce 1.2s ease-in-out infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%,60%,100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* Chat Input */
+        .chat-input-area {
+            padding: 14px 15px;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input-wrap {
+            flex: 1;
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input-wrap:focus-within { border-color: var(--primary); }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 11px 0;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            resize: none;
+        }
+
+        .chat-input::placeholder { color: var(--text-light); }
+
+        .chat-emoji-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 0;
+        }
+
+        .chat-emoji-btn:hover { opacity: 1; }
+
+        .chat-send-btn {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .chat-send-btn:hover { transform: scale(1.1) rotate(-10deg); box-shadow: 0 5px 15px rgba(26,92,56,0.4); }
+
+        /* Chat Footer */
+        .chat-footer {
+            padding: 8px 15px 10px;
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-light);
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+
+        /* Welcome message special style */
+        .msg-welcome-card {
+            background: linear-gradient(135deg, rgba(26,92,56,0.05), rgba(26,92,56,0.02));
+            border: 1px solid rgba(26,92,56,0.12);
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 8px;
+        }
+
+        .msg-welcome-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .msg-welcome-card p {
+            font-size: 12px;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* Emoji picker */
+        .emoji-picker {
+            position: absolute;
+            bottom: 80px;
+            right: 15px;
+            background: white;
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border);
+            display: none;
+            z-index: 10;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+        }
+
+        .emoji-picker.show { display: grid; }
+
+        .emoji-btn {
+            font-size: 20px;
+            padding: 4px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .emoji-btn:hover { background: var(--bg); }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .chatbot-window {
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 210px;
+                height: 500px;
+            }
+
+            .chat-toggle-btn { right: 15px; bottom: 150px; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .courses-grid  { grid-template-columns: repeat(2, 1fr); }
+            .teachers-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid   { grid-template-columns: 1fr 1fr; gap: 30px; }
+        }
+
+        @media (max-width: 850px) {
+            .hero-content  { grid-template-columns: 1fr; gap: 40px; }
+            .hero-right    { display: none; }
+            .hero-title    { font-size: 38px; }
+            .steps-grid    { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid::before { display: none; }
+            .pricing-grid  { grid-template-columns: 1fr; max-width: 420px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .stats-grid    { grid-template-columns: repeat(2, 1fr); }
+            .nav-links     { display: none; }
+            .hamburger     { display: block; }
+            section { padding: 65px 5%; }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .courses-grid  { grid-template-columns: 1fr; }
+            .teachers-grid { grid-template-columns: 1fr; }
+            .footer-grid   { grid-template-columns: 1fr; }
+            .hero-title    { font-size: 30px; }
+            .section-title { font-size: 28px; }
+            .cta-section h2 { font-size: 30px; }
+            .hero-stats    { gap: 18px; }
+            .hero-stat h3  { font-size: 20px; }
+            .stats-grid    { grid-template-columns: 1fr 1fr; }
+            .steps-grid    { grid-template-columns: 1fr; }
+            .btn-nav-login { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== PRAYER TIMES TICKER ===== -->
+<div class="prayer-ticker">
+    <span class="ticker-label">🕌 Prayer Times</span>
+    <div class="ticker-content" id="tickerContent">
+        <div class="ticker-item">Fajr <span>4:12 AM</span></div>
+        <div class="ticker-item">Sunrise <span>5:45 AM</span></div>
+        <div class="ticker-item">Dhuhr <span>1:15 PM</span></div>
+        <div class="ticker-item">Asr <span>5:30 PM</span></div>
+        <div class="ticker-item">Maghrib <span>8:45 PM</span></div>
+        <div class="ticker-item">Isha <span>10:10 PM</span></div>
+        <div class="ticker-item" style="color:rgba(255,255,255,0.5)">📖 "Read! In the name of your Lord who created" — Al-Alaq 96:1</div>
+        <div class="ticker-item">Fajr <span>4:12 AM</span></div>
+        <div class="ticker-item">Sunrise <span>5:45 AM</span></div>
+        <div class="ticker-item">Dhuhr <span>1:15 PM</span></div>
+        <div class="ticker-item">Asr <span>5:30 PM</span></div>
+        <div class="ticker-item">Maghrib <span>8:45 PM</span></div>
+        <div class="ticker-item">Isha <span>10:10 PM</span></div>
+        <div class="ticker-item" style="color:rgba(255,255,255,0.5)">📖 "Read! In the name of your Lord who created" — Al-Alaq 96:1</div>
+    </div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">🕌</div>
+        <div class="nav-logo-text">
+            <h2>Al-Noor Academy</h2>
+            <p>أكاديمية النور للقرآن</p>
+        </div>
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#teachers">Teachers</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <div class="nav-btns">
+<a href="login.html" class="btn-nav-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="login.html" class="btn-nav-start"><i class="fas fa-rocket"></i> Get Started</a>
+
+    </div>
+
+    <button class="hamburger" onclick="toggleMobileNav()" id="hamburger">
+        <i class="fas fa-bars" id="hamburgerIcon"></i>
+    </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+    <a href="#features"     onclick="closeMobileNav()"><i class="fas fa-star"></i> Features</a>
+    <a href="#courses"      onclick="closeMobileNav()"><i class="fas fa-book"></i> Courses</a>
+    <a href="#teachers"     onclick="closeMobileNav()"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+    <a href="#pricing"      onclick="closeMobileNav()"><i class="fas fa-tags"></i> Pricing</a>
+    <a href="#testimonials" onclick="closeMobileNav()"><i class="fas fa-star"></i> Reviews</a>
+    <a href="#faq"          onclick="closeMobileNav()"><i class="fas fa-question-circle"></i> FAQ</a>
+<a href="login.html"    style="background:var(--primary);color:white;margin-top:5px"><i class="fas fa-sign-in-alt"></i> Login / Register</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+    <div class="hero-float"></div>
+    <div class="hero-float"></div>
+    <div class="hero-float"></div>
+    <div class="hero-pattern"></div>
+
+    <div class="hero-content">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <span>🟢</span> Now Enrolling for July 2025 Batch
+            </div>
+            <div class="hero-arabic">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
+            <h1 class="hero-title">
+                Learn Quran Online<br>
+                with <span>Certified</span><br>
+                Teachers
+            </h1>
+            <p class="hero-desc">
+                Join thousands of students worldwide learning the Holy Quran
+                with expert teachers, flexible schedules, and a proven curriculum.
+                Start your Quranic journey today — for all ages!
+            </p>
+            <div class="hero-btns">
+<a href="login.html" class="btn-hero-primary"><i class="fas fa-rocket"></i> Start Free Trial</a>
+                <a href="#courses"   class="btn-hero-secondary"><i class="fas fa-play-circle"></i> Explore Courses</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><h3>5,000+</h3><p>Students</p></div>
+                <div class="hero-stat"><h3>150+</h3><p>Teachers</p></div>
+                <div class="hero-stat"><h3>50+</h3><p>Countries</p></div>
+                <div class="hero-stat"><h3>4.9⭐</h3><p>Rating</p></div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="float-badge float-badge-1">
+                <div class="badge-icon">🏆</div>
+                <div class="badge-txt"><h4>Top Rated</h4><p>Academy 2025</p></div>
+            </div>
+
+            <div class="hero-card-main">
+                <div class="quran-verse">
+                    <div class="arabic-big">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
+                    <div class="translation">"Read! In the name of your Lord who created"</div>
+                    <div class="reference">— Surah Al-Alaq 96:1</div>
+                </div>
+                <div style="font-size:12px; color:rgba(255,255,255,0.6); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">
+                    🟢 Live Classes Now
+                </div>
+                <div class="live-classes">
+                    <div class="live-class-item">
+                        <div class="live-dot"></div>
+                        <div class="live-class-info"><h4>Tajweed Fundamentals</h4><p>👨‍🏫 Ustaz Ibrahim • 12 students</p></div>
+                        <div class="live-time">Live Now</div>
+                    </div>
+                    <div class="live-class-item">
+                        <div class="live-dot"></div>
+                        <div class="live-class-info"><h4>Hifz Program - Juz Amma</h4><p>👩‍🏫 Ustaza Maryam • 8 students</p></div>
+                        <div class="live-time">Live Now</div>
+                    </div>
+                    <div class="live-class-item">
+                        <div style="width:10px;height:10px;border-radius:50%;background:#ffc107;flex-shrink:0"></div>
+                        <div class="live-class-info"><h4>Arabic for Beginners</h4><p>👨‍🏫 Ustaz Ahmed • Starting soon</p></div>
+                        <div class="live-time">In 15 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-badge float-badge-2">
+                <div class="badge-icon">📖</div>
+                <div class="badge-txt"><h4>500+ Hafiz</h4><p>Graduated this year</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features-section" id="features">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-star"></i> Why Choose Us</div>
+            <h2 class="section-title">Everything You Need to<br><span>Learn Quran</span></h2>
+            <p class="section-desc">Al-Noor Quran Academy provides a complete learning platform with certified teachers, flexible schedules, and powerful progress tracking.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-green">🎓</div>
+                <h3>Certified Teachers</h3>
+                <p>All our teachers hold Ijazah certificates and have years of teaching experience. Learn from the best scholars worldwide.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-blue">🎥</div>
+                <h3>Live HD Classes</h3>
+                <p>Attend interactive one-on-one or group classes via high-quality video. Real-time feedback from your teacher.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-gold">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>Parents can monitor their children's progress in real-time. Detailed monthly reports and achievement badges.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-teal">📅</div>
+                <h3>Flexible Schedule</h3>
+                <p>Choose class times that suit your timezone and lifestyle. Available 7 days a week, morning to midnight.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-purple">🏆</div>
+                <h3>Gamified Learning</h3>
+                <p>Students earn XP points, badges, and climb leaderboards. Making Quran learning fun and motivating!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap fc-orange">💬</div>
+                <h3>Parent Portal</h3>
+                <p>Stay connected with teachers through our messaging system. Receive instant notifications about your child's progress.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== COURSES ===== -->
+<section id="courses" style="background:white">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-book-open"></i> Our Courses</div>
+            <h2 class="section-title">Choose Your <span>Learning Path</span></h2>
+            <p class="section-desc">From complete beginners to advanced Hafiz students, we have the perfect course for every level.</p>
+        </div>
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-header ch-green">
+                    <div class="course-icon">📖</div>
+                    <h3>Quran Reading</h3>
+                    <p>Noorani Qaida to fluent reading</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Arabic alphabet & pronunciation</li>
+                        <li><i class="fas fa-check"></i> Noorani Qaida method</li>
+                        <li><i class="fas fa-check"></i> Fluent Quran reading</li>
+                        <li><i class="fas fa-check"></i> Basic Tajweed rules</li>
+                        <li><i class="fas fa-check"></i> Progress certificate</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-beginner">Beginner</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header ch-blue">
+                    <div class="course-icon">🎤</div>
+                    <h3>Tajweed Course</h3>
+                    <p>Perfect your Quran recitation</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Makhaarij (articulation points)</li>
+                        <li><i class="fas fa-check"></i> Sifaat (letter characteristics)</li>
+                        <li><i class="fas fa-check"></i> Noon & Meem rules</li>
+                        <li><i class="fas fa-check"></i> Madd (elongation) rules</li>
+                        <li><i class="fas fa-check"></i> Waqf & Ibtida rules</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-intermediate">Intermediate</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header ch-teal">
+                    <div class="course-icon">🧠</div>
+                    <h3>Hifz Program</h3>
+                    <p>Memorize the entire Holy Quran</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Structured memorization plan</li>
+                        <li><i class="fas fa-check"></i> Daily revision system</li>
+                        <li><i class="fas fa-check"></i> Expert Hafiz teachers</li>
+                        <li><i class="fas fa-check"></i> Ijazah certificate</li>
+                        <li><i class="fas fa-check"></i> Lifetime support</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-advanced">Advanced</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header ch-purple">
+                    <div class="course-icon">🔤</div>
+                    <h3>Arabic Language</h3>
+                    <p>Understand Quran in Arabic</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Arabic alphabet mastery</li>
+                        <li><i class="fas fa-check"></i> Vocabulary building</li>
+                        <li><i class="fas fa-check"></i> Grammar fundamentals</li>
+                        <li><i class="fas fa-check"></i> Quranic Arabic focus</li>
+                        <li><i class="fas fa-check"></i> Conversational Arabic</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-beginner">All Levels</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header ch-gold">
+                    <div class="course-icon">☪️</div>
+                    <h3>Islamic Studies</h3>
+                    <p>Fiqh, Hadith & Islamic history</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Pillars of Islam & Iman</li>
+                        <li><i class="fas fa-check"></i> Fiqh (Islamic law basics)</li>
+                        <li><i class="fas fa-check"></i> Hadith studies</li>
+                        <li><i class="fas fa-check"></i> Seerah (Prophet's biography)</li>
+                        <li><i class="fas fa-check"></i> Islamic history</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-all">All Levels</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header ch-navy">
+                    <div class="course-icon">👶</div>
+                    <h3>Kids Program</h3>
+                    <p>Fun Quran learning for children</p>
+                </div>
+                <div class="course-body">
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Interactive & fun lessons</li>
+                        <li><i class="fas fa-check"></i> Gamified learning system</li>
+                        <li><i class="fas fa-check"></i> Experienced kids teachers</li>
+                        <li><i class="fas fa-check"></i> Parent progress reports</li>
+                        <li><i class="fas fa-check"></i> Achievement rewards</li>
+                    </ul>
+                </div>
+                <div class="course-footer">
+                    <span class="course-level cl-beginner">Ages 4-14</span>
+                    <a href="index.html" class="btn-enroll">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-section" id="how">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-cogs"></i> How It Works</div>
+            <h2 class="section-title">Start Learning in <span>4 Simple Steps</span></h2>
+            <p class="section-desc">Getting started with Al-Noor is quick and easy. Join thousands of happy students today!</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">📝</div>
+                <h3>1. Register</h3>
+                <p>Create your free account in under 2 minutes. Choose your role as parent or student.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">🎯</div>
+                <h3>2. Choose Course</h3>
+                <p>Select the perfect course for your level and goals. Take a free placement test.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">👨‍🏫</div>
+                <h3>3. Meet Teacher</h3>
+                <p>Get matched with a certified teacher. Schedule your first class at your convenience.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">📖</div>
+                <h3>4. Start Learning</h3>
+                <p>Join your live class and begin your blessed Quranic journey. Track progress daily!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TEACHERS ===== -->
+<section id="teachers" style="background:white">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-chalkboard-teacher"></i> Our Teachers</div>
+            <h2 class="section-title">Learn from <span>Expert Scholars</span></h2>
+            <p class="section-desc">All our teachers are certified, experienced, and passionate about teaching the Holy Quran.</p>
+        </div>
+        <div class="teachers-grid">
+            <div class="teacher-card">
+                <div class="teacher-avatar ta-green">👨‍🏫</div>
+                <div class="teacher-card-body">
+                    <h3>Ustaz Ibrahim Al-Qari</h3>
+                    <div class="teacher-title">Senior Tajweed Teacher</div>
+                    <div class="teacher-spec">Ijazah in Hafs & Warsh recitation</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-txt">4.9 • 230 reviews • 8 years exp.</div>
+                    <div class="teacher-tags">
+                        <span class="teacher-tag">Tajweed</span>
+                        <span class="teacher-tag">Quran</span>
+                        <span class="teacher-tag">Arabic</span>
+                    </div>
+                </div>
+            </div>
+            <div class="teacher-card">
+                <div class="teacher-avatar ta-blue">👩‍🏫</div>
+                <div class="teacher-card-body">
+                    <h3>Ustaza Maryam Hassan</h3>
+                    <div class="teacher-title">Hifz Program Specialist</div>
+                    <div class="teacher-spec">Hafiza • MA Islamic Studies</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-txt">4.9 • 185 reviews • 6 years exp.</div>
+                    <div class="teacher-tags">
+                        <span class="teacher-tag">Hifz</span>
+                        <span class="teacher-tag">Tajweed</span>
+                        <span class="teacher-tag">Kids</span>
+                    </div>
+                </div>
+            </div>
+            <div class="teacher-card">
+                <div class="teacher-avatar ta-teal">👨‍🏫</div>
+                <div class="teacher-card-body">
+                    <h3>Ustaz Ahmed Siddiqui</h3>
+                    <div class="teacher-title">Arabic Language Expert</div>
+                    <div class="teacher-spec">BA Arabic Literature • Cairo University</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-txt">4.8 • 142 reviews • 10 years exp.</div>
+                    <div class="teacher-tags">
+                        <span class="teacher-tag">Arabic</span>
+                        <span class="teacher-tag">Quran</span>
+                        <span class="teacher-tag">Fiqh</span>
+                    </div>
+                </div>
+            </div>
+            <div class="teacher-card">
+                <div class="teacher-avatar ta-purple">👩‍🏫</div>
+                <div class="teacher-card-body">
+                    <h3>Ustaza Fatima Zahra</h3>
+                    <div class="teacher-title">Kids Quran Specialist</div>
+                    <div class="teacher-spec">Certified Early Childhood Educator</div>
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-txt">5.0 • 198 reviews • 7 years exp.</div>
+                    <div class="teacher-tags">
+                        <span class="teacher-tag">Kids</span>
+                        <span class="teacher-tag">Quran</span>
+                        <span class="teacher-tag">Islamic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px">
+            <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--primary);color:white;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+                <i class="fas fa-users"></i> Meet All Our Teachers
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-item"><h2 id="stat1">0</h2><p>🌍 Students Worldwide</p></div>
+        <div class="stat-item"><h2 id="stat2">0</h2><p>👨‍🏫 Expert Teachers</p></div>
+        <div class="stat-item"><h2 id="stat3">0</h2><p>📖 Hafiz Graduates</p></div>
+        <div class="stat-item"><h2 id="stat4">0</h2><p>🌐 Countries Served</p></div>
+    </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing-section" id="pricing">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-tags"></i> Pricing Plans</div>
+            <h2 class="section-title">Simple & <span>Affordable Plans</span></h2>
+            <p class="section-desc">Choose a plan that works for your family. All plans include a 3-day free trial. No credit card required!</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-icon">👶</div>
+                <div class="plan-name">Single Child</div>
+                <div class="plan-desc">Perfect for one student</div>
+                <div class="plan-price">
+                    <div class="price-amount">$29<span>.99</span></div>
+                    <div class="price-period">per month • billed monthly</div>
+                </div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 1 Child Enrollment</li>
+                    <li><i class="fas fa-check"></i> 3 Classes per week</li>
+                    <li><i class="fas fa-check"></i> 1-on-1 Sessions</li>
+                    <li><i class="fas fa-check"></i> Progress Reports</li>
+                    <li><i class="fas fa-check"></i> Parent Dashboard</li>
+                    <li><i class="fas fa-check"></i> Chat with Teacher</li>
+                    <li><i class="fas fa-times"></i> Priority Support</li>
+                    <li><i class="fas fa-times"></i> Group Classes</li>
+                </ul>
+                <a href="index.html" class="btn-plan btn-plan-outline"><i class="fas fa-arrow-right"></i> Get Started</a>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">POPULAR</div>
+                <div class="plan-icon">👨‍👩‍👧</div>
+                <div class="plan-name">Family Package</div>
+                <div class="plan-desc">Best value for families</div>
+                <div class="plan-price">
+                    <div class="price-amount">$49<span>.99</span></div>
+                    <div class="price-period">per month • save $10</div>
+                </div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Up to 2 Children</li>
+                    <li><i class="fas fa-check"></i> 6 Classes per week</li>
+                    <li><i class="fas fa-check"></i> 1-on-1 Sessions</li>
+                    <li><i class="fas fa-check"></i> Progress Reports</li>
+                    <li><i class="fas fa-check"></i> Parent Dashboard</li>
+                    <li><i class="fas fa-check"></i> Chat with Teacher</li>
+                    <li><i class="fas fa-check"></i> Priority Support</li>
+                    <li><i class="fas fa-check"></i> Group Classes</li>
+                </ul>
+                <a href="index.html" class="btn-plan btn-plan-filled"><i class="fas fa-star"></i> Most Popular</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-icon">👑</div>
+                <div class="plan-name">Premium Plan</div>
+                <div class="plan-desc">For large families</div>
+                <div class="plan-price">
+                    <div class="price-amount">$79<span>.99</span></div>
+                    <div class="price-period">per month • best value</div>
+                </div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Up to 4 Children</li>
+                    <li><i class="fas fa-check"></i> Unlimited Classes</li>
+                    <li><i class="fas fa-check"></i> 1-on-1 Sessions</li>
+                    <li><i class="fas fa-check"></i> Detailed Reports</li>
+                    <li><i class="fas fa-check"></i> Parent Dashboard</li>
+                    <li><i class="fas fa-check"></i> Priority Chat</li>
+                    <li><i class="fas fa-check"></i> 24/7 Support</li>
+                    <li><i class="fas fa-check"></i> All Group Classes</li>
+                </ul>
+                <a href="index.html" class="btn-plan btn-plan-outline"><i class="fas fa-arrow-right"></i> Get Started</a>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:30px; color:var(--text-light); font-size:13px">
+            <p>✅ 3-Day Free Trial &nbsp;•&nbsp; ✅ No Credit Card Required &nbsp;•&nbsp; ✅ Cancel Anytime</p>
+            <p style="margin-top:8px">All prices in USD. Discounts available for annual subscriptions.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" style="background:white">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-heart"></i> Testimonials</div>
+            <h2 class="section-title">What Parents & Students <span>Say About Us</span></h2>
+            <p class="section-desc">Join thousands of happy families who have transformed their Quranic journey with Al-Noor.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="test-text">"MashaAllah! My son Ahmed has been learning Tajweed for 3 months and the progress is incredible. The teacher is so patient and knowledgeable. Highly recommended!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#0d3d25,#1a5c38); color:white">👩</div>
+                    <div class="test-info"><h4>Mrs. Fatima Khan</h4><p>Parent • London, UK</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="test-text">"Alhamdulillah! I completed Hifz of Juz Amma in just 6 months. Ustaza Maryam is the best teacher ever. The platform is so easy to use and the classes are amazing!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#1a3a6b,#2d5aa0); color:white">👦</div>
+                    <div class="test-info"><h4>Omar Hassan</h4><p>Student • Age 12 • Toronto, CA</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="test-text">"The parent dashboard is excellent! I can see my daughter's progress every day. The teachers are professional and the schedule is very flexible. JazakAllah Khair!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#004d40,#00897b); color:white">👨</div>
+                    <div class="test-info"><h4>Brother Yusuf Ali</h4><p>Parent • Dubai, UAE</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="test-text">"I am from USA and finding a good Quran teacher was so difficult. Al-Noor Academy made it so easy! My kids look forward to every class. Excellent platform!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#2d1b69,#6b46c1); color:white">👩</div>
+                    <div class="test-info"><h4>Sister Aisha Rahman</h4><p>Parent • New York, USA</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="test-text">"SubhanAllah! My daughter memorized 10 surahs in 4 months. The gamified system with badges and points keeps her so motivated. Best investment for my children!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#7b4f00,#c07d00); color:white">👨</div>
+                    <div class="test-info"><h4>Brother Tariq Malik</h4><p>Parent • Sydney, Australia</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="test-text">"The best online Quran academy I have found! Professional teachers, easy-to-use platform, and excellent customer support. My whole family is enrolled now!"</div>
+                <div class="test-author">
+                    <div class="test-avatar" style="background:linear-gradient(135deg,#0d1b2e,#1a3a6b); color:white">👩</div>
+                    <div class="test-info"><h4>Mrs. Zainab Ahmed</h4><p>Parent • Karachi, Pakistan</p><div class="test-stars">★★★★★</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq-section" id="faq">
+    <div style="max-width:1200px; margin:0 auto">
+        <div class="section-header center">
+            <div class="section-tag"><i class="fas fa-question-circle"></i> FAQ</div>
+            <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+            <p class="section-desc">Have questions? We have answers. If you can't find what you're looking for, contact us anytime.</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>Is there a free trial available?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">Yes! We offer a 3-day free trial with no credit card required. You can attend up to 3 classes and experience our full platform before making any commitment.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>What age groups do you teach?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">We teach students of all ages — from young children (4+) to adults. Our teachers are specially trained to work with different age groups, and we have dedicated programs for kids, teenagers, and adults.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>How are the classes conducted?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">All classes are conducted live via our integrated video platform (or Zoom/Skype). Classes are one-on-one or in small groups. Sessions are typically 30-60 minutes depending on your plan.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>Are all teachers certified?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">Absolutely! All our teachers hold Ijazah certificates (chain of transmission to the Prophet ﷺ), have years of teaching experience, and undergo a rigorous selection process before joining Al-Noor Academy.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>Can I choose my class schedule?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">Yes! We offer flexible scheduling 7 days a week from early morning to late night. You can choose times that suit your timezone and daily routine. You can also reschedule classes when needed.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>What if I want to change my teacher?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">You can request a teacher change at any time, no questions asked! We want you to be comfortable with your teacher. Simply contact our support team and we'll arrange a new teacher within 24 hours.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>Is the platform safe for children?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">Yes, child safety is our top priority. All our teachers undergo background checks, all classes can be monitored by parents in real-time, and we have strict safety protocols in place. Parents receive reports after every class.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><h4>Do you offer family discounts?</h4><div class="faq-icon"><i class="fas fa-plus"></i></div></div>
+                <div class="faq-answer">Yes! Our Family Package covers 2 children at a discounted rate, and our Premium Plan covers up to 4 children. We also offer annual subscription discounts of up to 20%. Contact us for custom family packages.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div style="position:relative; z-index:2">
+        <div class="cta-arabic">ابدأ رحلتك القرآنية اليوم</div>
+        <h2>Start Your <span>Quranic Journey</span><br>Today — For Free!</h2>
+        <p>Join 5,000+ students and families worldwide who are learning the Holy Quran with Al-Noor Academy. Your first 3 classes are completely free!</p>
+        <div class="cta-btns">
+            <a href="index.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Start Free Trial Now</a>
+            <a href="https://wa.me/1234567890" class="btn-cta-secondary" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        </div>
+        <p style="margin-top:20px; font-size:13px; color:rgba(255,255,255,0.6)">
+            ✅ No credit card &nbsp;•&nbsp; ✅ Cancel anytime &nbsp;•&nbsp; ✅ 3 free classes
+        </p>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="logo">
+                <div class="icon">🕌</div>
+                <div><h3>Al-Noor Academy</h3><p>أكاديمية النور للقرآن</p></div>
+            </div>
+            <p>Al-Noor Quran Academy provides world-class online Quran education with certified teachers, flexible schedules, and a comprehensive learning platform for students of all ages worldwide.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="#home"><i class="fas fa-angle-right"></i> Home</a></li>
+                <li><a href="#features"><i class="fas fa-angle-right"></i> Features</a></li>
+                <li><a href="#courses"><i class="fas fa-angle-right"></i> Courses</a></li>
+                <li><a href="#teachers"><i class="fas fa-angle-right"></i> Teachers</a></li>
+                <li><a href="#pricing"><i class="fas fa-angle-right"></i> Pricing</a></li>
+                <li><a href="#testimonials"><i class="fas fa-angle-right"></i> Reviews</a></li>
+                <li><a href="#faq"><i class="fas fa-angle-right"></i> FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Our Courses</h4>
+            <ul class="footer-links">
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Quran Reading</a></li>
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Tajweed Course</a></li>
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Hifz Program</a></li>
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Arabic Language</a></li>
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Islamic Studies</a></li>
+                <li><a href="index.html"><i class="fas fa-angle-right"></i> Kids Program</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@alnooracademy.com</span></div>
+            <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span>+1 (234) 567-8900</span></div>
+            <div class="footer-contact-item"><i class="fas fa-clock"></i><span>24/7 Support Available</span></div>
+            <div class="footer-contact-item"><i class="fas fa-globe"></i><span>Serving 50+ Countries</span></div>
+            <div style="margin-top:18px; background:rgba(255,255,255,0.06); border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:12px; color:rgba(255,255,255,0.6); margin-bottom:10px; font-weight:700">📧 Newsletter</div>
+                <div style="display:flex; gap:6px">
+                    <input type="email" placeholder="Your email" style="flex:1; padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:white; font-size:12px; outline:none; font-family:'Poppins',sans-serif">
+                    <button onclick="subscribeNewsletter()" style="padding:9px 14px; background:var(--secondary); color:var(--primary-dark); border:none; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif">Join</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2025 Al-Noor Quran Academy. All rights reserved.</span>
+        <span class="footer-bottom-arabic">جَزَاكَ اللَّهُ خَيْرًا</span>
+        <span>
+            <a href="#" style="color:rgba(255,255,255,0.45); text-decoration:none; margin:0 8px">Privacy Policy</a>
+            <a href="#" style="color:rgba(255,255,255,0.45); text-decoration:none; margin:0 8px">Terms of Service</a>
+        </span>
+    </div>
+</footer>
+
+<!-- Scroll Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ========================================
+     ===== CHATBOT WIDGET =====
+     ======================================== -->
+
+<!-- Chat Toggle Button -->
+<button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" title="Chat with Al-Noor Assistant">
+    <i class="fas fa-comment-dots" id="chatToggleIcon"></i>
+    <div class="chat-notif" id="chatNotif">1</div>
+</button>
+
+<!-- Chatbot Window -->
+<div class="chatbot-window" id="chatbotWindow">
+
+    <!-- Header -->
+    <div class="chat-header">
+        <div class="chat-avatar">
+            🕌
+            <div class="chat-avatar-status"></div>
+        </div>
+        <div class="chat-header-info">
+            <h4>Al-Noor Assistant</h4>
+            <p>🟢 Online • Typically replies instantly</p>
+        </div>
+        <div class="chat-header-actions">
+            <button class="chat-action-btn" onclick="clearChat()" title="Clear chat">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <button class="chat-action-btn" onclick="toggleChat()" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Replies Bar -->
+    <div class="quick-replies-bar">
+        <button class="qr-chip" onclick="sendQuickReply('📚 Courses')">📚 Courses</button>
+        <button class="qr-chip" onclick="sendQuickReply('💰 Pricing')">💰 Pricing</button>
+        <button class="qr-chip" onclick="sendQuickReply('🎓 Teachers')">🎓 Teachers</button>
+        <button class="qr-chip" onclick="sendQuickReply('🆓 Free Trial')">🆓 Free Trial</button>
+        <button class="qr-chip" onclick="sendQuickReply('📞 Contact')">📞 Contact</button>
+        <button class="qr-chip" onclick="sendQuickReply('🕌 Prayer Times')">🕌 Prayer Times</button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+        <!-- Welcome message inserted by JS -->
+    </div>
+
+    <!-- Emoji Picker -->
+    <div class="emoji-picker" id="emojiPicker">
+        <span class="emoji-btn" onclick="addEmoji('😊')">😊</span>
+        <span class="emoji-btn" onclick="addEmoji('🤲')">🤲</span>
+        <span class="emoji-btn" onclick="addEmoji('📖')">📖</span>
+        <span class="emoji-btn" onclick="addEmoji('🕌')">🕌</span>
+        <span class="emoji-btn" onclick="addEmoji('☪️')">☪️</span>
+        <span class="emoji-btn" onclick="addEmoji('✨')">✨</span>
+        <span class="emoji-btn" onclick="addEmoji('🌙')">🌙</span>
+        <span class="emoji-btn" onclick="addEmoji('⭐')">⭐</span>
+        <span class="emoji-btn" onclick="addEmoji('🎓')">🎓</span>
+        <span class="emoji-btn" onclick="addEmoji('💚')">💚</span>
+        <span class="emoji-btn" onclick="addEmoji('🤍')">🤍</span>
+        <span class="emoji-btn" onclick="addEmoji('🙏')">🙏</span>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+        <div class="chat-input-wrap">
+            <button class="chat-emoji-btn" onclick="toggleEmojiPicker()" title="Emoji">😊</button>
+            <input
+                type="text"
+                class="chat-input"
+                id="chatInput"
+                placeholder="Type your message..."
+                onkeydown="handleChatKey(event)"
+                autocomplete="off"
+            >
+        </div>
+        <button class="chat-send-btn" onclick="sendUserMessage()" title="Send">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="chat-footer">
+        🔒 Secure & private &nbsp;•&nbsp; Powered by Al-Noor Academy
+    </div>
+</div>
+
+<script>
+    // ===================================================
+    //  CHATBOT KNOWLEDGE BASE
+    // ===================================================
+    const chatKB = {
+        greetings: {
+            triggers: ['hi','hello','salam','assalam','hey','good morning','good evening','good afternoon','asalam','walaikum','wa alaikum'],
+            response: `Wa Alaikum Assalam! 🌙 Welcome to **Al-Noor Quran Academy**!\n\nI'm your virtual assistant. I'm here to help you with any questions about our courses, pricing, teachers, and more.\n\nHow can I assist you today? 😊`,
+            buttons: ['📚 View Courses','💰 Pricing Plans','🆓 Free Trial','📞 Contact Us']
+        },
+        courses: {
+            triggers: ['course','courses','learn','learning','program','programs','what do you offer','what courses','curriculum'],
+            response: `📚 We offer **6 comprehensive courses**:\n\n**1. 📖 Quran Reading** — From Noorani Qaida to fluent reading\n**2. 🎤 Tajweed Course** — Perfect your recitation\n**3. 🧠 Hifz Program** — Memorize the entire Quran\n**4. 🔤 Arabic Language** — Understand Quran in Arabic\n**5. ☪️ Islamic Studies** — Fiqh, Hadith & History\n**6. 👶 Kids Program** — Fun learning for ages 4-14\n\nAll courses include live 1-on-1 classes with certified teachers!`,
+            buttons: ['📖 Quran Reading','🧠 Hifz Program','👶 Kids Program','💰 See Pricing']
+        },
+        pricing: {
+            triggers: ['price','pricing','cost','fee','fees','plan','plans','how much','payment','monthly','subscription','pay','affordable','cheap','expensive'],
+            response: `💰 Our **pricing plans** are very affordable:\n\n👶 **Single Child** — $29.99/month\n• 1 child, 3 classes/week, 1-on-1\n\n👨‍👩‍👧 **Family Package** — $49.99/month ⭐ POPULAR\n• 2 children, 6 classes/week\n\n👑 **Premium Plan** — $79.99/month\n• Up to 4 children, unlimited classes\n\n✅ All plans include a **3-day FREE trial** — no credit card needed!`,
+            buttons: ['🆓 Start Free Trial','📞 Contact for Custom','💳 Enroll Now']
+        },
+        teachers: {
+            triggers: ['teacher','teachers','ustaz','ustaza','instructor','instructor','qualified','certified','ijazah','scholar','professor'],
+            response: `🎓 Our teachers are **world-class scholars**:\n\n👨‍🏫 **Ustaz Ibrahim Al-Qari** — Tajweed Expert • ⭐ 4.9\n👩‍🏫 **Ustaza Maryam Hassan** — Hifz Specialist • ⭐ 4.9\n👨‍🏫 **Ustaz Ahmed Siddiqui** — Arabic Expert • ⭐ 4.8\n👩‍🏫 **Ustaza Fatima Zahra** — Kids Specialist • ⭐ 5.0\n\n🏅 All hold **Ijazah certificates** with chain of transmission to the Prophet ﷺ\n📊 We have **150+ certified teachers** from Egypt, Pakistan, Saudi Arabia & more!`,
+            buttons: ['👨‍🏫 Meet Teachers','📚 View Courses','🆓 Book Free Class']
+        },
+        freetrial: {
+            triggers: ['free trial','free class','trial','try','demo','first class','book','start','begin','register','sign up'],
+            response: `🆓 **Great news! Our FREE trial includes:**\n\n✅ 3 completely free classes\n✅ No credit card required\n✅ Meet your teacher first\n✅ Full platform access\n✅ Cancel anytime\n\n**How to start:**\n1. Click "Get Started" on our website\n2. Choose your course\n3. Pick a convenient time\n4. Attend your FREE class!\n\nJoin **5,000+ students** from 50+ countries! 🌍`,
+            buttons: ['🚀 Start Free Trial','📚 Choose Course','💰 View Plans']
+        },
+        contact: {
+            triggers: ['contact','reach','email','phone','whatsapp','support','help','talk','speak','call','message'],
+            response: `📞 **Contact Al-Noor Academy:**\n\n📧 **Email:** info@alnooracademy.com\n💬 **WhatsApp:** +1 (234) 567-8900\n🌐 **Website:** alnooracademy.com\n🕐 **Support:** Available 24/7\n\n**We're here for you!** Our team typically responds within a few minutes on WhatsApp.\n\nYou can also click the green WhatsApp button on our website! 💚`,
+            buttons: ['💬 WhatsApp Now','📧 Send Email','🆓 Free Trial']
+        },
+        tajweed: {
+            triggers: ['tajweed','tajwid','recitation','recite','pronunciation','makharij','makhaarij','letters','articulation'],
+            response: `🎤 **Tajweed Course Details:**\n\n📘 **What you'll learn:**\n• Makhaarij (letter articulation points)\n• Sifaat (letter characteristics)\n• Noon & Meem Mushaddad rules\n• Madd (elongation) rules\n• Waqf & Ibtida (stopping & starting)\n• Ghunnah rules\n\n👨‍🏫 Taught by certified Qaris with Ijazah\n⏱️ Classes: 30-60 minutes\n📊 Level: Intermediate\n\nBeautify your recitation like the Prophet ﷺ taught!`,
+            buttons: ['📝 Enroll in Tajweed','💰 Pricing','🎓 Our Teachers']
+        },
+        hifz: {
+            triggers: ['hifz','hafiz','hafiza','memorize','memorization','memorise','quran memorization','learn quran by heart'],
+            response: `🧠 **Hifz Program — Memorize the Quran:**\n\n📋 **Program includes:**\n• Personalized memorization plan\n• Daily new sabaq (lesson)\n• Sabqi (recent revision)\n• Manzil (old revision)\n• Weekly assessment tests\n• Ijazah certificate on completion\n\n👩‍🏫 Our Hafiz teachers have memorized Quran with Ijazah\n⏱️ Average completion: 2-4 years (varies)\n🏆 Over **500 Hafiz graduates** this year!\n\nMay Allah make it easy for you! 🤲`,
+            buttons: ['📝 Join Hifz Program','💰 Pricing','🎓 Hifz Teachers']
+        },
+        kids: {
+            triggers: ['kid','kids','child','children','boy','girl','age','young','toddler','baby','junior','son','daughter'],
+            response: `👶 **Kids Quran Program (Ages 4-14):**\n\n🎮 **Special Features:**\n• Fun, interactive lessons\n• Gamified learning with XP & badges\n• Animated learning materials\n• Patient, experienced kids' teachers\n• Parent progress reports after each class\n• Achievement rewards system\n\n👩‍🏫 **Ustaza Fatima Zahra** specializes in children\n🌟 Rated **5.0/5** by parents\n\n📱 Parents can monitor all classes in real-time for safety!`,
+            buttons: ['👶 Kids Program','📊 Parent Dashboard','💰 Family Plans']
+        },
+        arabic: {
+            triggers: ['arabic','arab','language','understand quran','quranic arabic','learn arabic','arabic grammar'],
+            response: `🔤 **Arabic Language Course:**\n\n📖 **Course covers:**\n• Arabic alphabet & pronunciation\n• Essential vocabulary (1000+ words)\n• Basic to advanced grammar\n• Quranic Arabic focus\n• Sentence structure\n• Conversational Arabic\n\n🌟 **Why learn Arabic?**\nUnderstanding Arabic means you can directly understand the Quran, Hadith, and Islamic texts!\n\n📊 Available for all levels — beginners to advanced\n👨‍🏫 Ustaz Ahmed Siddiqui (BA Arabic, Cairo University)`,
+            buttons: ['📝 Learn Arabic','📚 All Courses','💰 Pricing']
+        },
+        schedule: {
+            triggers: ['schedule','timing','time','timezone','flexible','when','days','week','morning','evening','night','available'],
+            response: `📅 **Flexible Scheduling at Al-Noor:**\n\n⏰ **Available times:**\n• 24 hours a day\n• 7 days a week\n• Morning, afternoon, evening & night\n\n🌍 **We cover all timezones:**\n• USA / Canada\n• UK / Europe\n• Middle East\n• Asia / Australia\n\n📌 You choose your preferred teacher\n📌 Reschedule classes easily\n📌 Never miss a class — makeup classes available!\n\nWhat timezone are you in? I can suggest best class times! 😊`,
+            buttons: ['📝 Book a Class','🆓 Free Trial','📞 Contact Us']
+        },
+        prayer: {
+            triggers: ['prayer','salah','salat','namaz','fajr','dhuhr','asr','maghrib','isha','prayer time','pray'],
+            response: `🕌 **Prayer Times (Today):**\n\n🌅 **Fajr:** 4:12 AM\n☀️ **Sunrise:** 5:45 AM\n🌤️ **Dhuhr:** 1:15 PM\n🌇 **Asr:** 5:30 PM\n🌆 **Maghrib:** 8:45 PM\n🌙 **Isha:** 10:10 PM\n\n*Note: Times may vary by location. Please check a local prayer time app for exact times in your city.*\n\n🤲 May Allah accept your prayers! اللهم تقبل منا`,
+            buttons: ['📚 Learn Quran','🕌 Islamic Studies','📞 Contact']
+        },
+        certificate: {
+            triggers: ['certificate','certification','ijazah','diploma','degree','completion','credentials'],
+            response: `🏆 **Certificates & Ijazah at Al-Noor:**\n\n📜 **We provide:**\n• Course Completion Certificates (all courses)\n• Tajweed Proficiency Certificate\n• Ijazah Certificate (Hifz graduates)\n• Monthly Progress Reports\n• Achievement Badges & Digital Awards\n\n🔗 **Ijazah** = Chain of transmission to the Prophet ﷺ — the highest Quranic credential!\n\n✅ Our Ijazah is recognized internationally by Islamic scholars.`,
+            buttons: ['🧠 Hifz Program','🎤 Tajweed','📚 All Courses']
+        },
+        safety: {
+            triggers: ['safe','safety','secure','child safety','background check','monitor','parent','privacy'],
+            response: `🔒 **Child Safety is Our #1 Priority:**\n\n✅ All teachers undergo criminal background checks\n✅ Parents can watch ALL classes live\n✅ Session recordings available for review\n✅ Female teachers available for girls\n✅ All classes monitored by our team\n✅ Strict code of conduct for all teachers\n✅ Instant parent notifications\n\n👨‍👩‍👧 **Parent Dashboard** lets you:\n• Watch live classes\n• Read teacher notes\n• Track daily progress\n• Message teachers directly\n\nYour child's safety is our sacred responsibility!`,
+            buttons: ['👶 Kids Program','📊 Parent Dashboard','🆓 Free Trial']
+        },
+        discount: {
+            triggers: ['discount','offer','promo','promotion','save','deal','annual','yearly','coupon','code'],
+            response: `🎉 **Special Offers & Discounts:**\n\n💰 **Annual Subscription:** Save up to 20%!\n👨‍👩‍👧 **Family Package:** 2 kids for $49.99 (save $10)\n👑 **Premium Plan:** 4 kids for $79.99 (huge savings!)\n🆓 **Free Trial:** First 3 classes FREE\n\n📣 **Current Promotions:**\n• July 2025 Enrollment — 10% OFF first month\n• Refer a friend — Get 1 free month\n• Annual payment — 2 months FREE\n\nContact us on WhatsApp for exclusive offers! 💚`,
+            buttons: ['💰 View Plans','📞 WhatsApp Us','🆓 Free Trial']
+        },
+        cancel: {
+            triggers: ['cancel','cancellation','refund','money back','stop','pause','quit','end subscription'],
+            response: `✅ **Cancellation & Refund Policy:**\n\n🔓 **Cancel anytime** — No questions asked!\n💳 No cancellation fees\n🔄 Pause subscription for up to 3 months\n💰 Refund available within 7 days of payment\n\n**To cancel or pause:**\n1. Go to your dashboard\n2. Settings → Subscription\n3. Click "Cancel/Pause"\n\nOr simply contact us on WhatsApp and we'll handle it immediately!\n\nWe hope you'll stay with us! 🤲`,
+            buttons: ['📞 WhatsApp Support','🆓 Try Again Free','💰 View Other Plans']
+        },
+        islamic: {
+            triggers: ['islamic studies','fiqh','hadith','seerah','prophet','sunnah','deen','religion','pillars','iman','faith'],
+            response: `☪️ **Islamic Studies Course:**\n\n📘 **Topics covered:**\n• Pillars of Islam & Pillars of Iman\n• Fiqh (Islamic jurisprudence basics)\n• Hadith studies (Nawawi's 40 Hadith)\n• Seerah (Life of Prophet Muhammad ﷺ)\n• Islamic history & civilization\n• Aqeedah (Islamic creed)\n• Halal & Haram in daily life\n\n📊 Available for all levels & ages\n🏅 Includes progress assessment & certificates\n\n"Seeking knowledge is an obligation upon every Muslim" — Prophet Muhammad ﷺ`,
+            buttons: ['📝 Enroll Now','📚 All Courses','💰 Pricing']
+        },
+        default: {
+            response: `JazakAllah Khair for your message! 🤲\n\nI'm not sure I fully understood your question. Here are some things I can help you with:\n\n📚 **Courses & Programs**\n💰 **Pricing & Plans**\n🎓 **Our Teachers**\n🆓 **Free Trial Info**\n📅 **Class Scheduling**\n📞 **Contact & Support**\n\nOr you can reach us directly on WhatsApp for personalized help! 💚`,
+            buttons: ['📚 Courses','💰 Pricing','🆓 Free Trial','📞 WhatsApp']
+        }
+    };
+
+    // ===================================================
+    //  CHATBOT STATE
+    // ===================================================
+    let chatOpen = false;
+    let chatInitialized = false;
+    let messageCount = 0;
+
+    // ===================================================
+    //  TOGGLE CHAT
+    // ===================================================
+    function toggleChat() {
+        chatOpen = !chatOpen;
+        const win  = document.getElementById('chatbotWindow');
+        const icon = document.getElementById('chatToggleIcon');
+        const notif = document.getElementById('chatNotif');
+
+        if (chatOpen) {
+            win.classList.add('open');
+            icon.className = 'fas fa-times';
+            notif.style.display = 'none';
+            if (!chatInitialized) {
+                chatInitialized = true;
+                setTimeout(() => showWelcomeMessage(), 400);
+            }
+        } else {
+            win.classList.remove('open');
+            icon.className = 'fas fa-comment-dots';
+        }
+
+        // Close emoji picker if open
+        document.getElementById('emojiPicker').classList.remove('show');
+    }
+
+    // ===================================================
+    //  WELCOME MESSAGE
+    // ===================================================
+    function showWelcomeMessage() {
+        const now = getCurrentTime();
+
+        const welcomeHTML = `
+            <div class="msg bot" id="welcomeMsg">
+                <div class="msg-avatar bot-avatar-sm">🕌</div>
+                <div>
+                    <div class="msg-bubble">
+                        <div style="font-family:'Amiri',serif; font-size:18px; color:#1a5c38; margin-bottom:8px;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+                        <strong>Assalam Alaikum! 🌙</strong><br><br>
+                        Welcome to <strong>Al-Noor Quran Academy</strong>! I'm your virtual assistant, here to help you start your blessed Quranic journey.<br><br>
+                        <div class="msg-welcome-card">
+                            <h4>🎓 How can I help you?</h4>
+                            <p>Ask me about courses, pricing, teachers, free trial, or anything about Al-Noor Academy!</p>
+                        </div>
+                        <div class="msg-quick-btns">
+                            <button class="msg-qbtn" onclick="sendQuickReply('📚 Courses')">📚 Courses</button>
+                            <button class="msg-qbtn" onclick="sendQuickReply('💰 Pricing')">💰 Pricing</button>
+                            <button class="msg-qbtn" onclick="sendQuickReply('🆓 Free Trial')">🆓 Free Trial</button>
+                            <button class="msg-qbtn" onclick="sendQuickReply('🎓 Teachers')">🎓 Teachers</button>
+                        </div>
+                        <span class="msg-time">${now}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('chatMessages').innerHTML = welcomeHTML;
+        scrollToBottom();
+    }
+
+    // ===================================================
+    //  GET CURRENT TIME
+    // ===================================================
+    function getCurrentTime() {
+        return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // ===================================================
+    //  ADD MESSAGE TO CHAT
+    // ===================================================
+    function addMessage(text, sender = 'bot', buttons = []) {
+        const msgs = document.getElementById('chatMessages');
+        const now  = getCurrentTime();
+        messageCount++;
+
+        const isUser = sender === 'user';
+        const avatarClass = isUser ? 'user-avatar-sm' : 'bot-avatar-sm';
+        const avatarEmoji = isUser ? '👤' : '🕌';
+
+        // Format text: bold (**text**), line breaks
+        const formatted = formatText(text);
+
+        let buttonsHTML = '';
+        if (buttons.length > 0) {
+            buttonsHTML = `<div class="msg-quick-btns">`;
+            buttons.forEach(btn => {
+                buttonsHTML += `<button class="msg-qbtn" onclick="sendQuickReply('${btn}')">${btn}</button>`;
+            });
+            buttonsHTML += `</div>`;
+        }
+
+        const msgHTML = `
+            <div class="msg ${sender}">
+                ${!isUser ? `<div class="msg-avatar ${avatarClass}">${avatarEmoji}</div>` : ''}
+                <div>
+                    <div class="msg-bubble">
+                        ${formatted}
+                        ${buttonsHTML}
+                        <span class="msg-time">${now}</span>
+                    </div>
+                </div>
+                ${isUser ? `<div class="msg-avatar ${avatarClass}">${avatarEmoji}</div>` : ''}
+            </div>
+        `;
+
+        msgs.insertAdjacentHTML('beforeend', msgHTML);
+        scrollToBottom();
+    }
+
+    // ===================================================
+    //  FORMAT TEXT (bold, line breaks)
+    // ===================================================
+    function formatText(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+    }
+
+    // ===================================================
+    //  SHOW TYPING INDICATOR
+    // ===================================================
+    function showTyping() {
+        const msgs = document.getElementById('chatMessages');
+        const typingHTML = `
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="msg-avatar bot-avatar-sm">🕌</div>
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        `;
+        msgs.insertAdjacentHTML('beforeend', typingHTML);
+        scrollToBottom();
+    }
+
+    // ===================================================
+    //  REMOVE TYPING INDICATOR
+    // ===================================================
+    function removeTyping() {
+        const t = document.getElementById('typingIndicator');
+        if (t) t.remove();
+    }
+
+    // ===================================================
+    //  SCROLL TO BOTTOM
+    // ===================================================
+    function scrollToBottom() {
+        const msgs = document.getElementById('chatMessages');
+        setTimeout(() => {
+            msgs.scrollTop = msgs.scrollHeight;
+        }, 50);
+    }
+
+    // ===================================================
+    //  GET BOT RESPONSE
+    // ===================================================
+    function getBotResponse(userMsg) {
+        const msg = userMsg.toLowerCase().trim();
+
+        // Check each category
+        for (const [key, data] of Object.entries(chatKB)) {
+            if (key === 'default') continue;
+            if (data.triggers && data.triggers.some(t => msg.includes(t))) {
+                return { text: data.response, buttons: data.buttons || [] };
+            }
+        }
+
+        // Special keyword catches
+        if (msg.includes('quran reading') || msg.includes('reading quran') || msg.includes('noorani qaida') || msg.includes('qaida')) {
+            return {
+                text: `📖 **Quran Reading Course:**\n\n📋 **What you'll learn:**\n• Arabic alphabet & sounds\n• Noorani Qaida (letter joining)\n• Short vowels & sukoon\n• Tanween & shadda\n• Connecting letters\n• Fluent Quran reading\n\n👨‍🏫 Taught by certified teachers\n⏱️ Classes: 30-45 minutes\n📊 Level: Absolute beginner\n\nPerfect for those starting from zero! 🌟`,
+                buttons: ['📝 Enroll Now', '🆓 Free Trial', '💰 Pricing']
+            };
+        }
+
+        if (msg.includes('how many') || msg.includes('number of')) {
+            return {
+                text: `📊 **Al-Noor Academy Numbers:**\n\n👨‍👩‍👧 **5,000+** Students worldwide\n👨‍🏫 **150+** Certified teachers\n📖 **500+** Hafiz graduates\n🌍 **50+** Countries served\n⭐ **4.9/5** Average rating\n📅 **7 days** a week available\n\nWe are growing every day, Alhamdulillah! 🌱`,
+                buttons: ['🆓 Join Us Free', '📚 Courses', '💰 Pricing']
+            };
+        }
+
+        if (msg.includes('thank') || msg.includes('jazak') || msg.includes('shukran')) {
+            return {
+                text: `Wa Iyyakum! 🤲 JazakAllah Khair for reaching out to Al-Noor Academy!\n\nMay Allah bless you and your family. If you have any more questions, I'm always here to help! 💚\n\n"The best of you are those who learn the Quran and teach it." — Prophet Muhammad ﷺ`,
+                buttons: ['📚 Explore Courses', '🆓 Free Trial', '📞 Contact Us']
+            };
+        }
+
+        if (msg.includes('bye') || msg.includes('goodbye') || msg.includes('see you') || msg.includes('later')) {
+            return {
+                text: `Ma'a Salama! 🌙 May Allah bless you!\n\nFeel free to come back anytime. We're always here to help you on your Quranic journey.\n\nAssalam Alaikum Wa Rahmatullahi Wa Barakatuh! 🤲`,
+                buttons: ['🆓 Start Free Trial', '📚 Courses']
+            };
+        }
+
+        // Default
+        return { text: chatKB.default.response, buttons: chatKB.default.buttons };
+    }
+
+    // ===================================================
+    //  SEND USER MESSAGE
+    // ===================================================
+    function sendUserMessage() {
+        const input = document.getElementById('chatInput');
+        const text  = input.value.trim();
+        if (!text) return;
+
+        // Add user message
+        addMessage(text, 'user');
+        input.value = '';
+
+        // Close emoji picker
+        document.getElementById('emojiPicker').classList.remove('show');
+
+        // Show typing
+        showTyping();
+
+        // Get response with delay
+        const thinkTime = 800 + Math.random() * 700;
+        setTimeout(() => {
+            removeTyping();
+            const resp = getBotResponse(text);
+            addMessage(resp.text, 'bot', resp.buttons);
+        }, thinkTime);
+    }
+
+    // ===================================================
+    //  SEND QUICK REPLY
+    // ===================================================
+    function sendQuickReply(text) {
+        // Show as user message (without emoji for cleaner look)
+        const cleanText = text.replace(/[📚💰🎓🆓📞🕌📖🎤🧠🔤☪️👶📝🚀💳📊👨‍🏫📞💚💰👑🎉🔒]/g, '').trim();
+        addMessage(text, 'user');
+
+        showTyping();
+
+        const thinkTime = 700 + Math.random() * 500;
+        setTimeout(() => {
+            removeTyping();
+            const resp = getBotResponse(text + ' ' + cleanText);
+            addMessage(resp.text, 'bot', resp.buttons);
+        }, thinkTime);
+    }
+
+    // ===================================================
+    //  HANDLE ENTER KEY
+    // ===================================================
+    function handleChatKey(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendUserMessage();
+        }
+    }
+
+    // ===================================================
+    //  CLEAR CHAT
+    // ===================================================
+    function clearChat() {
+        document.getElementById('chatMessages').innerHTML = '';
+        messageCount = 0;
+        setTimeout(() => showWelcomeMessage(), 100);
+    }
+
+    // ===================================================
+    //  EMOJI PICKER
+    // ===================================================
+    function toggleEmojiPicker() {
+        document.getElementById('emojiPicker').classList.toggle('show');
+    }
+
+    function addEmoji(emoji) {
+        const input = document.getElementById('chatInput');
+        input.value += emoji;
+        input.focus();
+        document.getElementById('emojiPicker').classList.remove('show');
+    }
+
+    // Close emoji picker on outside click
+    document.addEventListener('click', (e) => {
+        const picker = document.getElementById('emojiPicker');
+        if (picker.classList.contains('show') && !picker.contains(e.target) && !e.target.classList.contains('chat-emoji-btn')) {
+            picker.classList.remove('show');
+        }
+    });
+
+    // ===================================================
+    //  AUTO-OPEN CHATBOT AFTER 8 SECONDS (optional)
+    // ===================================================
+    setTimeout(() => {
+        const notif = document.getElementById('chatNotif');
+        notif.style.display = 'flex';
+        notif.textContent = '1';
+    }, 3000);
+
+    // ===================================================
+    //  NAVBAR SCROLL
+    // ===================================================
+    window.addEventListener('scroll', () => {
+        const navbar   = document.getElementById('navbar');
+        const scrollTop = document.getElementById('scrollTop');
+
+        if (window.scrollY > 80) {
+            navbar.classList.add('scrolled');
+            scrollTop.classList.add('show');
+        } else {
+            navbar.classList.remove('scrolled');
+            scrollTop.classList.remove('show');
+        }
+    });
+
+    // ===== MOBILE NAV =====
+    function toggleMobileNav() {
+        const nav  = document.getElementById('mobileNav');
+        const icon = document.getElementById('hamburgerIcon');
+        const open = nav.classList.toggle('open');
+        icon.className = open ? 'fas fa-times' : 'fas fa-bars';
+    }
+
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('open');
+        document.getElementById('hamburgerIcon').className = 'fas fa-bars';
+    }
+
+    // ===== FAQ TOGGLE =====
+    function toggleFaq(item) {
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item').forEach(f => {
+            f.classList.remove('open');
+            f.querySelector('.faq-answer').classList.remove('open');
+        });
+
+        if (!isOpen) {
+            item.classList.add('open');
+            answer.classList.add('open');
+        }
+    }
+
+    // ===== STATS COUNTER =====
+    const statsTargets  = [5000, 150, 500, 50];
+    const statsIds      = ['stat1','stat2','stat3','stat4'];
+    const statsSuffix   = ['+','+','+','+'];
+    let statsAnimated   = false;
+
+    function animateStats() {
+        if (statsAnimated) return;
+        statsAnimated = true;
+
+        statsIds.forEach((id, index) => {
+            const target = statsTargets[index];
+            const el     = document.getElementById(id);
+            let count    = 0;
+            const step   = Math.ceil(target / 60);
+
+            const interval = setInterval(() => {
+                count = Math.min(count + step, target);
+                el.textContent = count.toLocaleString() + statsSuffix[index];
+                if (count >= target) clearInterval(interval);
+            }, 30);
+        });
+    }
+
+    // ===== INTERSECTION OBSERVER =====
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.id === 'stat1') animateStats();
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.2 });
+
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) observer.observe(document.getElementById('stat1'));
+
+    const animateEls = document.querySelectorAll('.feature-card, .course-card, .teacher-card, .testimonial-card, .step-card, .pricing-card');
+    animateEls.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `opacity 0.6s ease ${i * 0.08}s, transform 0.6s ease ${i * 0.08}s`;
+        observer.observe(el);
+    });
+
+    // ===== NEWSLETTER =====
+    function subscribeNewsletter() {
+        const inputs = document.querySelectorAll('footer input[type="email"]');
+        inputs.forEach(input => {
+            if (input.value && input.value.includes('@')) {
+                input.value = '';
+                showToast('✅ Subscribed! JazakAllah Khair!');
+            } else {
+                showToast('⚠️ Please enter valid email', 'error');
+            }
+        });
+    }
+
+    // ===== TOAST =====
+    function showToast(msg, type = 'success') {
+        const colors = { success: '#38a169', error: '#e53e3e' };
+        const t = document.createElement('div');
+        t.style.cssText = `
+            position:fixed; bottom:25px; left:50%; transform:translateX(-50%);
+            background:${colors[type]||colors.success}; color:white;
+            padding:14px 28px; border-radius:12px; font-size:14px; font-weight:600;
+            box-shadow:0 8px 25px rgba(0,0,0,0.2); z-index:9999;
+            animation:slideUp 0.3s ease; font-family:'Poppins',sans-serif;
+        `;
+        t.textContent = msg;
+
+        if (!document.getElementById('toastCSS')) {
+            const s = document.createElement('style');
+            s.id = 'toastCSS';
+            s.textContent = `@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}`;
+            document.head.appendChild(s);
+        }
+
+        document.body.appendChild(t);
+        setTimeout(() => {
+            t.style.opacity = '0';
+            t.style.transition = 'opacity 0.3s';
+            setTimeout(() => t.remove(), 300);
+        }, 3000);
+    }
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const href = a.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const top = target.offsetTop - 75;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // ===== ACTIVE NAV =====
+    window.addEventListener('scroll', () => {
+        const sections = ['home','features','courses','how','teachers','pricing','testimonials','faq'];
+        const scrollPos = window.scrollY + 100;
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const top    = el.offsetTop;
+            const bottom = top + el.offsetHeight;
+
+            if (scrollPos >= top && scrollPos < bottom) {
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.style.fontWeight = '';
+                    if (a.getAttribute('href') === '#' + id) a.style.fontWeight = '700';
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

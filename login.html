@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Noor Quran Academy - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a5c38;
+            --primary-light: #2d8653;
+            --primary-dark: #0d3d25;
+            --secondary: #f0a500;
+            --secondary-light: #ffc107;
+            --accent: #00897b;
+            --blue: #3182ce;
+            --purple: #6b46c1;
+            --student-color: #0d2a4a;
+            --student-light: #1a3a6b;
+            --bg: #f0f4f8;
+            --white: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-mid: #4a5568;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #38a169;
+            --danger: #e53e3e;
+        }
+
+        /* ===== FIX: SCROLL ISSUE ===== */
+        html {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            background: #0d1b2e;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg,
+                #0d1b2e 0%,
+                #0d3d25 35%,
+                #1a5c38 65%,
+                #0d2a4a 100%
+            );
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            animation: float linear infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 350px; height: 350px;
+            background: var(--secondary);
+            top: -120px; left: -120px;
+            animation-duration: 25s;
+        }
+        .shape:nth-child(2) {
+            width: 250px; height: 250px;
+            background: var(--primary-light);
+            top: 40%; right: -100px;
+            animation-duration: 20s;
+            animation-delay: -5s;
+        }
+        .shape:nth-child(3) {
+            width: 180px; height: 180px;
+            background: var(--blue);
+            bottom: 10%; left: 25%;
+            animation-duration: 18s;
+            animation-delay: -8s;
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(0) rotate(0deg); }
+            33%  { transform: translateY(-25px) rotate(120deg); }
+            66%  { transform: translateY(15px) rotate(240deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        .pattern-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.015) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 55px 55px;
+        }
+
+        /* ===== MAIN WRAPPER ===== */
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 20px 40px;
+        }
+
+        /* ===== TOP HEADER ===== */
+        .top-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .academy-logo {
+            width: 75px; height: 75px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 38px;
+            margin: 0 auto 12px;
+            border: 3px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .top-header h1 {
+            font-size: 26px; font-weight: 700;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .top-header .arabic-main {
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        /* ===== ROLE SELECTOR ===== */
+        .role-selector-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .role-card {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 14px;
+            padding: 14px 20px;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            flex: 1;
+            max-width: 160px;
+            backdrop-filter: blur(8px);
+        }
+
+        .role-card:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-2px);
+        }
+
+        .role-card.active {
+            border-color: var(--secondary);
+            background: rgba(240,165,0,0.18);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(240,165,0,0.2);
+        }
+
+        .role-emoji {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .role-name {
+            font-size: 12px; font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .role-desc {
+            font-size: 10px; opacity: 0.65;
+        }
+
+        /* ===== LOGIN CARD ===== */
+        .login-card {
+            width: 100%;
+            max-width: 900px;
+            background: var(--white);
+            border-radius: 22px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+        }
+
+        /* ===== LEFT PANEL ===== */
+        .login-left {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        .login-left.parent-theme {
+            background: linear-gradient(180deg, #0d3d25, #1a5c38, #2d8653);
+        }
+        .login-left.teacher-theme {
+            background: linear-gradient(180deg, #1a3a6b, #2d5aa0, #3182ce);
+        }
+        .login-left.student-theme {
+            background: linear-gradient(180deg, #0d1b2e, #0d2a4a, #1a3a6b);
+        }
+        .login-left.admin-theme {
+            background: linear-gradient(180deg, #2d1b69, #4a0080, #6b46c1);
+        }
+
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
+        .left-icon {
+            width: 80px; height: 80px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px;
+            margin-bottom: 16px;
+            border: 3px solid rgba(255,255,255,0.3);
+            position: relative; z-index: 1;
+        }
+
+        .left-title {
+            font-size: 20px; font-weight: 700;
+            margin-bottom: 6px;
+            position: relative; z-index: 1;
+            line-height: 1.3;
+        }
+
+        .left-arabic {
+            font-family: 'Amiri', serif;
+            font-size: 17px; opacity: 0.85;
+            margin-bottom: 22px;
+            position: relative; z-index: 1;
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+            width: 100%;
+            position: relative; z-index: 1;
+        }
+
+        .features-list li {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0; font-size: 12px; opacity: 0.88;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .features-list li:last-child { border-bottom: none; }
+
+        .features-list li i {
+            color: var(--secondary-light);
+            width: 16px; font-size: 13px;
+        }
+
+        .left-footer-txt {
+            margin-top: 20px;
+            font-size: 11px; opacity: 0.6;
+            position: relative; z-index: 1;
+        }
+
+        .left-footer-txt p {
+            font-family: 'Amiri', serif;
+            font-size: 15px; margin-bottom: 3px;
+        }
+
+        /* ===== RIGHT PANEL ===== */
+        .login-right {
+            padding: 35px 35px 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Right header */
+        .right-header { margin-bottom: 20px; }
+
+        .right-header h2 {
+            font-size: 24px; font-weight: 700;
+            color: var(--text-dark); margin-bottom: 5px;
+        }
+
+        .right-header p { font-size: 13px; color: var(--text-light); }
+
+        .role-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; margin-top: 7px;
+        }
+
+        .role-badge.parent { background: rgba(26,92,56,0.1); color: var(--primary); }
+        .role-badge.student { background: rgba(13,42,74,0.1); color: var(--student-light); }
+        .role-badge.teacher { background: rgba(49,130,206,0.1); color: var(--blue); }
+        .role-badge.admin   { background: rgba(107,70,193,0.1); color: var(--purple); }
+
+        /* ===== TABS ===== */
+        .auth-tabs {
+            display: flex; gap: 4px;
+            background: var(--bg); padding: 4px;
+            border-radius: 10px; margin-bottom: 18px;
+        }
+
+        .auth-tab {
+            flex: 1; padding: 10px;
+            border: none; border-radius: 8px;
+            background: none; font-size: 13px; font-weight: 600;
+            cursor: pointer; color: var(--text-light);
+            transition: all 0.3s; font-family: 'Poppins', sans-serif;
+        }
+
+        .auth-tab.active {
+            background: white; color: var(--text-dark);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* ===== DEMO SECTION ===== */
+        .demo-box {
+            background: linear-gradient(135deg, rgba(240,165,0,0.05), rgba(240,165,0,0.1));
+            border: 1px solid rgba(240,165,0,0.25);
+            border-radius: 10px; padding: 12px 14px; margin-bottom: 18px;
+        }
+
+        .demo-box p {
+            font-size: 10px; font-weight: 700; color: var(--text-mid);
+            margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .demo-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
+        }
+
+        .demo-btn {
+            padding: 7px 10px;
+            background: white; border: 1px solid var(--border);
+            border-radius: 7px; font-size: 11px; font-weight: 600;
+            cursor: pointer; color: var(--text-dark);
+            transition: all 0.2s; font-family: 'Poppins', sans-serif;
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        .demo-btn:hover {
+            border-color: var(--secondary);
+            background: rgba(240,165,0,0.05);
+            transform: translateY(-1px);
+        }
+
+        /* ===== FORM ===== */
+        .form-group { margin-bottom: 15px; }
+
+        .form-label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--text-dark); margin-bottom: 6px;
+        }
+
+        .input-wrap { position: relative; }
+
+        .input-icon {
+            position: absolute; left: 13px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light); font-size: 14px; z-index: 1;
+        }
+
+        .form-input {
+            width: 100%; padding: 11px 13px 11px 40px;
+            border: 2px solid var(--border); border-radius: 10px;
+            font-size: 13px; font-family: 'Poppins', sans-serif;
+            outline: none; transition: all 0.3s; color: var(--text-dark);
+            background: white;
+        }
+
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,92,56,0.08); }
+        .form-input.blue-focus:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(49,130,206,0.08); }
+        .form-input.navy-focus:focus { border-color: var(--student-light); box-shadow: 0 0 0 3px rgba(13,42,74,0.08); }
+        .form-input.purple-focus:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(107,70,193,0.08); }
+
+        .pass-toggle {
+            position: absolute; right: 13px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--text-light); cursor: pointer; font-size: 14px;
+        }
+
+        .pass-toggle:hover { color: var(--text-dark); }
+
+        /* 2 col grid */
+        .form-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+
+        /* Forgot row */
+        .forgot-row {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 6px;
+        }
+
+        .remember-label {
+            display: flex; align-items: center; gap: 7px;
+            font-size: 12px; color: var(--text-mid); cursor: pointer;
+        }
+
+        .remember-label input { accent-color: var(--primary); }
+
+        .forgot-btn {
+            font-size: 12px; color: var(--primary); font-weight: 600;
+            background: none; border: none; cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .forgot-btn:hover { text-decoration: underline; }
+
+        /* ===== SUBMIT BUTTON ===== */
+        .submit-btn {
+            width: 100%; padding: 13px;
+            border: none; border-radius: 11px;
+            font-size: 15px; font-weight: 700;
+            cursor: pointer; font-family: 'Poppins', sans-serif;
+            transition: all 0.3s; display: flex;
+            align-items: center; justify-content: center; gap: 9px;
+            margin-top: 6px; color: white;
+        }
+
+        .submit-btn:hover { transform: translateY(-2px); opacity: 0.93; }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        .btn-parent  { background: linear-gradient(135deg, #0d3d25, #1a5c38); box-shadow: 0 5px 18px rgba(26,92,56,0.35); }
+        .btn-student { background: linear-gradient(135deg, #0d1b2e, #0d2a4a); box-shadow: 0 5px 18px rgba(13,26,46,0.35); }
+        .btn-teacher { background: linear-gradient(135deg, #1a3a6b, #3182ce); box-shadow: 0 5px 18px rgba(49,130,206,0.35); }
+        .btn-admin   { background: linear-gradient(135deg, #2d1b69, #6b46c1); box-shadow: 0 5px 18px rgba(107,70,193,0.35); }
+
+        /* ===== SPINNER ===== */
+        .spinner {
+            width: 18px; height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            display: flex; align-items: center; gap: 10px;
+            margin: 14px 0; color: var(--text-light); font-size: 11px;
+        }
+
+        .divider::before, .divider::after {
+            content: ''; flex: 1; height: 1px; background: var(--border);
+        }
+
+        /* Social buttons */
+        .social-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+        }
+
+        .social-btn {
+            padding: 11px; border: 2px solid var(--border);
+            border-radius: 10px; background: none;
+            font-size: 12px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 7px;
+            font-family: 'Poppins', sans-serif; transition: all 0.3s;
+        }
+
+        .social-btn:hover { background: var(--bg); }
+
+        /* ===== ALERT ===== */
+        .alert {
+            padding: 11px 14px; border-radius: 9px;
+            margin-bottom: 14px; font-size: 12px;
+            display: flex; align-items: flex-start; gap: 9px;
+            line-height: 1.5;
+        }
+
+        .alert-error   { background: rgba(229,62,62,0.08); color: #c53030; border: 1px solid rgba(229,62,62,0.2); }
+        .alert-success { background: rgba(56,161,105,0.08); color: #276749; border: 1px solid rgba(56,161,105,0.2); }
+        .alert-info    { background: rgba(49,130,206,0.08); color: #2c5282; border: 1px solid rgba(49,130,206,0.2); }
+
+        /* ===== REGISTER ROLE GRID ===== */
+        .reg-role-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px;
+            margin-bottom: 14px;
+        }
+
+        .reg-role-btn {
+            padding: 10px 5px; border: 2px solid var(--border);
+            border-radius: 9px; background: none;
+            font-size: 10px; font-weight: 700; cursor: pointer;
+            color: var(--text-light); transition: all 0.3s;
+            font-family: 'Poppins', sans-serif; text-align: center;
+        }
+
+        .reg-role-btn i { display: block; font-size: 18px; margin-bottom: 4px; }
+        .reg-role-btn.active { border-color: var(--primary); color: var(--primary); background: rgba(26,92,56,0.05); }
+
+        /* ===== PASSWORD STRENGTH ===== */
+        .strength-wrap { margin-top: 7px; }
+
+        .strength-bar {
+            height: 4px; background: var(--border);
+            border-radius: 4px; overflow: hidden; margin-bottom: 4px;
+        }
+
+        .strength-fill { height: 100%; border-radius: 4px; transition: all 0.3s; width: 0; }
+        .strength-txt { font-size: 10px; color: var(--text-light); }
+
+        /* ===== FORGOT FORM ===== */
+        .forgot-panel { display: none; }
+
+        .back-btn {
+            background: none; border: 2px solid var(--border);
+            color: var(--text-mid); padding: 11px 20px;
+            border-radius: 10px; font-size: 13px; font-weight: 600;
+            cursor: pointer; width: 100%; margin-top: 9px;
+            font-family: 'Poppins', sans-serif; transition: all 0.3s;
+        }
+
+        .back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ===== TERMS ===== */
+        .terms-row {
+            display: flex; align-items: flex-start; gap: 9px;
+            margin-bottom: 13px;
+        }
+
+        .terms-row input { margin-top: 3px; accent-color: var(--primary); flex-shrink: 0; }
+        .terms-row label { font-size: 11px; color: var(--text-mid); cursor: pointer; line-height: 1.5; }
+        .terms-row a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        .terms-row a:hover { text-decoration: underline; }
+
+        /* ===== FOOTER ===== */
+        .card-footer {
+            margin-top: 16px; text-align: center;
+            font-size: 11px; color: var(--text-light);
+        }
+
+        .card-footer .arabic-footer {
+            font-family: 'Amiri', serif; font-size: 14px; margin-top: 3px;
+        }
+
+        /* ===== ALREADY LOGGED ===== */
+        .already-banner {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px; padding: 12px 16px;
+            margin-bottom: 18px;
+            display: none; align-items: center; gap: 12px;
+            color: white; backdrop-filter: blur(8px);
+            width: 100%; max-width: 900px;
+        }
+
+        .already-banner .go-dash {
+            margin-left: auto;
+            background: var(--secondary); color: var(--primary-dark);
+            border: none; padding: 7px 16px; border-radius: 8px;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            font-family: 'Poppins', sans-serif; white-space: nowrap;
+        }
+
+        /* ===== BOTTOM TEXT ===== */
+        .bottom-note {
+            margin-top: 20px; text-align: center;
+            color: rgba(255,255,255,0.45); font-size: 11px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-wrap {
+            position: fixed; bottom: 25px; right: 25px;
+            z-index: 9999; display: flex; flex-direction: column; gap: 8px;
+        }
+
+        .toast {
+            background: white; border-radius: 11px;
+            padding: 13px 18px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: flex; align-items: center; gap: 10px;
+            min-width: 260px; max-width: 340px;
+            animation: toastSlide 0.3s ease; border-left: 4px solid;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes toastSlide {
+            from { opacity: 0; transform: translateX(100%); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .toast.success { border-color: var(--success); }
+        .toast.error   { border-color: var(--danger); }
+        .toast.info    { border-color: var(--blue); }
+        .toast span    { font-size: 12px; font-weight: 500; color: var(--text-dark); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 820px) {
+            .login-card { grid-template-columns: 1fr; }
+            .login-left { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .page-wrapper { padding: 20px 15px 30px; }
+            .role-selector-row { gap: 8px; }
+            .role-card { min-width: 70px; padding: 10px 8px; max-width: 110px; }
+            .role-emoji { font-size: 22px; }
+            .login-right { padding: 25px 20px; }
+            .demo-grid { grid-template-columns: 1fr; }
+            .reg-role-grid { grid-template-columns: repeat(2, 1fr); }
+            .form-row { grid-template-columns: 1fr; }
+            .social-row { grid-template-columns: 1fr; }
+            .top-header h1 { font-size: 22px; }
+        }
+
+        @media (max-width: 400px) {
+            .role-card { padding: 8px 6px; }
+            .role-name { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Fixed Background -->
+<div class="bg-animated">
+    <div class="bg-gradient"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="pattern-overlay"></div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- Page Wrapper - Scrollable -->
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <div class="top-header">
+        <div class="academy-logo">🕌</div>
+        <h1>Al-Noor Quran Academy</h1>
+        <div class="arabic-main">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    </div>
+
+    <!-- Already Logged In Banner -->
+    <div class="already-banner" id="alreadyBanner">
+        <span style="font-size:22px">👤</span>
+        <div>
+            <div style="font-size:13px; font-weight:700" id="loggedName">Already logged in</div>
+            <div style="font-size:11px; opacity:0.75" id="loggedRole">as Parent</div>
+        </div>
+        <button class="go-dash" onclick="goToDashboard()">Go to Dashboard →</button>
+    </div>
+
+    <!-- Role Selector -->
+    <div class="role-selector-row">
+        <div class="role-card active" onclick="selectRole('parent', this)" id="rc-parent">
+            <span class="role-emoji">👨‍👩‍👧</span>
+            <div class="role-name">Parent</div>
+            <div class="role-desc">Monitor children</div>
+        </div>
+        <div class="role-card" onclick="selectRole('student', this)" id="rc-student">
+            <span class="role-emoji">📖</span>
+            <div class="role-name">Student</div>
+            <div class="role-desc">Learn & grow</div>
+        </div>
+        <div class="role-card" onclick="selectRole('teacher', this)" id="rc-teacher">
+            <span class="role-emoji">👨‍🏫</span>
+            <div class="role-name">Teacher</div>
+            <div class="role-desc">Teach & guide</div>
+        </div>
+        <div class="role-card" onclick="selectRole('admin', this)" id="rc-admin">
+            <span class="role-emoji">👨‍💼</span>
+            <div class="role-name">Admin</div>
+            <div class="role-desc">Manage academy</div>
+        </div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+
+        <!-- ===== LEFT PANEL ===== -->
+        <div class="login-left parent-theme" id="loginLeft">
+
+            <!-- Parent -->
+            <div id="lc-parent">
+                <div class="left-icon">👨‍👩‍👧</div>
+                <div class="left-title">Parent Portal</div>
+                <div class="left-arabic">بَوَّابَةُ الْوَالِدِين</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-chart-line"></i> Track children's progress</li>
+                    <li><i class="fas fa-video"></i> Join live Quran classes</li>
+                    <li><i class="fas fa-comments"></i> Message teachers directly</li>
+                    <li><i class="fas fa-calendar-alt"></i> Manage class schedule</li>
+                    <li><i class="fas fa-trophy"></i> View achievements & badges</li>
+                    <li><i class="fas fa-credit-card"></i> Manage payments easily</li>
+                    <li><i class="fas fa-bell"></i> Real-time notifications</li>
+                </ul>
+            </div>
+
+            <!-- Student -->
+            <div id="lc-student" style="display:none">
+                <div class="left-icon">📖</div>
+                <div class="left-title">Student Portal</div>
+                <div class="left-arabic">بَوَّابَةُ الطَّالِب</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-video"></i> Join live Quran classes</li>
+                    <li><i class="fas fa-book-open"></i> Track surah progress</li>
+                    <li><i class="fas fa-microphone"></i> Learn Tajweed rules</li>
+                    <li><i class="fas fa-trophy"></i> Earn XP & achievements</li>
+                    <li><i class="fas fa-fire"></i> Daily learning streak 🔥</li>
+                    <li><i class="fas fa-medal"></i> Leaderboard ranking</li>
+                    <li><i class="fas fa-tasks"></i> Complete homework</li>
+                </ul>
+            </div>
+
+            <!-- Teacher -->
+            <div id="lc-teacher" style="display:none">
+                <div class="left-icon">👨‍🏫</div>
+                <div class="left-title">Teacher Portal</div>
+                <div class="left-arabic">بَوَّابَةُ الْأُسْتَاذ</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-chalkboard"></i> Manage your students</li>
+                    <li><i class="fas fa-chart-bar"></i> Update progress reports</li>
+                    <li><i class="fas fa-video"></i> Conduct live classes</li>
+                    <li><i class="fas fa-tasks"></i> Assign homework tasks</li>
+                    <li><i class="fas fa-comments"></i> Message parents</li>
+                    <li><i class="fas fa-calendar-alt"></i> View your schedule</li>
+                    <li><i class="fas fa-medal"></i> Award achievements</li>
+                </ul>
+            </div>
+
+            <!-- Admin -->
+            <div id="lc-admin" style="display:none">
+                <div class="left-icon">👨‍💼</div>
+                <div class="left-title">Admin Portal</div>
+                <div class="left-arabic">بَوَّابَةُ الْإِدَارَة</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-users"></i> Manage all users</li>
+                    <li><i class="fas fa-chalkboard-teacher"></i> Assign teachers</li>
+                    <li><i class="fas fa-dollar-sign"></i> Monitor payments</li>
+                    <li><i class="fas fa-bullhorn"></i> Send announcements</li>
+                    <li><i class="fas fa-chart-pie"></i> View academy stats</li>
+                    <li><i class="fas fa-cog"></i> System settings</li>
+                    <li><i class="fas fa-shield-alt"></i> Full access control</li>
+                </ul>
+            </div>
+
+            <div class="left-footer-txt">
+                <p>جَزَاكَ اللَّهُ خَيْرًا</p>
+                <span>May Allah bless your journey</span>
+            </div>
+        </div>
+
+        <!-- ===== RIGHT PANEL ===== -->
+        <div class="login-right">
+
+            <!-- Header -->
+            <div class="right-header">
+                <h2 id="rightTitle">Welcome Back! 🌙</h2>
+                <p id="rightSub">Sign in to your parent account</p>
+                <span class="role-badge parent" id="roleBadge">👨‍👩‍👧 Parent Portal</span>
+            </div>
+
+            <!-- Alert -->
+            <div id="alertBox" style="display:none"></div>
+
+            <!-- Demo Section -->
+            <div class="demo-box">
+                <p>⚡ Quick Demo Login</p>
+                <div class="demo-grid">
+                    <button class="demo-btn" onclick="quickLogin('parent@alnoor.com','Parent@123456','parent')">
+                        👨‍👩‍👧 Parent Demo
+                    </button>
+                    <button class="demo-btn" onclick="quickLogin('student@alnoor.com','Student@123456','student')">
+                        📖 Student Demo
+                    </button>
+                    <button class="demo-btn" onclick="quickLogin('ibrahim@alnoor.com','Teacher@123456','teacher')">
+                        👨‍🏫 Teacher Demo
+                    </button>
+                    <button class="demo-btn" onclick="quickLogin('admin@alnoor.com','Admin@123456','admin')">
+                        👨‍💼 Admin Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">🔑 Login</button>
+                <button class="auth-tab" id="tabReg" onclick="switchTab('register')">✨ Register</button>
+            </div>
+
+            <!-- ===== LOGIN FORM ===== -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="loginEmail" class="form-input"
+                               placeholder="Enter your email" autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="loginPassword" class="form-input"
+                               placeholder="Enter your password" autocomplete="current-password">
+                        <button class="pass-toggle" type="button"
+                                onclick="togglePwd('loginPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="forgot-row">
+                    <label class="remember-label">
+                        <input type="checkbox" id="rememberMe" checked> Remember me
+                    </label>
+                    <button class="forgot-btn" onclick="showForgot()">Forgot Password?</button>
+                </div>
+
+                <button class="submit-btn btn-parent" id="loginBtn" onclick="doLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div class="divider">or continue with</div>
+
+                <div class="social-row">
+                    <button class="social-btn" onclick="showToast('Google login coming soon!','info')">
+                        🇬 Google
+                    </button>
+                    <button class="social-btn" onclick="showToast('Facebook login coming soon!','info')">
+                        📘 Facebook
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== REGISTER FORM ===== -->
+            <div id="registerForm" style="display:none">
+
+                <div class="form-group">
+                    <label class="form-label">Register As</label>
+                    <div class="reg-role-grid">
+                        <button class="reg-role-btn active" onclick="setRegRole('parent',this)">
+                            <i class="fas fa-user-friends"></i> Parent
+                        </button>
+                        <button class="reg-role-btn" onclick="setRegRole('student',this)">
+                            <i class="fas fa-user-graduate"></i> Student
+                        </button>
+                        <button class="reg-role-btn" onclick="setRegRole('teacher',this)">
+                            <i class="fas fa-chalkboard-teacher"></i> Teacher
+                        </button>
+                        <button class="reg-role-btn" onclick="setRegRole('admin',this)">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">First Name</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="regFirst" class="form-input" placeholder="First name">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="regLast" class="form-input" placeholder="Last name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:14px">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="regEmail" class="form-input" placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="regPhone" class="form-input" placeholder="+1 234 567 8900">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Password</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="regPass" class="form-input"
+                                   placeholder="Min 6 characters"
+                                   oninput="checkStrength(this.value)">
+                            <button class="pass-toggle" type="button"
+                                    onclick="togglePwd('regPass',this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="strength-wrap" id="strengthWrap" style="display:none">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-txt" id="strengthTxt"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="regConfirm" class="form-input"
+                                   placeholder="Repeat password">
+                            <button class="pass-toggle" type="button"
+                                    onclick="togglePwd('regConfirm',this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terms-row" style="margin-top:13px">
+                    <input type="checkbox" id="agreeTerms">
+                    <label for="agreeTerms">
+                        I agree to the
+                        <a href="#">Terms of Service</a> and
+                        <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button class="submit-btn btn-parent" id="regBtn" onclick="doRegister()">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </div>
+
+            <!-- ===== FORGOT PASSWORD ===== -->
+            <div class="forgot-panel" id="forgotPanel">
+                <div style="text-align:center; margin-bottom:18px">
+                    <div style="font-size:45px; margin-bottom:8px">🔐</div>
+                    <h3 style="font-size:17px; font-weight:700; margin-bottom:4px; color:var(--text-dark)">
+                        Reset Password
+                    </h3>
+                    <p style="font-size:12px; color:var(--text-light)">
+                        Enter your email to receive a reset link
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Registered Email</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="forgotEmail" class="form-input"
+                               placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <button class="submit-btn btn-parent" onclick="doForgot()">
+                    <i class="fas fa-paper-plane"></i> Send Reset Link
+                </button>
+
+                <button class="back-btn" onclick="backToLogin()">← Back to Login</button>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="card-footer">
+                <div>© 2025 Al-Noor Quran Academy</div>
+                <div class="arabic-footer">جَزَاكَ اللَّهُ خَيْرًا</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Note -->
+    <div class="bottom-note">
+        🔒 Secure & Encrypted &nbsp;|&nbsp; 📱 All Devices &nbsp;|&nbsp; 🌍 Global Students
+    </div>
+
+</div><!-- end page-wrapper -->
+
+<script>
+    // ===== CONFIG =====
+    const API = 'http://localhost:5000/api';
+    let activeRole = 'parent';
+    let regRole    = 'parent';
+    let activeTab  = 'login';
+
+    // Role configs
+    const ROLES = {
+        parent:  {
+            theme: 'parent-theme',  btnCls: 'btn-parent',
+            badge: 'parent',        badgeTxt: '👨‍👩‍👧 Parent Portal',
+            title: 'Welcome Back! 🌙',
+            sub:   'Sign in to your parent account',
+            dash:  '/dashboard-parent.html',
+            focus: ''
+        },
+        student: {
+            theme: 'student-theme', btnCls: 'btn-student',
+            badge: 'student',       badgeTxt: '📖 Student Portal',
+            title: 'Assalamu Alaikum! 🌟',
+            sub:   'Sign in to your student account',
+            dash:  '/dashboard-student.html',
+            focus: 'navy-focus'
+        },
+        teacher: {
+            theme: 'teacher-theme', btnCls: 'btn-teacher',
+            badge: 'teacher',       badgeTxt: '👨‍🏫 Teacher Portal',
+            title: 'Welcome, Ustaz/Ustaza! 📚',
+            sub:   'Sign in to your teacher account',
+            dash:  '/dashboard-teacher.html',
+            focus: 'blue-focus'
+        },
+        admin: {
+            theme: 'admin-theme',   btnCls: 'btn-admin',
+            badge: 'admin',         badgeTxt: '👨‍💼 Admin Portal',
+            title: 'Admin Access 🔐',
+            sub:   'Sign in to manage the academy',
+            dash:  '/dashboard-admin.html',
+            focus: 'purple-focus'
+        }
+    };
+
+    // ===== ON LOAD =====
+    document.addEventListener('DOMContentLoaded', () => {
+        checkLoggedIn();
+        startClock();
+        bindEnterKey();
+    });
+
+    function checkLoggedIn() {
+        const token = localStorage.getItem('token');
+        const user  = JSON.parse(localStorage.getItem('user') || '{}');
+        if (token && user.name) {
+            const banner = document.getElementById('alreadyBanner');
+            banner.style.display = 'flex';
+            document.getElementById('loggedName').textContent = user.name;
+            document.getElementById('loggedRole').textContent =
+                'Logged in as ' + cap(user.role || 'parent');
+            if (user.role) selectRole(user.role, document.getElementById('rc-' + user.role));
+        }
+    }
+
+    function goToDashboard() {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        window.location.href = (ROLES[user.role] || ROLES.parent).dash;
+    }
+
+    // ===== SELECT ROLE =====
+    function selectRole(role, card) {
+        activeRole = role;
+        const cfg = ROLES[role];
+
+        // Cards
+        document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+        if (card) card.classList.add('active');
+
+        // Left panel
+        const left = document.getElementById('loginLeft');
+        left.className = 'login-left ' + cfg.theme;
+
+        // Left content
+        ['parent','student','teacher','admin'].forEach(r => {
+            const el = document.getElementById('lc-' + r);
+            if (el) el.style.display = r === role ? 'block' : 'none';
+        });
+
+        // Right header
+        if (activeTab === 'login') {
+            document.getElementById('rightTitle').textContent = cfg.title;
+            document.getElementById('rightSub').textContent   = cfg.sub;
+        }
+
+        const badge = document.getElementById('roleBadge');
+        badge.className = 'role-badge ' + cfg.badge;
+        badge.textContent = cfg.badgeTxt;
+
+        // Buttons
+        ['loginBtn','regBtn'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.className = 'submit-btn ' + cfg.btnCls;
+        });
+
+        // Input focus color
+        document.querySelectorAll('.form-input').forEach(inp => {
+            inp.classList.remove('blue-focus','navy-focus','purple-focus');
+            if (cfg.focus) inp.classList.add(cfg.focus);
+        });
+
+        hideAlert();
+    }
+
+    // ===== SWITCH TABS =====
+    function switchTab(tab) {
+        activeTab = tab;
+        const cfg = ROLES[activeRole];
+
+        document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+        document.getElementById('tabReg').classList.toggle('active', tab === 'register');
+
+        document.getElementById('loginForm').style.display    = tab === 'login'    ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        document.getElementById('forgotPanel').style.display  = 'none';
+
+        document.getElementById('rightTitle').textContent =
+            tab === 'login' ? cfg.title : 'Create Account ✨';
+        document.getElementById('rightSub').textContent   =
+            tab === 'login' ? cfg.sub   : 'Join Al-Noor Quran Academy today!';
+
+        hideAlert();
+    }
+
+    function showForgot() {
+        document.getElementById('loginForm').style.display   = 'none';
+        document.getElementById('registerForm').style.display= 'none';
+        document.getElementById('forgotPanel').style.display = 'block';
+        document.getElementById('rightTitle').textContent    = 'Reset Password 🔐';
+        document.getElementById('rightSub').textContent      = "We'll send a reset link to your email";
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        hideAlert();
+    }
+
+    function backToLogin() {
+        switchTab('login');
+    }
+
+    // ===== REGISTER ROLE =====
+    function setRegRole(role, btn) {
+        regRole = role;
+        document.querySelectorAll('.reg-role-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    // ===== QUICK LOGIN =====
+    function quickLogin(email, pass, role) {
+        selectRole(role, document.getElementById('rc-' + role));
+        if (activeTab !== 'login') switchTab('login');
+        document.getElementById('loginEmail').value    = email;
+        document.getElementById('loginPassword').value = pass;
+        showAlert('✅ Credentials filled for ' + cap(role) + '! Click Sign In.', 'success');
+    }
+
+    // ===== DO LOGIN =====
+    async function doLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const pass  = document.getElementById('loginPassword').value;
+
+        if (!email)              return showAlert('Please enter your email address', 'error');
+        if (!validEmail(email))  return showAlert('Please enter a valid email address', 'error');
+        if (!pass)               return showAlert('Please enter your password', 'error');
+
+        setBtnLoad('loginBtn', true, 'Signing in...');
+        hideAlert();
+
+        try {
+            const res  = await fetch(`${API}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password: pass })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                const cfg = ROLES[data.user.role] || ROLES.parent;
+                selectRole(data.user.role, document.getElementById('rc-' + data.user.role));
+
+                showAlert('✅ Assalamu Alaikum, ' + data.user.name + '! Redirecting...', 'success');
+                showToast('🎉 Welcome back, ' + data.user.name.split(' ')[0] + '!', 'success');
+
+                setTimeout(() => { window.location.href = cfg.dash; }, 1400);
+            } else {
+                showAlert(data.message || 'Invalid email or password. Please try again.', 'error');
+                setBtnLoad('loginBtn', false);
+                shake('loginBtn');
+            }
+        } catch (err) {
+            showAlert('❌ Cannot connect to server. Check your connection.', 'error');
+            setBtnLoad('loginBtn', false);
+        }
+    }
+
+    // ===== DO REGISTER =====
+    async function doRegister() {
+        const first   = document.getElementById('regFirst').value.trim();
+        const last    = document.getElementById('regLast').value.trim();
+        const email   = document.getElementById('regEmail').value.trim();
+        const phone   = document.getElementById('regPhone').value.trim();
+        const pass    = document.getElementById('regPass').value;
+        const confirm = document.getElementById('regConfirm').value;
+        const agreed  = document.getElementById('agreeTerms').checked;
+
+        if (!first || !last)     return showAlert('Please enter your full name', 'error');
+        if (!email)              return showAlert('Please enter your email', 'error');
+        if (!validEmail(email))  return showAlert('Please enter a valid email', 'error');
+        if (!pass)               return showAlert('Please create a password', 'error');
+        if (pass.length < 6)     return showAlert('Password must be at least 6 characters', 'error');
+        if (pass !== confirm)    return showAlert('Passwords do not match', 'error');
+        if (!agreed)             return showAlert('Please agree to Terms of Service', 'error');
+
+        setBtnLoad('regBtn', true, 'Creating account...');
+        hideAlert();
+
+        try {
+            const res  = await fetch(`${API}/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: first + ' ' + last,
+                    email, password: pass, phone,
+                    role: regRole
+                })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                const cfg = ROLES[data.user.role] || ROLES.parent;
+                showAlert('🎉 Welcome, ' + first + '! JazakAllah Khair! Redirecting...', 'success');
+                showToast('✅ Account created!', 'success');
+
+                setTimeout(() => { window.location.href = cfg.dash; }, 1800);
+            } else {
+                showAlert(data.message || 'Registration failed. Please try again.', 'error');
+                setBtnLoad('regBtn', false);
+            }
+        } catch (err) {
+            showAlert('❌ Server error. Please try again later.', 'error');
+            setBtnLoad('regBtn', false);
+        }
+    }
+
+    // ===== DO FORGOT =====
+    async function doForgot() {
+        const email = document.getElementById('forgotEmail').value.trim();
+        if (!email)             return showAlert('Please enter your email', 'error');
+        if (!validEmail(email)) return showAlert('Please enter a valid email', 'error');
+        hideAlert();
+
+        try {
+            const res  = await fetch(`${API}/auth/forgot-password`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                showAlert('✅ Reset link sent! Check your email inbox.', 'success');
+                showToast('📧 Reset email sent!', 'success');
+            } else {
+                showAlert(data.message || 'Email not found.', 'error');
+            }
+        } catch (err) {
+            showAlert('❌ Server error. Try again later.', 'error');
+        }
+    }
+
+    // ===== PASSWORD STRENGTH =====
+    function checkStrength(val) {
+        const wrap = document.getElementById('strengthWrap');
+        const fill = document.getElementById('strengthFill');
+        const txt  = document.getElementById('strengthTxt');
+
+        if (!val) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'block';
+
+        let score = 0;
+        if (val.length >= 8)           score++;
+        if (val.length >= 12)          score++;
+        if (/[A-Z]/.test(val))         score++;
+        if (/[0-9]/.test(val))         score++;
+        if (/[^A-Za-z0-9]/.test(val))  score++;
+
+        const lvls = [
+            { lbl: 'Very Weak',   clr: '#e53e3e', w: '20%' },
+            { lbl: 'Weak',        clr: '#dd6b20', w: '40%' },
+            { lbl: 'Fair',        clr: '#d69e2e', w: '60%' },
+            { lbl: 'Strong',      clr: '#38a169', w: '80%' },
+            { lbl: 'Very Strong 💪', clr: '#2f855a', w: '100%' }
+        ];
+
+        const l = lvls[Math.min(score, 4)];
+        fill.style.width      = l.w;
+        fill.style.background = l.clr;
+        txt.textContent       = 'Strength: ' + l.lbl;
+        txt.style.color       = l.clr;
+    }
+
+    // ===== TOGGLE PASSWORD =====
+    function togglePwd(id, btn) {
+        const inp  = document.getElementById(id);
+        const icon = btn.querySelector('i');
+        if (inp.type === 'password') {
+            inp.type       = 'text';
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            inp.type       = 'password';
+            icon.className = 'fas fa-eye';
+        }
+    }
+
+    // ===== ALERT =====
+    function showAlert(msg, type = 'error') {
+        const box   = document.getElementById('alertBox');
+        const icons = { error: '⚠️', success: '✅', info: 'ℹ️' };
+        box.style.display = 'flex';
+        box.className     = 'alert alert-' + type;
+        box.innerHTML     = `<span>${icons[type]}</span><span>${msg}</span>`;
+    }
+
+    function hideAlert() {
+        const box = document.getElementById('alertBox');
+        if (box) box.style.display = 'none';
+    }
+
+    // ===== BUTTON LOADING =====
+    function setBtnLoad(id, loading, txt = '') {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        btn.disabled = loading;
+        if (loading) {
+            btn.innerHTML = `<div class="spinner"></div> ${txt}`;
+        } else {
+            btn.innerHTML = id === 'loginBtn'
+                ? '<i class="fas fa-sign-in-alt"></i> Sign In'
+                : '<i class="fas fa-user-plus"></i> Create Account';
+        }
+    }
+
+    // ===== SHAKE =====
+    function shake(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!document.getElementById('shakeCSS')) {
+            const s = document.createElement('style');
+            s.id = 'shakeCSS';
+            s.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}`;
+            document.head.appendChild(s);
+        }
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = 'shake 0.45s ease';
+    }
+
+    // ===== TOAST =====
+    function showToast(msg, type = 'info') {
+        const colors = { success: '#38a169', error: '#e53e3e', info: '#3182ce' };
+        const icons  = { success: '✅', error: '❌', info: 'ℹ️' };
+
+        const t = document.createElement('div');
+        t.className = 'toast ' + type;
+        t.innerHTML = `<span style="font-size:17px">${icons[type]}</span><span>${msg}</span>`;
+
+        document.getElementById('toastWrap').appendChild(t);
+
+        setTimeout(() => {
+            t.style.transition = 'all 0.3s';
+            t.style.opacity    = '0';
+            t.style.transform  = 'translateX(100%)';
+            setTimeout(() => t.remove(), 300);
+        }, 3500);
+    }
+
+    // ===== CLOCK =====
+    function startClock() {
+        const tick = () => {
+            const n = new Date();
+            document.title =
+                n.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'}) +
+                ' — Al-Noor Quran Academy';
+        };
+        tick();
+        setInterval(tick, 1000);
+    }
+
+    // ===== ENTER KEY =====
+    function bindEnterKey() {
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Enter') return;
+            const lf = document.getElementById('loginForm');
+            const rf = document.getElementById('registerForm');
+            const fp = document.getElementById('forgotPanel');
+            if (lf && lf.style.display !== 'none') doLogin();
+            else if (rf && rf.style.display !== 'none') doRegister();
+            else if (fp && fp.style.display !== 'none') doForgot();
+        });
+    }
+
+    // ===== UTILS =====
+    function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+    function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+</script>
+</body>
+</html>

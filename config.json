@@ -1,0 +1,8 @@
+{
+  "openai_api_key": "YOUR_OPENAI_API_KEY_HERE",
+  "picovoice_access_key": "YOUR_PICOVOICE_ACCESS_KEY_HERE",
+  "twilio_sid": "YOUR_TWILIO_ACCOUNT_SID",
+  "twilio_auth_token": "YOUR_TWILIO_AUTH_TOKEN",
+  "twilio_phone_number": "YOUR_TWILIO_PHONE_NUMBER",
+  "vosk_model_path": "vosk-model-en-us-0.22"
+}

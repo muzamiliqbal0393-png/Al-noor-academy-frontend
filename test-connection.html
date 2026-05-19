@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend-Frontend Connection Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 25px;
+        }
+        
+        .test-section h2 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .test-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+        
+        .test-item.loading {
+            background: #fff3cd;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .test-item.success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        
+        .test-item.error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .test-item.warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .icon {
+            font-size: 20px;
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        .test-info {
+            flex: 1;
+        }
+        
+        .test-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .test-message {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .test-suggestion {
+            font-size: 12px;
+            color: #d9534f;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(217, 83, 79, 0.3);
+        }
+        
+        .summary {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .summary h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .summary-row span:first-child {
+            font-weight: 500;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .footer {
+            background: #f9f9f9;
+            padding: 15px 30px;
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .content, .footer {
+                padding: 20px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            button {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Connection Test</h1>
+            <p>Al-Noor Quran Academy - Backend & Frontend Connectivity</p>
+        </div>
+        
+        <div class="content">
+            <!-- Backend Tests -->
+            <div class="test-section">
+                <h2>🖥️ Backend Connection Tests</h2>
+                <div class="test-item" id="test-backend-health">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">Backend Health Check</div>
+                        <div class="test-message">Testing if server is running...</div>
+                    </div>
+                </div>
+                
+                <div class="test-item" id="test-api-endpoint">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">API Endpoint Access</div>
+                        <div class="test-message">Testing if API routes are accessible...</div>
+                    </div>
+                </div>
+                
+                <div class="test-item" id="test-cors">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">CORS Configuration</div>
+                        <div class="test-message">Checking CORS headers...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Database Tests -->
+            <div class="test-section">
+                <h2>💾 Database Connection Tests</h2>
+                <div class="test-item" id="test-mongodb">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">MongoDB Connection</div>
+                        <div class="test-message">Testing database connectivity...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Configuration Tests -->
+            <div class="test-section">
+                <h2>⚙️ Configuration Tests</h2>
+                <div class="test-item" id="test-api-base">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">API Base URL</div>
+                        <div class="test-message">Checking frontend API configuration...</div>
+                    </div>
+                </div>
+                
+                <div class="test-item" id="test-fetch-api">
+                    <span class="icon">⏳</span>
+                    <div class="test-info">
+                        <div class="test-name">Fetch API Support</div>
+                        <div class="test-message">Checking if Fetch API is available...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summary -->
+            <div class="summary">
+                <h3>📊 Test Summary</h3>
+                <div class="summary-row">
+                    <span>Total Tests:</span>
+                    <span id="summary-total">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>✅ Passed:</span>
+                    <span id="summary-passed" style="color: #28a745;">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>❌ Failed:</span>
+                    <span id="summary-failed" style="color: #dc3545;">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>⚠️ Warnings:</span>
+                    <span id="summary-warning" style="color: #ffc107;">0</span>
+                </div>
+                <div class="summary-row" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                    <span>Overall Status:</span>
+                    <span id="overall-status" class="status-badge status-warning">TESTING...</span>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="actions">
+                <button class="btn-primary" onclick="runAllTests()">🔄 Run All Tests</button>
+                <button class="btn-secondary" onclick="clearResults()">Clear Results</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Last updated: <span id="timestamp">-</span></p>
+            <p style="margin-top: 5px;">For issues, check console (F12) for detailed error messages</p>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        const results = {};
+        
+        // Test 1: Backend Health Check
+        async function testBackendHealth() {
+            const testId = 'test-backend-health';
+            updateTestStatus(testId, 'loading', 'Testing...', 'Sending request to backend...');
+            
+            try {
+                const response = await fetch('http://localhost:5000/', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateTestStatus(testId, 'success', 'Backend is Running ✓', 
+                        `Server: ${data.message} | Port: 5000 | Version: ${data.version}`);
+                    results['backend-health'] = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                updateTestStatus(testId, 'error', 'Backend Not Running ✗', 
+                    `Cannot reach http://localhost:5000`, 
+                    '💡 Make sure backend is running: npm start');
+                results['backend-health'] = false;
+            }
+        }
+        
+        // Test 2: API Endpoint Access
+        async function testAPIEndpoint() {
+            const testId = 'test-api-endpoint';
+            updateTestStatus(testId, 'loading', 'Testing...', 'Checking API endpoint...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                updateTestStatus(testId, 'success', 'API Endpoint Accessible ✓', 
+                    `Status: ${response.status} | Base URL: ${API_BASE}`);
+                results['api-endpoint'] = true;
+            } catch (error) {
+                updateTestStatus(testId, 'error', 'API Endpoint Not Accessible ✗', 
+                    `Cannot reach ${API_BASE}`,
+                    '💡 Check if backend is running and API routes are configured');
+                results['api-endpoint'] = false;
+            }
+        }
+        
+        // Test 3: CORS Configuration
+        async function testCORS() {
+            const testId = 'test-cors';
+            updateTestStatus(testId, 'loading', 'Testing...', 'Checking CORS headers...');
+            
+            try {
+                const response = await fetch('http://localhost:5000/', {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Origin': window.location.origin
+                    }
+                });
+                
+                const corsHeader = response.headers.get('access-control-allow-origin');
+                if (corsHeader) {
+                    updateTestStatus(testId, 'success', 'CORS Configured ✓', 
+                        `Allows: ${corsHeader}`);
+                    results['cors'] = true;
+                } else {
+                    updateTestStatus(testId, 'warning', 'CORS Not Configured ⚠', 
+                        'No CORS headers found',
+                        '💡 Frontend may have issues accessing backend');
+                    results['cors'] = false;
+                }
+            } catch (error) {
+                updateTestStatus(testId, 'error', 'CORS Check Failed ✗', 
+                    error.message);
+                results['cors'] = false;
+            }
+        }
+        
+        // Test 4: MongoDB Status
+        async function testMongoDB() {
+            const testId = 'test-mongodb';
+            updateTestStatus(testId, 'loading', 'Testing...', 'Checking MongoDB connection...');
+            
+            try {
+                // Try to call an endpoint that requires DB connection
+                const response = await fetch(`${API_BASE}/auth`, {
+                    method: 'GET'
+                });
+                
+                if (response.status < 500) {
+                    updateTestStatus(testId, 'success', 'MongoDB Connected ✓', 
+                        'Database is responsive');
+                    results['mongodb'] = true;
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                updateTestStatus(testId, 'error', 'MongoDB Not Connected ✗', 
+                    'Database may not be running',
+                    '💡 Start MongoDB: mongod');
+                results['mongodb'] = false;
+            }
+        }
+        
+        // Test 5: API Base URL
+        async function testAPIBase() {
+            const testId = 'test-api-base';
+            updateTestStatus(testId, 'success', 'API Base URL Configured ✓', 
+                `URL: ${API_BASE}`);
+            results['api-base'] = true;
+        }
+        
+        // Test 6: Fetch API Support
+        async function testFetchAPI() {
+            const testId = 'test-fetch-api';
+            
+            if (typeof fetch !== 'undefined') {
+                updateTestStatus(testId, 'success', 'Fetch API Available ✓', 
+                    'Browser supports Fetch API');
+                results['fetch-api'] = true;
+            } else {
+                updateTestStatus(testId, 'error', 'Fetch API Not Available ✗', 
+                    'Browser does not support Fetch API');
+                results['fetch-api'] = false;
+            }
+        }
+        
+        // Utility Functions
+        function updateTestStatus(testId, status, title, message, suggestion = '') {
+            const element = document.getElementById(testId);
+            if (!element) return;
+            
+            const iconMap = {
+                loading: '⏳',
+                success: '✅',
+                error: '❌',
+                warning: '⚠️'
+            };
+            
+            element.className = `test-item ${status}`;
+            element.innerHTML = `
+                <span class="icon">${iconMap[status]}</span>
+                <div class="test-info">
+                    <div class="test-name">${title}</div>
+                    <div class="test-message">${message}</div>
+                    ${suggestion ? `<div class="test-suggestion">${suggestion}</div>` : ''}
+                </div>
+            `;
+        }
+        
+        function updateSummary() {
+            const total = Object.keys(results).length;
+            const passed = Object.values(results).filter(v => v === true).length;
+            const failed = Object.values(results).filter(v => v === false).length;
+            const warning = total - passed - failed;
+            
+            document.getElementById('summary-total').textContent = total;
+            document.getElementById('summary-passed').textContent = passed;
+            document.getElementById('summary-failed').textContent = failed;
+            document.getElementById('summary-warning').textContent = warning;
+            
+            let status, statusClass;
+            if (failed === 0 && warning === 0) {
+                status = 'ALL TESTS PASSED';
+                statusClass = 'status-success';
+            } else if (failed === 0) {
+                status = 'MOSTLY WORKING';
+                statusClass = 'status-warning';
+            } else {
+                status = 'SOME ISSUES';
+                statusClass = 'status-fail';
+            }
+            
+            const statusBadge = document.getElementById('overall-status');
+            statusBadge.textContent = status;
+            statusBadge.className = `status-badge ${statusClass}`;
+            
+            document.getElementById('timestamp').textContent = new Date().toLocaleTimeString();
+        }
+        
+        async function runAllTests() {
+            results.clear = {};
+            console.clear();
+            console.log('🧪 Starting connection tests...');
+            
+            await testFetchAPI();
+            await testAPIBase();
+            await testBackendHealth();
+            await testCORS();
+            await testAPIEndpoint();
+            await testMongoDB();
+            
+            updateSummary();
+            console.log('✅ Tests completed', results);
+        }
+        
+        function clearResults() {
+            Object.keys(results).forEach(key => {
+                delete results[key];
+            });
+            
+            document.querySelectorAll('.test-item').forEach(item => {
+                item.className = 'test-item';
+                item.innerHTML = '<span class="icon">⏳</span><div class="test-info"><div class="test-name">Waiting...</div></div>';
+            });
+            
+            document.getElementById('summary-total').textContent = '0';
+            document.getElementById('summary-passed').textContent = '0';
+            document.getElementById('summary-failed').textContent = '0';
+            document.getElementById('summary-warning').textContent = '0';
+            document.getElementById('overall-status').textContent = 'READY';
+            document.getElementById('overall-status').className = 'status-badge status-warning';
+            document.getElementById('timestamp').textContent = '-';
+        }
+        
+        // Run tests on page load
+        window.addEventListener('load', () => {
+            console.log('Page loaded. Click "Run All Tests" to start testing.');
+        });
+    </script>
+</body>
+</html>
