@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://noor-academy-backend.vercel.app/api';
 
 let currentUser = null;
 let children = [];
@@ -215,10 +215,10 @@ function renderSchedule(classes) {
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
                     <span class="status-badge ${cls.status}">${statusIcons[cls.status]} ${cls.status}</span>
                     ${cls.status === 'scheduled' || cls.status === 'ongoing' ?
-                        `<button class="join-btn" onclick="joinClassById('${cls._id}','${cls.meetingLink}')">
+                `<button class="join-btn" onclick="joinClassById('${cls._id}','${cls.meetingLink}')">
                             <i class="fas fa-video"></i> Join
                         </button>` : ''
-                    }
+            }
                 </div>
             </div>
         `;
@@ -598,7 +598,7 @@ function showLoadingState() {
     });
 }
 
-function hideLoadingState() {}
+function hideLoadingState() { }
 
 function showError(msg) {
     window.socketManager.showToast(msg, 'error');

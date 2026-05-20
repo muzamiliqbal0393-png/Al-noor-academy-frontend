@@ -1,466 +1,476 @@
 # NoorAcademy AI Chatbot — Complete Professional Version
-
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoorAcademy AI Chatbot</title>
 
-<style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     /* Reuse premium motion styles */
-    [data-reveal], [data-pop], [data-fadeimg]{
-      opacity:0;
+    [data-reveal],
+    [data-pop],
+    [data-fadeimg] {
+      opacity: 0;
       transform: translateY(20px);
-      transition: opacity 320ms var(--anim-ease, cubic-bezier(.2,.9,.2,1)), transform 320ms var(--anim-ease, cubic-bezier(.2,.9,.2,1));
+      transition: opacity 320ms var(--anim-ease, cubic-bezier(.2, .9, .2, 1)), transform 320ms var(--anim-ease, cubic-bezier(.2, .9, .2, 1));
     }
-    [data-reveal].is-visible, [data-pop].is-visible, [data-fadeimg].is-visible{
-      opacity:1;
+
+    [data-reveal].is-visible,
+    [data-pop].is-visible,
+    [data-fadeimg].is-visible {
+      opacity: 1;
       transform: translateY(0);
     }
 
 
-    body{
-      font-family:Arial, sans-serif;
-      background:#f5f7f9;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7f9;
     }
 
-    #nb-launcher{
-      position:fixed;
-      bottom:25px;
-      right:25px;
-      z-index:999999;
+    #nb-launcher {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 999999;
     }
 
-    #nb-toggle{
-      width:65px;
-      height:65px;
-      border:none;
-      border-radius:50%;
-      cursor:pointer;
-      font-size:28px;
-      color:#fff;
-      background:linear-gradient(135deg,#0A5C36,#1A7A4A);
-      box-shadow:0 10px 30px rgba(0,0,0,.2);
+    #nb-toggle {
+      width: 65px;
+      height: 65px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 28px;
+      color: #fff;
+      background: linear-gradient(135deg, #0A5C36, #1A7A4A);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
     }
 
-    #nb-chat{
-      position:fixed;
-      bottom:100px;
-      right:25px;
-      width:420px;
-      max-width:95vw;
-      height:700px;
-      max-height:90vh;
-      background:#fff;
-      border-radius:20px;
-      overflow:hidden;
-      display:none;
-      flex-direction:column;
-      box-shadow:0 20px 50px rgba(0,0,0,.18);
-      border:1px solid rgba(0,0,0,.06);
+    #nb-chat {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 420px;
+      max-width: 95vw;
+      height: 700px;
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
+      border: 1px solid rgba(0, 0, 0, .06);
     }
 
-    .nb-header{
-      padding:16px;
-      background:linear-gradient(135deg,#0A5C36,#1A7A4A);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .nb-header {
+      padding: 16px;
+      background: linear-gradient(135deg, #0A5C36, #1A7A4A);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .nb-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
+    .nb-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .nb-avatar{
-      width:45px;
-      height:45px;
-      border-radius:50%;
-      background:rgba(255,255,255,.15);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:22px;
+    .nb-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
     }
 
-    .nb-header h2{
-      font-size:16px;
+    .nb-header h2 {
+      font-size: 16px;
     }
 
-    .nb-header p{
-      font-size:12px;
-      opacity:.8;
-      margin-top:3px;
+    .nb-header p {
+      font-size: 12px;
+      opacity: .8;
+      margin-top: 3px;
     }
 
-    .nb-clear{
-      border:none;
-      background:rgba(255,255,255,.15);
-      color:#fff;
-      padding:8px 12px;
-      border-radius:10px;
-      cursor:pointer;
-      font-size:12px;
+    .nb-clear {
+      border: none;
+      background: rgba(255, 255, 255, .15);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
     }
 
-    .nb-topics{
-      padding:10px;
-      display:flex;
-      gap:8px;
-      overflow-x:auto;
-      background:#f8faf9;
-      border-bottom:1px solid #eee;
+    .nb-topics {
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      background: #f8faf9;
+      border-bottom: 1px solid #eee;
     }
 
-    .nb-topic{
-      border:none;
-      padding:8px 14px;
-      border-radius:30px;
-      cursor:pointer;
-      white-space:nowrap;
-      background:#fff;
-      border:1px solid #ddd;
-      font-size:12px;
-      transition:.2s;
+    .nb-topic {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      white-space: nowrap;
+      background: #fff;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      transition: .2s;
     }
 
-    .nb-topic:hover{
-      background:#0A5C36;
-      color:#fff;
+    .nb-topic:hover {
+      background: #0A5C36;
+      color: #fff;
     }
 
-    #nb-messages{
-      flex:1;
-      overflow-y:auto;
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      background:#f5f7f9;
+    #nb-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: #f5f7f9;
     }
 
-    .nb-msg{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      animation:fade .3s ease;
+    .nb-msg {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      animation: fade .3s ease;
     }
 
-    .nb-user{
-      flex-direction:row-reverse;
+    .nb-user {
+      flex-direction: row-reverse;
     }
 
-    .nb-msg-av{
-      width:35px;
-      height:35px;
-      border-radius:50%;
-      background:#0A5C36;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      flex-shrink:0;
+    .nb-msg-av {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #0A5C36;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
     }
 
-    .nb-bubble{
-      max-width:80%;
-      padding:14px;
-      border-radius:16px;
-      line-height:1.7;
-      font-size:14px;
+    .nb-bubble {
+      max-width: 80%;
+      padding: 14px;
+      border-radius: 16px;
+      line-height: 1.7;
+      font-size: 14px;
     }
 
-    .nb-bot-bubble{
-      background:#fff;
-      border:1px solid #eee;
+    .nb-bot-bubble {
+      background: #fff;
+      border: 1px solid #eee;
     }
 
-    .nb-user-bubble{
-      background:#0A5C36;
-      color:#fff;
+    .nb-user-bubble {
+      background: #0A5C36;
+      color: #fff;
     }
 
-    .nb-bubble ul{
-      margin-left:20px;
-      margin-top:8px;
+    .nb-bubble ul {
+      margin-left: 20px;
+      margin-top: 8px;
     }
 
-    .nb-bubble li{
-      margin-bottom:6px;
+    .nb-bubble li {
+      margin-bottom: 6px;
     }
 
-    .nb-time{
-      font-size:10px;
-      margin-top:5px;
-      opacity:.5;
+    .nb-time {
+      font-size: 10px;
+      margin-top: 5px;
+      opacity: .5;
     }
 
-    .nb-input-wrap{
-      padding:15px;
-      background:#fff;
-      border-top:1px solid #eee;
+    .nb-input-wrap {
+      padding: 15px;
+      background: #fff;
+      border-top: 1px solid #eee;
     }
 
-    .nb-input-row{
-      display:flex;
-      gap:10px;
+    .nb-input-row {
+      display: flex;
+      gap: 10px;
     }
 
-    #nb-input{
-      flex:1;
-      resize:none;
-      border:none;
-      background:#f5f7f9;
-      border-radius:12px;
-      padding:12px;
-      outline:none;
-      font-size:14px;
-      height:48px;
+    #nb-input {
+      flex: 1;
+      resize: none;
+      border: none;
+      background: #f5f7f9;
+      border-radius: 12px;
+      padding: 12px;
+      outline: none;
+      font-size: 14px;
+      height: 48px;
     }
 
-    #nb-send{
-      width:48px;
-      height:48px;
-      border:none;
-      border-radius:50%;
-      cursor:pointer;
-      color:#fff;
-      font-size:18px;
-      background:linear-gradient(135deg,#0A5C36,#1A7A4A);
+    #nb-send {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      background: linear-gradient(135deg, #0A5C36, #1A7A4A);
     }
 
-    .nb-quick{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:12px;
+    .nb-quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
     }
 
-    .nb-qbtn{
-      border:none;
-      background:#ecf7f1;
-      color:#0A5C36;
-      padding:8px 12px;
-      border-radius:30px;
-      cursor:pointer;
-      font-size:12px;
+    .nb-qbtn {
+      border: none;
+      background: #ecf7f1;
+      color: #0A5C36;
+      padding: 8px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 12px;
     }
 
-    .nb-card{
-      background:#fff;
-      border:1px solid #eee;
-      border-radius:14px;
-      padding:12px;
-      margin-top:10px;
+    .nb-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 10px;
     }
 
-    .typing{
-      display:flex;
-      gap:4px;
-      align-items:center;
+    .typing {
+      display: flex;
+      gap: 4px;
+      align-items: center;
     }
 
-    .typing span{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#999;
-      animation:bounce .8s infinite;
+    .typing span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #999;
+      animation: bounce .8s infinite;
     }
 
-    .typing span:nth-child(2){
-      animation-delay:.15s;
+    .typing span:nth-child(2) {
+      animation-delay: .15s;
     }
 
-    .typing span:nth-child(3){
-      animation-delay:.3s;
+    .typing span:nth-child(3) {
+      animation-delay: .3s;
     }
 
-    @keyframes bounce{
-      0%,80%,100%{
-        transform:translateY(0);
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: translateY(0);
       }
-      40%{
-        transform:translateY(-8px);
-      }
-    }
 
-    @keyframes fade{
-      from{
-        opacity:0;
-        transform:translateY(10px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
+      40% {
+        transform: translateY(-8px);
       }
     }
 
-    @media(max-width:500px){
-      #nb-chat{
-        width:100%;
-        height:100%;
-        max-height:100%;
-        border-radius:0;
-        bottom:0;
-        right:0;
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media(max-width:500px) {
+      #nb-chat {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        bottom: 0;
+        right: 0;
       }
     }
   </style>
 </head>
+
 <body>
 
-<div id="nb-launcher">
-  <button id="nb-toggle">🕌</button>
-</div>
+  <div id="nb-launcher">
+    <button id="nb-toggle">🕌</button>
+  </div>
 
-<div id="nb-chat">
+  <div id="nb-chat">
 
-  <div class="nb-header">
-    <div class="nb-title">
-      <div class="nb-avatar">🕌</div>
-      <div>
-        <h2>Al-Noor Assistant</h2>
-        <p>AI Powered • NoorAcademy Support</p>
+    <div class="nb-header">
+      <div class="nb-title">
+        <div class="nb-avatar">🕌</div>
+        <div>
+          <h2>Al-Noor Assistant</h2>
+          <p>AI Powered • NoorAcademy Support</p>
+        </div>
+      </div>
+
+      <button class="nb-clear" onclick="NoorBot.clear()">Clear</button>
+    </div>
+
+    <div class="nb-topics">
+      <button class="nb-topic" onclick="NoorBot.ask('courses')">Courses</button>
+      <button class="nb-topic" onclick="NoorBot.ask('pricing')">Pricing</button>
+      <button class="nb-topic" onclick="NoorBot.ask('teachers')">Teachers</button>
+      <button class="nb-topic" onclick="NoorBot.ask('tajweed')">Tajweed</button>
+      <button class="nb-topic" onclick="NoorBot.ask('hifz')">Hifz</button>
+      <button class="nb-topic" onclick="NoorBot.ask('kids')">Kids</button>
+      <button class="nb-topic" onclick="NoorBot.ask('vip')">VIP</button>
+    </div>
+
+    <div id="nb-messages"></div>
+
+    <div class="nb-input-wrap">
+      <div class="nb-input-row">
+        <textarea id="nb-input" placeholder="Ask anything about NoorAcademy..."></textarea>
+        <button id="nb-send">➤</button>
       </div>
     </div>
 
-    <button class="nb-clear" onclick="NoorBot.clear()">Clear</button>
   </div>
 
-  <div class="nb-topics">
-    <button class="nb-topic" onclick="NoorBot.ask('courses')">Courses</button>
-    <button class="nb-topic" onclick="NoorBot.ask('pricing')">Pricing</button>
-    <button class="nb-topic" onclick="NoorBot.ask('teachers')">Teachers</button>
-    <button class="nb-topic" onclick="NoorBot.ask('tajweed')">Tajweed</button>
-    <button class="nb-topic" onclick="NoorBot.ask('hifz')">Hifz</button>
-    <button class="nb-topic" onclick="NoorBot.ask('kids')">Kids</button>
-    <button class="nb-topic" onclick="NoorBot.ask('vip')">VIP</button>
-  </div>
+  <script>
 
-  <div id="nb-messages"></div>
+    // premium entrances for chatbot container (light-touch)
+    (function () {
+      try {
+        const el = document.getElementById('nb-chat');
+        if (el) {
+          el.style.transform = 'translateY(10px)';
+          el.style.opacity = '0';
+          requestAnimationFrame(() => { el.style.transition = 'opacity 500ms ease, transform 500ms ease'; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+        }
+      } catch (e) { }
+    })();
 
-  <div class="nb-input-wrap">
-    <div class="nb-input-row">
-      <textarea id="nb-input" placeholder="Ask anything about NoorAcademy..."></textarea>
-      <button id="nb-send">➤</button>
-    </div>
-  </div>
-
-</div>
-
-<script>
-
-// premium entrances for chatbot container (light-touch)
-(function(){
-  try{
-    const el = document.getElementById('nb-chat');
-    if(el){
-      el.style.transform='translateY(10px)';
-      el.style.opacity='0';
-      requestAnimationFrame(()=>{ el.style.transition='opacity 500ms ease, transform 500ms ease'; el.style.opacity='1'; el.style.transform='translateY(0)'; });
-    }
-  }catch(e){}
-})();
-
-const KB = {
+    const KB = {
 
 
-  courses:[
-    {
-      name:'Noorani Qaida',
-      price:'$29/mo',
-      duration:'3 Months'
-    },
-    {
-      name:'Nazra Quran',
-      price:'$39/mo',
-      duration:'6 Months'
-    },
-    {
-      name:'Tajweed Course',
-      price:'$49/mo',
-      duration:'4 Months'
-    },
-    {
-      name:'Hifz ul Quran',
-      price:'$79/mo',
-      duration:'2-3 Years'
-    }
-  ]
+      courses: [
+        {
+          name: 'Noorani Qaida',
+          price: '$29/mo',
+          duration: '3 Months'
+        },
+        {
+          name: 'Nazra Quran',
+          price: '$39/mo',
+          duration: '6 Months'
+        },
+        {
+          name: 'Tajweed Course',
+          price: '$49/mo',
+          duration: '4 Months'
+        },
+        {
+          name: 'Hifz ul Quran',
+          price: '$79/mo',
+          duration: '2-3 Years'
+        }
+      ]
 
-};
+    };
 
-const INTENTS = [
+    const INTENTS = [
 
-  {
-    keys:['hi','hello','salam','assalamualaikum'],
-    fn:'greeting'
-  },
+      {
+        keys: ['hi', 'hello', 'salam', 'assalamualaikum'],
+        fn: 'greeting'
+      },
 
-  {
-    keys:['courses','course','programs'],
-    fn:'courses'
-  },
+      {
+        keys: ['courses', 'course', 'programs'],
+        fn: 'courses'
+      },
 
-  {
-    keys:['pricing','price','plans','fees','cost'],
-    fn:'pricing'
-  },
+      {
+        keys: ['pricing', 'price', 'plans', 'fees', 'cost'],
+        fn: 'pricing'
+      },
 
-  {
-    keys:['teacher','teachers','scholar'],
-    fn:'teachers'
-  },
+      {
+        keys: ['teacher', 'teachers', 'scholar'],
+        fn: 'teachers'
+      },
 
-  {
-    keys:['tajweed'],
-    fn:'tajweed'
-  },
+      {
+        keys: ['tajweed'],
+        fn: 'tajweed'
+      },
 
-  {
-    keys:['hifz'],
-    fn:'hifz'
-  },
+      {
+        keys: ['hifz'],
+        fn: 'hifz'
+      },
 
-  {
-    keys:['vip'],
-    fn:'vip'
-  },
+      {
+        keys: ['vip'],
+        fn: 'vip'
+      },
 
-  {
-    keys:['kids','child'],
-    fn:'kids'
-  },
+      {
+        keys: ['kids', 'child'],
+        fn: 'kids'
+      },
 
-  {
-    keys:['contact','support'],
-    fn:'contact'
-  },
+      {
+        keys: ['contact', 'support'],
+        fn: 'contact'
+      },
 
-  {
-    keys:['bye'],
-    fn:'bye'
-  }
+      {
+        keys: ['bye'],
+        fn: 'bye'
+      }
 
-];
+    ];
 
-const RESPONSES = {
+    const RESPONSES = {
 
-  greeting(){
-    return {
-      text:`
+      greeting() {
+        return {
+          text: `
       <h3>Assalamu Alaikum 🌙</h3>
       <p>Welcome to NoorAcademy.</p>
       <p>I am your AI assistant. Ask me anything about:</p>
@@ -472,33 +482,33 @@ const RESPONSES = {
         <li>Hifz</li>
       </ul>
       `,
-      quick:['Show Courses','Pricing Plans','VIP Membership']
-    }
-  },
+          quick: ['Show Courses', 'Pricing Plans', 'VIP Membership']
+        }
+      },
 
-  courses(){
+      courses() {
 
-    let html = '<h3>Our Courses 📖</h3>';
+        let html = '<h3>Our Courses 📖</h3>';
 
-    KB.courses.forEach(c=>{
-      html += `
+        KB.courses.forEach(c => {
+          html += `
       <div class="nb-card">
         <strong>${c.name}</strong><br>
         Duration: ${c.duration}<br>
         Price: ${c.price}
       </div>
       `;
-    });
+        });
 
-    return {
-      text:html,
-      quick:['Tajweed','Hifz','Pricing']
-    }
-  },
+        return {
+          text: html,
+          quick: ['Tajweed', 'Hifz', 'Pricing']
+        }
+      },
 
-  pricing(){
-    return {
-      text:`
+      pricing() {
+        return {
+          text: `
       <h3>Pricing Plans 💰</h3>
 
       <div class="nb-card">
@@ -518,13 +528,13 @@ const RESPONSES = {
 
       <p>All plans include a 7-day free trial.</p>
       `,
-      quick:['VIP Benefits','Courses','Free Trial']
-    }
-  },
+          quick: ['VIP Benefits', 'Courses', 'Free Trial']
+        }
+      },
 
-  teachers(){
-    return {
-      text:`
+      teachers() {
+        return {
+          text: `
       <h3>Our Teachers 👨‍🏫</h3>
 
       <div class="nb-card">
@@ -539,13 +549,13 @@ const RESPONSES = {
         Kids Specialist
       </div>
       `,
-      quick:['Female Teachers','Kids Classes','Pricing']
-    }
-  },
+          quick: ['Female Teachers', 'Kids Classes', 'Pricing']
+        }
+      },
 
-  tajweed(){
-    return {
-      text:`
+      tajweed() {
+        return {
+          text: `
       <h3>Tajweed Course 📿</h3>
 
       <p>Learn:</p>
@@ -559,13 +569,13 @@ const RESPONSES = {
 
       <p>Price: $49/month</p>
       `,
-      quick:['Enroll','Pricing','Teachers']
-    }
-  },
+          quick: ['Enroll', 'Pricing', 'Teachers']
+        }
+      },
 
-  hifz(){
-    return {
-      text:`
+      hifz() {
+        return {
+          text: `
       <h3>Hifz ul Quran 🏆</h3>
 
       <ul>
@@ -576,13 +586,13 @@ const RESPONSES = {
 
       <p>Duration: 2-3 years</p>
       `,
-      quick:['VIP Plan','Kids Classes','Enroll']
-    }
-  },
+          quick: ['VIP Plan', 'Kids Classes', 'Enroll']
+        }
+      },
 
-  vip(){
-    return {
-      text:`
+      vip() {
+        return {
+          text: `
       <h3>VIP Membership 👑</h3>
 
       <ul>
@@ -594,13 +604,13 @@ const RESPONSES = {
 
       <p>$49/month</p>
       `,
-      quick:['Pricing','Enroll','Teachers']
-    }
-  },
+          quick: ['Pricing', 'Enroll', 'Teachers']
+        }
+      },
 
-  kids(){
-    return {
-      text:`
+      kids() {
+        return {
+          text: `
       <h3>Kids Quran Classes 👦</h3>
 
       <ul>
@@ -609,36 +619,36 @@ const RESPONSES = {
         <li>Female Teachers Available</li>
       </ul>
       `,
-      quick:['Female Teachers','Courses','Enroll']
-    }
-  },
+          quick: ['Female Teachers', 'Courses', 'Enroll']
+        }
+      },
 
-  contact(){
-    return {
-      text:`
+      contact() {
+        return {
+          text: `
       <h3>Contact Us 📞</h3>
 
-      <p>Email: info@nooracademy.com</p>
-      <p>WhatsApp: +1 555 123 4567</p>
+      <p>Email: muzamiliqbal0393@gmail.com</p>
+      <p>WhatsApp: +92 3262346358</p>
       <p>Available 24/7</p>
       `,
-      quick:['WhatsApp','Pricing','Courses']
-    }
-  },
+          quick: ['WhatsApp', 'Pricing', 'Courses']
+        }
+      },
 
-  bye(){
-    return {
-      text:`
+      bye() {
+        return {
+          text: `
       <h3>Khuda Hafiz 🌙</h3>
       <p>May Allah bless you.</p>
       `,
-      quick:[]
-    }
-  },
+          quick: []
+        }
+      },
 
-  unknown(){
-    return {
-      text:`
+      unknown() {
+        return {
+          text: `
       <h3>I can help with:</h3>
 
       <ul>
@@ -649,58 +659,58 @@ const RESPONSES = {
         <li>Tajweed</li>
       </ul>
       `,
-      quick:['Courses','Pricing','Teachers']
-    }
-  }
-
-};
-
-function detectIntent(text){
-
-  const lower = text.toLowerCase();
-
-  let bestMatch = null;
-  let bestScore = 0;
-
-  for(const intent of INTENTS){
-
-    let score = 0;
-
-    intent.keys.forEach(k=>{
-
-      if(lower.includes(k)){
-        score += k.length;
+          quick: ['Courses', 'Pricing', 'Teachers']
+        }
       }
 
-    });
+    };
 
-    if(score > bestScore){
-      bestScore = score;
-      bestMatch = intent.fn;
+    function detectIntent(text) {
+
+      const lower = text.toLowerCase();
+
+      let bestMatch = null;
+      let bestScore = 0;
+
+      for (const intent of INTENTS) {
+
+        let score = 0;
+
+        intent.keys.forEach(k => {
+
+          if (lower.includes(k)) {
+            score += k.length;
+          }
+
+        });
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = intent.fn;
+        }
+
+      }
+
+      return bestMatch;
+
     }
 
-  }
+    function time() {
+      return new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
 
-  return bestMatch;
+    function append(html) {
+      const area = document.getElementById('nb-messages');
+      area.insertAdjacentHTML('beforeend', html);
+      area.scrollTop = area.scrollHeight;
+    }
 
-}
+    function userMessage(text) {
 
-function time(){
-  return new Date().toLocaleTimeString([], {
-    hour:'2-digit',
-    minute:'2-digit'
-  });
-}
-
-function append(html){
-  const area = document.getElementById('nb-messages');
-  area.insertAdjacentHTML('beforeend', html);
-  area.scrollTop = area.scrollHeight;
-}
-
-function userMessage(text){
-
-  return `
+      return `
   <div class="nb-msg nb-user">
 
     <div class="nb-msg-av">👤</div>
@@ -718,29 +728,29 @@ function userMessage(text){
   </div>
   `;
 
-}
+    }
 
-function botMessage(resp){
+    function botMessage(resp) {
 
-  let quick = '';
+      let quick = '';
 
-  if(resp.quick && resp.quick.length){
+      if (resp.quick && resp.quick.length) {
 
-    quick += '<div class="nb-quick">';
+        quick += '<div class="nb-quick">';
 
-    resp.quick.forEach(q=>{
-      quick += `
+        resp.quick.forEach(q => {
+          quick += `
       <button class="nb-qbtn" onclick="NoorBot.ask('${q}')">
         ${q}
       </button>
       `;
-    });
+        });
 
-    quick += '</div>';
+        quick += '</div>';
 
-  }
+      }
 
-  return `
+      return `
   <div class="nb-msg">
 
     <div class="nb-msg-av">🕌</div>
@@ -761,11 +771,11 @@ function botMessage(resp){
   </div>
   `;
 
-}
+    }
 
-function typing(){
+    function typing() {
 
-  return `
+      return `
   <div class="nb-msg" id="typing">
 
     <div class="nb-msg-av">🕌</div>
@@ -781,79 +791,79 @@ function typing(){
   </div>
   `;
 
-}
+    }
 
-function removeTyping(){
-  const el = document.getElementById('typing');
-  if(el) el.remove();
-}
+    function removeTyping() {
+      const el = document.getElementById('typing');
+      if (el) el.remove();
+    }
 
-function escapeHtml(text){
+    function escapeHtml(text) {
 
-  return text
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 
-}
+    }
 
-const NoorBot = {
+    const NoorBot = {
 
-  ask(text){
+      ask(text) {
 
-    if(!text) return;
+        if (!text) return;
 
-    append(userMessage(text));
+        append(userMessage(text));
 
-    append(typing());
+        append(typing());
 
-    setTimeout(()=>{
+        setTimeout(() => {
 
-      removeTyping();
+          removeTyping();
 
-      const fn = detectIntent(text);
+          const fn = detectIntent(text);
 
-      let resp;
+          let resp;
 
-      if(fn && RESPONSES[fn]){
-        resp = RESPONSES[fn]();
-      }else{
-        resp = RESPONSES.unknown();
-      }
+          if (fn && RESPONSES[fn]) {
+            resp = RESPONSES[fn]();
+          } else {
+            resp = RESPONSES.unknown();
+          }
 
-      append(botMessage(resp));
+          append(botMessage(resp));
 
-    },700);
+        }, 700);
 
-  },
+      },
 
-  send(){
+      send() {
 
-    const input = document.getElementById('nb-input');
+        const input = document.getElementById('nb-input');
 
-    const text = input.value.trim();
+        const text = input.value.trim();
 
-    if(!text) return;
+        if (!text) return;
 
-    input.value = '';
+        input.value = '';
 
-    this.ask(text);
+        this.ask(text);
 
-  },
+      },
 
-  clear(){
+      clear() {
 
-    document.getElementById('nb-messages').innerHTML = '';
+        document.getElementById('nb-messages').innerHTML = '';
 
-    this.welcome();
+        this.welcome();
 
-  },
+      },
 
-  welcome(){
+      welcome() {
 
-    append(botMessage({
+        append(botMessage({
 
-      text:`
+          text: `
       <h3>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h3>
 
       <p>Welcome to NoorAcademy 🕌</p>
@@ -869,60 +879,60 @@ const NoorBot = {
       </ul>
       `,
 
-      quick:[
-        'Courses',
-        'Pricing',
-        'Teachers',
-        'VIP',
-        'Kids'
-      ]
+          quick: [
+            'Courses',
+            'Pricing',
+            'Teachers',
+            'VIP',
+            'Kids'
+          ]
 
-    }));
+        }));
 
-  }
+      }
 
-};
+    };
 
-const toggle = document.getElementById('nb-toggle');
-const chat = document.getElementById('nb-chat');
+    const toggle = document.getElementById('nb-toggle');
+    const chat = document.getElementById('nb-chat');
 
-let open = false;
+    let open = false;
 
-function toggleChat(){
+    function toggleChat() {
 
-  open = !open;
+      open = !open;
 
-  chat.style.display = open ? 'flex' : 'none';
+      chat.style.display = open ? 'flex' : 'none';
 
-  toggle.innerHTML = open ? '✕' : '🕌';
+      toggle.innerHTML = open ? '✕' : '🕌';
 
-}
-
-
-toggle.addEventListener('click',toggleChat);
-
-
-document
-  .getElementById('nb-send')
-  .addEventListener('click',()=>NoorBot.send());
-
-
-document
-  .getElementById('nb-input')
-  .addEventListener('keydown',e=>{
-
-    if(e.key === 'Enter' && !e.shiftKey){
-      e.preventDefault();
-      NoorBot.send();
     }
 
-  });
 
-NoorBot.welcome();
+    toggle.addEventListener('click', toggleChat);
 
-</script>
+
+    document
+      .getElementById('nb-send')
+      .addEventListener('click', () => NoorBot.send());
+
+
+    document
+      .getElementById('nb-input')
+      .addEventListener('keydown', e => {
+
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          NoorBot.send();
+        }
+
+      });
+
+    NoorBot.welcome();
+
+  </script>
 
 </body>
+
 </html>
 ```
-
