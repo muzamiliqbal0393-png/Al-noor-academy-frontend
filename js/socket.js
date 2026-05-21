@@ -8,7 +8,8 @@ class SocketManager {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        this.socket = io('http://localhost:5000', {
+        // Connect to production backend URL for Socket.io
+        this.socket = io('https://noor-academy-backend.vercel.app', {
             auth: { token }
         });
 

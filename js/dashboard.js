@@ -1,4 +1,4 @@
-const API_URL = 'https://noor-academy-backend.vercel.app/api';
+const API_URL = 'http://localhost:5000/api';
 
 let currentUser = null;
 let children = [];
