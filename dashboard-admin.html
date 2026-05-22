@@ -1,1688 +1,505 @@
+Claude finished the response
+
+noor acadmey klia admin klia ak dashboard chy ak student klia  ak parents klia ak teachers klia
+7:38 AM
+Reading frontend design skill
+
+Yeh rahe Noor Academy ke 4 dashboards! Upar buttons se switch karein:
+
+Admin — poori school ki overview: students, teachers, fee collection, hazri aur notices.
+
+Student — Ayesha ka portal: subjects ke marks, homework assignments aur aaj ka time table.
+
+Parents — walid/walida ka portal: fee details, teacher messages aur school events.
+
+Teacher — Ms. Amna ka portal: class schedule, hazri lena aur test results.
+
+Agar koi aur feature chahiye — jaise fee payment form, exam schedule, ya koi aur cheez — bata dein, add kar deta hoon!
+
+code do aur asa ho ky  without data ho q ky webite l  h ab
+7:42 AM
+Reading frontend design skill
+
+Bilkul! Yeh rahe 4 alag-alag HTML files — har ek portal ka apna code — without hardcoded data, forms ke sath taake website par use ho sake.
+Created 4 files, ran a command
+Done
+You are out of free messages until 12:30 PM
+Get more
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+Admin dashboard · HTML
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Al-Noor Quran Academy</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --primary: #1a5c38;
-            --primary-light: #2d8653;
-            --primary-dark: #0d3d25;
-            --secondary: #f0a500;
-            --secondary-light: #ffc107;
-            --accent: #00897b;
-            --blue: #3182ce;
-            --white: #ffffff;
-            --bg: #f0f7f4;
-            --text-dark: #1a1a2e;
-            --text-mid: #4a5568;
-            --text-light: #718096;
-            --border: #e2e8f0;
-            --success: #38a169;
-            --danger: #e53e3e;
-            --warning: #f0a500;
-            --purple: #6b46c1;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
-            --sidebar-width: 270px;
-            --radius: 16px;
-        }
-
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; color: var(--text-dark); background: var(--bg); overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
-
-        /* ===== LAYOUT ===== */
-        .dashboard-layout { display: flex; min-height: 100vh; }
-
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: linear-gradient(180deg, #0a1628 0%, #0d2a1a 40%, #1a5c38 100%);
-            position: fixed;
-            top: 0; left: 0; bottom: 0;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .sidebar::-webkit-scrollbar { width: 3px; }
-        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
-
-        .sidebar-header {
-            padding: 20px 18px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            display: flex; align-items: center; gap: 11px;
-        }
-
-        .sidebar-logo {
-            width: 44px; height: 44px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 13px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(26,92,56,0.4);
-        }
-
-        .sidebar-brand h2 { font-size: 13px; font-weight: 800; color: white; line-height: 1.2; }
-        .sidebar-brand p  { font-family: 'Amiri', serif; font-size: 11px; color: rgba(255,255,255,0.55); }
-
-        /* Admin Profile */
-        .admin-profile {
-            padding: 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .admin-profile-card {
-            background: rgba(255,255,255,0.07);
-            border-radius: 13px;
-            padding: 13px;
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; gap: 10px;
-        }
-
-        .admin-avatar {
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f0a500, #ffc107);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 19px; flex-shrink: 0;
-            position: relative;
-        }
-
-        .admin-status {
-            position: absolute; bottom: 1px; right: 1px;
-            width: 10px; height: 10px;
-            background: #38a169; border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .admin-info h4 { font-size: 12px; font-weight: 700; color: white; margin-bottom: 1px; }
-        .admin-info p  { font-size: 10px; color: rgba(255,255,255,0.55); }
-
-        .admin-role {
-            margin-left: auto;
-            background: rgba(229,62,62,0.25);
-            border: 1px solid rgba(229,62,62,0.4);
-            color: #fc8181;
-            font-size: 9px; font-weight: 800;
-            padding: 3px 8px; border-radius: 10px;
-        }
-
-        /* Live stats in sidebar */
-        .sidebar-live-stats {
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .live-stat-mini {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px; padding: 9px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .live-stat-mini h4 { font-size: 16px; font-weight: 800; color: var(--secondary-light); }
-        .live-stat-mini p  { font-size: 9px; color: rgba(255,255,255,0.5); margin-top: 1px; }
-
-        /* Navigation */
-        .sidebar-nav { flex: 1; padding: 8px 11px; }
-
-        .nav-section-label {
-            font-size: 10px; font-weight: 700;
-            color: rgba(255,255,255,0.35);
-            text-transform: uppercase; letter-spacing: 1.5px;
-            padding: 10px 8px 5px;
-        }
-
-        .nav-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 10px 11px;
-            border-radius: 11px;
-            color: rgba(255,255,255,0.65);
-            font-size: 13px; font-weight: 500;
-            cursor: pointer; transition: all 0.3s;
-            margin-bottom: 2px; text-decoration: none;
-            position: relative;
-        }
-
-        .nav-item:hover { background: rgba(255,255,255,0.1); color: white; }
-
-        .nav-item.active {
-            background: rgba(255,255,255,0.14);
-            color: white; font-weight: 700;
-        }
-
-        .nav-item.active::before {
-            content: '';
-            position: absolute; left: 0; top: 25%; bottom: 25%;
-            width: 3px; background: var(--secondary);
-            border-radius: 0 3px 3px 0;
-        }
-
-        .nav-item i { width: 18px; text-align: center; font-size: 14px; }
-
-        .nav-badge {
-            margin-left: auto;
-            font-size: 10px; font-weight: 700;
-            padding: 2px 7px; border-radius: 10px;
-            min-width: 20px; text-align: center;
-        }
-
-        .nb-yellow { background: var(--secondary); color: var(--primary-dark); }
-        .nb-red    { background: var(--danger); color: white; }
-        .nb-green  { background: var(--success); color: white; }
-        .nb-blue   { background: var(--blue); color: white; }
-
-        .sidebar-footer { padding: 12px 11px; border-top: 1px solid rgba(255,255,255,0.07); }
-
-        /* ===== MAIN CONTENT ===== */
-        .main-content { margin-left: var(--sidebar-width); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-
-        /* ===== TOPBAR ===== */
-        .topbar {
-            background: white;
-            padding: 0 26px;
-            height: 68px;
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
-            position: sticky; top: 0; z-index: 50;
-        }
-
-        .topbar-left { display: flex; align-items: center; gap: 14px; }
-
-        .menu-toggle {
-            width: 36px; height: 36px;
-            background: var(--bg); border: none; border-radius: 10px;
-            font-size: 15px; color: var(--text-mid); cursor: pointer;
-            display: none; align-items: center; justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .menu-toggle:hover { background: rgba(26,92,56,0.1); color: var(--primary); }
-
-        .topbar-title h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); }
-        .topbar-title p  { font-size: 11px; color: var(--text-light); }
-
-        .topbar-right { display: flex; align-items: center; gap: 10px; }
-
-        .topbar-search {
-            display: flex; align-items: center; gap: 8px;
-            background: var(--bg); border: 1.5px solid var(--border);
-            border-radius: 11px; padding: 8px 14px;
-            transition: all 0.3s;
-        }
-
-        .topbar-search:focus-within { border-color: var(--primary); }
-        .topbar-search i { color: var(--text-light); font-size: 13px; }
-        .topbar-search input { border: none; background: transparent; font-size: 13px; font-family: 'Poppins', sans-serif; color: var(--text-dark); outline: none; width: 160px; }
-
-        .topbar-btn {
-            width: 38px; height: 38px;
-            background: var(--bg); border: none; border-radius: 10px;
-            font-size: 15px; color: var(--text-mid); cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s; position: relative;
-        }
-
-        .topbar-btn:hover { background: rgba(26,92,56,0.1); color: var(--primary); }
-
-        .topbar-notif {
-            position: absolute; top: -3px; right: -3px;
-            width: 15px; height: 15px;
-            background: var(--danger); border-radius: 50%;
-            font-size: 8px; font-weight: 700; color: white;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid white;
-        }
-
-        .admin-avatar-top {
-            width: 38px; height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 17px; cursor: pointer;
-            border: 3px solid rgba(240,165,0,0.2);
-            transition: all 0.3s;
-        }
-
-        .admin-avatar-top:hover { transform: scale(1.05); }
-
-        /* ===== PAGE CONTENT ===== */
-        .page-content { padding: 24px 26px; flex: 1; }
-        .dash-page { display: none; }
-        .dash-page.active { display: block; }
-
-        /* ===== STAT CARDS ===== */
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 20px; }
-
-        .stat-card {
-            background: white; border-radius: var(--radius);
-            padding: 20px; box-shadow: var(--shadow);
-            border: 1px solid var(--border); transition: all 0.3s;
-            position: relative; overflow: hidden;
-        }
-
-        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-        .sc-green::before  { background: linear-gradient(90deg, #1a5c38, #2d8653); }
-        .sc-blue::before   { background: linear-gradient(90deg, #3182ce, #63b3ed); }
-        .sc-gold::before   { background: linear-gradient(90deg, #f0a500, #ffc107); }
-        .sc-purple::before { background: linear-gradient(90deg, #6b46c1, #9f7aea); }
-        .sc-teal::before   { background: linear-gradient(90deg, #00897b, #26a69a); }
-        .sc-red::before    { background: linear-gradient(90deg, #e53e3e, #fc8181); }
-        .sc-orange::before { background: linear-gradient(90deg, #dd6b20, #f6ad55); }
-
-        .stat-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-
-        .stat-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .si-green  { background: rgba(26,92,56,0.1); }
-        .si-blue   { background: rgba(49,130,206,0.1); }
-        .si-gold   { background: rgba(240,165,0,0.1); }
-        .si-purple { background: rgba(107,70,193,0.1); }
-        .si-teal   { background: rgba(0,137,123,0.1); }
-        .si-red    { background: rgba(229,62,62,0.1); }
-        .si-orange { background: rgba(221,107,32,0.1); }
-
-        .stat-trend { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
-        .trend-up   { background: rgba(56,161,105,0.1); color: var(--success); }
-        .trend-down { background: rgba(229,62,62,0.1);  color: var(--danger); }
-        .trend-same { background: rgba(113,128,150,0.1); color: var(--text-light); }
-
-        .stat-card h2 { font-size: 26px; font-weight: 800; color: var(--text-dark); margin-bottom: 3px; }
-        .stat-card p  { font-size: 12px; color: var(--text-light); }
-
-        /* ===== GRID LAYOUTS ===== */
-        .grid-2  { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
-        .grid-3  { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; margin-bottom: 18px; }
-        .grid-3r { display: grid; grid-template-columns: 1fr 2fr; gap: 18px; margin-bottom: 18px; }
-        .grid-4  { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 18px; }
-
-        /* ===== CARD ===== */
-        .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
-
-        .card-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
-        }
-
-        .card-header h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 7px; }
-        .card-header h3 i { color: var(--primary); }
-
-        .card-action {
-            font-size: 11px; font-weight: 600; color: var(--primary);
-            cursor: pointer; padding: 5px 12px;
-            border: 1.5px solid rgba(26,92,56,0.2); border-radius: 8px;
-            transition: all 0.3s; background: none;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .card-action:hover { background: rgba(26,92,56,0.08); }
-        .card-body { padding: 18px; }
-
-        /* ===== REVENUE BANNER ===== */
-        .revenue-banner {
-            background: linear-gradient(135deg, #0a1628, #0d2a1a, #1a5c38);
-            border-radius: var(--radius); padding: 22px;
-            color: white; position: relative; overflow: hidden;
-            margin-bottom: 18px;
-        }
-
-        .revenue-banner::before {
-            content: '💰';
-            position: absolute; font-size: 100px;
-            right: -10px; bottom: -20px; opacity: 0.08;
-        }
-
-        .revenue-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
-        .revenue-top h3 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
-        .revenue-top p  { font-size: 11px; color: rgba(255,255,255,0.65); }
-
-        .revenue-amount { font-size: 36px; font-weight: 800; color: var(--secondary-light); }
-        .revenue-amount span { font-size: 14px; color: rgba(255,255,255,0.6); }
-
-        .revenue-stats { display: flex; gap: 20px; }
-        .rev-stat { }
-        .rev-stat .label { font-size: 10px; color: rgba(255,255,255,0.55); margin-bottom: 2px; }
-        .rev-stat .value { font-size: 15px; font-weight: 700; }
-
-        /* ===== LIVE CLASSES FEED ===== */
-        .live-feed-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px; border-radius: 11px;
-            margin-bottom: 8px; border: 1.5px solid var(--border);
-            transition: all 0.3s; cursor: pointer;
-        }
-
-        .live-feed-item:hover { border-color: var(--primary); background: rgba(26,92,56,0.02); }
-        .live-feed-item:last-child { margin-bottom: 0; }
-
-        .live-dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            flex-shrink: 0; animation: dotPulse 1.5s infinite;
-        }
-
-        .ld-live   { background: var(--danger); }
-        .ld-soon   { background: var(--warning); }
-        .ld-done   { background: var(--success); animation: none; }
-
-        @keyframes dotPulse {
-            0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(229,62,62,0.4); }
-            50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(229,62,62,0); }
-        }
-
-        .lf-info { flex: 1; }
-        .lf-info h4 { font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-        .lf-info p  { font-size: 10px; color: var(--text-light); }
-
-        .lf-count {
-            font-size: 10px; font-weight: 700;
-            padding: 3px 8px; border-radius: 8px;
-        }
-
-        .lfc-live { background: rgba(229,62,62,0.1); color: var(--danger); }
-        .lfc-soon { background: rgba(240,165,0,0.1); color: var(--warning); }
-        .lfc-done { background: rgba(56,161,105,0.1); color: var(--success); }
-
-        /* ===== TABLES ===== */
-        .data-table { width: 100%; border-collapse: collapse; }
-
-        .data-table th {
-            padding: 11px 14px; font-size: 11px; font-weight: 700;
-            color: var(--text-light); text-align: left;
-            background: var(--bg); border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-        }
-
-        .data-table td {
-            padding: 12px 14px; font-size: 12px;
-            color: var(--text-mid); border-bottom: 1px solid var(--border);
-        }
-
-        .data-table tr:last-child td { border-bottom: none; }
-        .data-table tr:hover td { background: rgba(26,92,56,0.02); }
-
-        /* ===== STATUS BADGES ===== */
-        .badge { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
-        .b-success  { background: rgba(56,161,105,0.1);  color: var(--success); }
-        .b-danger   { background: rgba(229,62,62,0.1);   color: var(--danger); }
-        .b-warning  { background: rgba(240,165,0,0.1);   color: var(--warning); }
-        .b-primary  { background: rgba(26,92,56,0.1);    color: var(--primary); }
-        .b-blue     { background: rgba(49,130,206,0.1);  color: var(--blue); }
-        .b-purple   { background: rgba(107,70,193,0.1);  color: var(--purple); }
-        .b-live     { background: rgba(229,62,62,0.1);   color: var(--danger); animation: dotPulse 2s infinite; }
-
-        /* ===== USER ROW ===== */
-        .user-row { display: flex; align-items: center; gap: 9px; }
-        .user-avatar-sm {
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 15px; flex-shrink: 0;
-        }
-
-        .user-info h4 { font-size: 12px; font-weight: 700; color: var(--text-dark); }
-        .user-info p  { font-size: 10px; color: var(--text-light); }
-
-        /* ===== ACTION BUTTONS ===== */
-        .action-btn {
-            padding: 5px 11px; border-radius: 8px;
-            font-size: 11px; font-weight: 600;
-            cursor: pointer; font-family: 'Poppins', sans-serif;
-            transition: all 0.3s; border: none;
-            display: inline-flex; align-items: center; gap: 4px;
-        }
-
-        .ab-primary { background: var(--primary); color: white; }
-        .ab-primary:hover { background: var(--primary-light); }
-        .ab-danger  { background: rgba(229,62,62,0.1); color: var(--danger); border: 1px solid rgba(229,62,62,0.2); }
-        .ab-danger:hover { background: var(--danger); color: white; }
-        .ab-success { background: rgba(56,161,105,0.1); color: var(--success); border: 1px solid rgba(56,161,105,0.2); }
-        .ab-success:hover { background: var(--success); color: white; }
-        .ab-blue    { background: rgba(49,130,206,0.1); color: var(--blue); border: 1px solid rgba(49,130,206,0.2); }
-        .ab-blue:hover { background: var(--blue); color: white; }
-        .ab-outline { background: white; color: var(--text-mid); border: 1px solid var(--border); }
-        .ab-outline:hover { border-color: var(--primary); color: var(--primary); }
-
-        /* ===== PROGRESS BARS ===== */
-        .prog-bar-wrap { height: 7px; background: var(--bg); border-radius: 10px; overflow: hidden; }
-        .prog-fill { height: 100%; border-radius: 10px; transition: width 1.5s ease; }
-        .pf-green  { background: linear-gradient(90deg, #1a5c38, #2d8653); }
-        .pf-blue   { background: linear-gradient(90deg, #3182ce, #63b3ed); }
-        .pf-gold   { background: linear-gradient(90deg, #f0a500, #ffc107); }
-        .pf-purple { background: linear-gradient(90deg, #6b46c1, #9f7aea); }
-        .pf-teal   { background: linear-gradient(90deg, #00897b, #26a69a); }
-        .pf-red    { background: linear-gradient(90deg, #e53e3e, #fc8181); }
-
-        /* ===== NOTIFICATION ITEMS ===== */
-        .notif-item {
-            display: flex; align-items: flex-start; gap: 11px;
-            padding: 12px; border-bottom: 1px solid var(--border);
-            transition: all 0.3s; cursor: pointer;
-        }
-
-        .notif-item:hover { background: var(--bg); }
-        .notif-item:last-child { border-bottom: none; }
-        .notif-item.unread { background: rgba(26,92,56,0.03); }
-
-        .notif-icon { width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-        .ni-green  { background: rgba(26,92,56,0.1); }
-        .ni-blue   { background: rgba(49,130,206,0.1); }
-        .ni-gold   { background: rgba(240,165,0,0.1); }
-        .ni-red    { background: rgba(229,62,62,0.1); }
-        .ni-purple { background: rgba(107,70,193,0.1); }
-
-        .notif-content h4 { font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-        .notif-content p  { font-size: 11px; color: var(--text-light); line-height: 1.5; }
-        .notif-time { font-size: 10px; color: var(--text-light); margin-top: 3px; display: block; }
-
-        /* ===== ANALYTICS CARDS ===== */
-        .analytics-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px; margin-bottom: 18px;
-        }
-
-        .analytics-mini {
-            background: white; border-radius: 13px;
-            padding: 16px; box-shadow: var(--shadow);
-            border: 1px solid var(--border); text-align: center;
-            transition: all 0.3s;
-        }
-
-        .analytics-mini:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-        .analytics-mini .icon { font-size: 28px; margin-bottom: 8px; }
-        .analytics-mini h3 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 3px; }
-        .analytics-mini p  { font-size: 11px; color: var(--text-light); }
-
-        /* ===== CHART PLACEHOLDER ===== */
-        .chart-placeholder {
-            height: 180px;
-            background: var(--bg);
-            border-radius: 12px;
-            display: flex; align-items: flex-end;
-            padding: 16px; gap: 8px;
-            position: relative; overflow: hidden;
-        }
-
-        .chart-bar {
-            flex: 1; border-radius: 6px 6px 0 0;
-            min-height: 20px; position: relative;
-            transition: all 0.5s ease; cursor: pointer;
-        }
-
-        .chart-bar:hover { opacity: 0.85; }
-
-        .chart-bar .tooltip {
-            position: absolute; bottom: 105%; left: 50%;
-            transform: translateX(-50%);
-            background: var(--text-dark); color: white;
-            font-size: 10px; font-weight: 700;
-            padding: 3px 7px; border-radius: 6px;
-            white-space: nowrap; display: none;
-        }
-
-        .chart-bar:hover .tooltip { display: block; }
-
-        .chart-labels {
-            display: flex; gap: 8px; padding: 6px 16px 0;
-            justify-content: space-around;
-        }
-
-        .chart-label { flex: 1; text-align: center; font-size: 10px; color: var(--text-light); }
-
-        /* ===== TEACHER CARD ===== */
-        .teacher-list-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px; border-radius: 11px;
-            border: 1.5px solid var(--border); margin-bottom: 8px;
-            transition: all 0.3s;
-        }
-
-        .teacher-list-item:hover { border-color: var(--primary); }
-        .teacher-list-item:last-child { margin-bottom: 0; }
-
-        .tli-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-        .tli-info { flex: 1; }
-        .tli-info h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-        .tli-info p  { font-size: 10px; color: var(--text-light); }
-        .tli-stars { color: var(--secondary); font-size: 11px; margin-bottom: 2px; }
-        .tli-actions { display: flex; gap: 6px; }
-
-        /* ===== SETTINGS FORM ===== */
-        .settings-section { margin-bottom: 24px; }
-        .settings-section h3 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-bottom: 14px; padding-bottom: 9px; border-bottom: 1px solid var(--border); }
-
-        .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
-        .setting-item:last-child { border-bottom: none; }
-        .setting-info h4 { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
-        .setting-info p  { font-size: 11px; color: var(--text-light); }
-
-        .toggle-switch { width: 42px; height: 23px; background: var(--border); border-radius: 12px; cursor: pointer; position: relative; transition: all 0.3s; flex-shrink: 0; }
-        .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; background: white; border-radius: 50%; transition: all 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
-        .toggle-switch.on { background: var(--primary); }
-        .toggle-switch.on::after { left: 22px; }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--text-mid); margin-bottom: 5px; }
-        .form-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; font-family: 'Poppins', sans-serif; color: var(--text-dark); outline: none; transition: border-color 0.3s; }
-        .form-input:focus { border-color: var(--primary); }
-
-        .btn-save { padding: 9px 22px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.3s; margin-top: 14px; }
-        .btn-save:hover { background: var(--primary-light); transform: translateY(-2px); }
-
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); z-index: 200;
-            display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-overlay.show { display: flex; }
-
-        .modal {
-            background: white; border-radius: 20px;
-            padding: 28px; width: 90%; max-width: 500px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(-20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-        .modal-header h3 { font-size: 17px; font-weight: 800; color: var(--text-dark); }
-        .modal-close { width: 32px; height: 32px; background: var(--bg); border: none; border-radius: 8px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-mid); transition: all 0.3s; }
-        .modal-close:hover { background: rgba(229,62,62,0.1); color: var(--danger); }
-        .modal-body { margin-bottom: 20px; }
-        .modal-footer { display: flex; gap: 10px; justify-content: flex-end; }
-
-        /* ===== REPORTS PAGE ===== */
-        .report-card {
-            background: white; border-radius: var(--radius);
-            padding: 20px; box-shadow: var(--shadow);
-            border: 1px solid var(--border); margin-bottom: 14px;
-            transition: all 0.3s;
-        }
-
-        .report-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-
-        .report-card-top { display: flex; align-items: center; gap: 13px; margin-bottom: 13px; }
-        .report-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-
-        .report-info h4 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-        .report-info p  { font-size: 11px; color: var(--text-light); }
-
-        /* ===== SUPPORT TICKETS ===== */
-        .ticket-item {
-            display: flex; align-items: flex-start; gap: 12px;
-            padding: 13px; border-radius: 11px;
-            border: 1.5px solid var(--border); margin-bottom: 8px;
-            transition: all 0.3s; cursor: pointer;
-        }
-
-        .ticket-item:hover { border-color: var(--primary); }
-        .ticket-item:last-child { margin-bottom: 0; }
-        .ticket-priority { width: 4px; border-radius: 2px; align-self: stretch; flex-shrink: 0; }
-        .tp-high   { background: var(--danger); }
-        .tp-medium { background: var(--warning); }
-        .tp-low    { background: var(--success); }
-        .ticket-info { flex: 1; }
-        .ticket-info h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
-        .ticket-info p  { font-size: 11px; color: var(--text-light); }
-        .ticket-meta { display: flex; gap: 7px; margin-top: 6px; flex-wrap: wrap; }
-
-        /* ===== SIDEBAR OVERLAY ===== */
-        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
-        .sidebar-overlay.show { display: block; }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1200px) { .stats-row { grid-template-columns: repeat(2, 1fr); } .grid-4 { grid-template-columns: repeat(2, 1fr); } .analytics-row { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 1000px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } .grid-3r { grid-template-columns: 1fr; } }
-        @media (max-width: 900px) { .sidebar { transform: translateX(-100%); } .sidebar.mobile-open { transform: translateX(0); } .main-content { margin-left: 0; } .menu-toggle { display: flex; } .topbar-search { display: none; } }
-        @media (max-width: 600px) { .stats-row { grid-template-columns: 1fr 1fr; } .page-content { padding: 14px; } .topbar { padding: 0 14px; } .form-grid { grid-template-columns: 1fr; } .analytics-row { grid-template-columns: 1fr 1fr; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor Academy — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #0F6E56;
+    --green-light: #E1F5EE;
+    --green-mid: #1D9E75;
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --red: #D85A30;
+    --red-light: #FAECE7;
+    --blue: #378ADD;
+    --blue-light: #E6F1FB;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f8faf9;
+    --white: #ffffff;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+ 
+  /* SIDEBAR */
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar { width: 240px; background: var(--green); display: flex; flex-direction: column; padding: 0; flex-shrink: 0; }
+  .sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .sidebar-logo h1 { color: #fff; font-size: 17px; font-weight: 600; }
+  .sidebar-logo span { color: rgba(255,255,255,0.6); font-size: 12px; display: block; margin-top: 2px; }
+  .sidebar-nav { padding: 16px 12px; flex: 1; }
+  .nav-label { color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 8px; margin: 16px 0 6px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; color: rgba(255,255,255,0.75); font-size: 13.5px; cursor: pointer; text-decoration: none; margin-bottom: 2px; transition: background 0.15s, color 0.15s; }
+  .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-item svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .sidebar-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
+  .admin-chip { display: flex; align-items: center; gap: 10px; }
+  .admin-av { width: 34px; height: 34px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 600; }
+  .admin-info p { color: #fff; font-size: 13px; font-weight: 500; }
+  .admin-info span { color: rgba(255,255,255,0.5); font-size: 11px; }
+ 
+  /* MAIN */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 28px; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+  .topbar h2 { font-size: 16px; font-weight: 600; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: opacity 0.15s; }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn:hover { opacity: 0.85; }
+  .content { padding: 24px 28px; overflow-y: auto; flex: 1; }
+ 
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .stat-box .label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .stat-box .value { font-size: 26px; font-weight: 600; color: var(--text); }
+  .stat-box .sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .stat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+ 
+  /* TABLES */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .card-head h3 { font-size: 14px; font-weight: 600; }
+  .card-head a { font-size: 12px; color: var(--green); text-decoration: none; }
+  .card-body { padding: 0 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 10px 0 8px; color: var(--text-muted); font-weight: 500; font-size: 12px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 0; border-bottom: 1px solid #f3f4f6; color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: #854F0B; }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-blue { background: var(--blue-light); color: #185FA5; }
+  .av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+  .av-g { background: var(--green-light); color: var(--green); }
+  .av-b { background: var(--blue-light); color: #185FA5; }
+  .av-a { background: var(--amber-light); color: #854F0B; }
+  .av-r { background: var(--red-light); color: var(--red); }
+  .name-cell { display: flex; align-items: center; gap: 8px; }
+ 
+  /* FORM */
+  .form-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
+  .form-overlay.open { display: flex; }
+  .form-box { background: var(--white); border-radius: var(--radius-lg); width: 460px; max-width: 95vw; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+  .form-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .form-head h3 { font-size: 15px; font-weight: 600; }
+  .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+  .form-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+  .field input, .field select { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; color: var(--text); background: var(--white); }
+  .field input:focus, .field select:focus { border-color: var(--green); }
+  .form-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+ 
+  /* NOTICE LIST */
+  .notice-list { padding: 4px 0; }
+  .notice-item { display: flex; gap: 10px; padding: 11px 18px; border-bottom: 1px solid #f3f4f6; }
+  .notice-item:last-child { border-bottom: none; }
+  .n-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .n-text { font-size: 13px; color: var(--text); }
+  .n-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+ 
+  /* EMPTY STATE */
+  .empty { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px; }
+  .empty svg { margin-bottom: 8px; opacity: 0.3; }
+ 
+  @media (max-width: 900px) {
+    .sidebar { width: 60px; }
+    .sidebar-logo h1, .sidebar-logo span, .nav-label, .nav-item span, .admin-info { display: none; }
+    .nav-item { justify-content: center; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-<!-- ADD MODAL -->
-<div class="modal-overlay" id="addModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h3 id="modalTitle">Add New Student</h3>
-            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body" id="modalBody">
-            <div class="form-grid">
-                <div class="form-group"><label>Full Name</label><input type="text" class="form-input" placeholder="Enter full name"></div>
-                <div class="form-group"><label>Email</label><input type="email" class="form-input" placeholder="Enter email"></div>
-                <div class="form-group"><label>Phone</label><input type="tel" class="form-input" placeholder="Phone number"></div>
-                <div class="form-group"><label>Country</label><input type="text" class="form-input" placeholder="Country"></div>
-                <div class="form-group"><label>Course</label>
-                    <select class="form-input">
-                        <option>Tajweed Course</option>
-                        <option>Hifz Program</option>
-                        <option>Arabic Language</option>
-                        <option>Islamic Studies</option>
-                        <option>Kids Program</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Plan</label>
-                    <select class="form-input">
-                        <option>Single Child — $29.99</option>
-                        <option>Family Package — $49.99</option>
-                        <option>Premium — $79.99</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="action-btn ab-outline" onclick="closeModal()">Cancel</button>
-            <button class="action-btn ab-primary" onclick="closeModal(); showToast('✅ Added successfully!')"><i class="fas fa-save"></i> Save</button>
-        </div>
+ 
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <h1>🌙 Noor Academy</h1>
+      <span>Admin Panel</span>
     </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <a href="#" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" onclick="openForm('student')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Students</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Teachers</span>
+      </a>
+      <div class="nav-label">Management</div>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Fee</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Timetable</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        <span>Results</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Notices</span>
+      </a>
+      <div class="nav-label">System</div>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-chip">
+        <div class="admin-av">A</div>
+        <div class="admin-info">
+          <p>Admin</p>
+          <span>Administrator</span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="topbar">
+      <h2>Overview Dashboard</h2>
+      <div class="topbar-right">
+        <button class="btn btn-outline" onclick="openForm('notice')">+ Notice</button>
+        <button class="btn btn-primary" onclick="openForm('student')">+ New Student</button>
+      </div>
+    </div>
+ 
+    <div class="content">
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="label">Total Students</div>
+          <div class="value" id="stat-students">—</div>
+          <div class="sub">Registered students</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Teachers</div>
+          <div class="value" id="stat-teachers">—</div>
+          <div class="sub">Active staff</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Fee Collection</div>
+          <div class="value" id="stat-fee">—%</div>
+          <div class="sub">This month</div>
+        </div>
+        <div class="stat-box">
+          <div class="label">Attendance Today</div>
+          <div class="value" id="stat-att">—%</div>
+          <div class="sub"><span class="stat-dot" style="background:var(--green-mid)"></span>Present</div>
+        </div>
+      </div>
+ 
+      <!-- TABLES ROW -->
+      <div class="grid2" style="margin-bottom:16px">
+        <div class="card">
+          <div class="card-head">
+            <h3>Recent Students</h3>
+            <a href="#">View all</a>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Name</th><th>Class</th><th>Status</th></tr></thead>
+              <tbody id="students-table">
+                <tr><td colspan="3" class="empty">No students added yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Notices & Alerts</h3>
+            <a href="#" onclick="openForm('notice')">+ Add</a>
+          </div>
+          <div class="notice-list" id="notices-list">
+            <div class="empty">No notices yet. Click + Add to create one.</div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head">
+            <h3>Fee Summary</h3>
+            <a href="#">Details</a>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Class</th><th>Collected</th><th>Due</th><th>Status</th></tr></thead>
+              <tbody id="fee-table">
+                <tr><td colspan="4" class="empty">No fee data added yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Teachers</h3>
+            <a href="#" onclick="openForm('teacher')">+ Add</a>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Name</th><th>Subject</th><th>Classes</th></tr></thead>
+              <tbody id="teachers-table">
+                <tr><td colspan="3" class="empty">No teachers added yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="dashboard-layout">
-
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="sidebar" id="sidebar">
-
-        <div class="sidebar-header">
-            <div class="sidebar-logo">🕌</div>
-            <div class="sidebar-brand">
-                <h2>Al-Noor Academy</h2>
-                <p>Admin Control Panel</p>
-            </div>
+ 
+<!-- MODAL: Add Student -->
+<div class="form-overlay" id="modal-student">
+  <div class="form-box">
+    <div class="form-head">
+      <h3>New Student Add Karen</h3>
+      <button class="close-btn" onclick="closeForm('student')">×</button>
+    </div>
+    <div class="form-body">
+      <div class="form-row">
+        <div class="field"><label>Student ka naam</label><input type="text" id="s-name" placeholder="Full name"></div>
+        <div class="field"><label>Father ka naam</label><input type="text" id="s-father" placeholder="Father name"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Class</label>
+          <select id="s-class">
+            <option value="">Select class</option>
+            <option>1-A</option><option>1-B</option><option>2-A</option><option>2-B</option>
+            <option>3-A</option><option>3-B</option><option>4-A</option><option>4-B</option>
+            <option>5-A</option><option>5-B</option><option>6-A</option><option>6-B</option>
+            <option>7-A</option><option>7-B</option><option>8-A</option><option>8-B</option>
+            <option>9-A</option><option>9-B</option><option>10-A</option><option>10-B</option>
+          </select>
         </div>
-
-        <!-- Admin Profile -->
-        <div class="admin-profile">
-            <div class="admin-profile-card">
-                <div class="admin-avatar">
-                    👨‍💼
-                    <div class="admin-status"></div>
-                </div>
-                <div class="admin-info">
-                    <h4>Dr. Khalid Admin</h4>
-                    <p>Super Administrator</p>
-                </div>
-                <div class="admin-role">ADMIN</div>
-            </div>
+        <div class="field"><label>Date of Birth</label><input type="date" id="s-dob"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Contact number</label><input type="tel" id="s-phone" placeholder="03xx-xxxxxxx"></div>
+        <div class="field"><label>Monthly fee (Rs)</label><input type="number" id="s-fee" placeholder="e.g. 3500"></div>
+      </div>
+      <div class="field"><label>Address</label><input type="text" id="s-addr" placeholder="Ghar ka pata"></div>
+      <div class="form-row">
+        <div class="field"><label>Gender</label>
+          <select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option></select>
         </div>
-
-        <!-- Live Mini Stats -->
-        <div class="sidebar-live-stats">
-            <div class="live-stat-mini"><h4 id="sb-live">12</h4><p>🔴 Live Now</p></div>
-            <div class="live-stat-mini"><h4>5,247</h4><p>👥 Students</p></div>
-            <div class="live-stat-mini"><h4>152</h4><p>👨‍🏫 Teachers</p></div>
-            <div class="live-stat-mini"><h4>$49K</h4><p>💰 Revenue</p></div>
+        <div class="field"><label>Status</label>
+          <select id="s-status"><option value="Active">Active</option><option value="Pending">Pending</option><option value="Left">Left</option></select>
         </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-section-label">Main</div>
-            <a class="nav-item active" onclick="showPage('dashboard')"><i class="fas fa-th-large"></i> Dashboard</a>
-            <a class="nav-item" onclick="showPage('analytics')"><i class="fas fa-chart-line"></i> Analytics<span class="nav-badge nb-blue">Live</span></a>
-            <a class="nav-item" onclick="showPage('liveclasses')"><i class="fas fa-video"></i> Live Classes<span class="nav-badge nb-red">12</span></a>
-
-            <div class="nav-section-label">Management</div>
-            <a class="nav-item" onclick="showPage('students')"><i class="fas fa-user-graduate"></i> Students<span class="nav-badge nb-yellow">5,247</span></a>
-            <a class="nav-item" onclick="showPage('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers<span class="nav-badge nb-yellow">152</span></a>
-            <a class="nav-item" onclick="showPage('parents')"><i class="fas fa-users"></i> Parents</a>
-            <a class="nav-item" onclick="showPage('courses')"><i class="fas fa-book-open"></i> Courses</a>
-            <a class="nav-item" onclick="showPage('schedule')"><i class="fas fa-calendar-alt"></i> Schedule</a>
-
-            <div class="nav-section-label">Finance</div>
-            <a class="nav-item" onclick="showPage('payments')"><i class="fas fa-credit-card"></i> Payments<span class="nav-badge nb-green">+$2.1K</span></a>
-            <a class="nav-item" onclick="showPage('reports')"><i class="fas fa-file-alt"></i> Reports</a>
-
-            <div class="nav-section-label">Support</div>
-            <a class="nav-item" onclick="showPage('messages')"><i class="fas fa-comments"></i> Messages<span class="nav-badge nb-red">18</span></a>
-            <a class="nav-item" onclick="showPage('support')"><i class="fas fa-headset"></i> Support<span class="nav-badge nb-red">7</span></a>
-            <a class="nav-item" onclick="showPage('notifications')"><i class="fas fa-bell"></i> Notifications<span class="nav-badge nb-yellow">24</span></a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <a class="nav-item" onclick="showPage('settings')"><i class="fas fa-cog"></i> Settings</a>
-            <a class="nav-item" href="#" style="color:rgba(229,62,62,0.8)"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeForm('student')">Cancel</button>
+      <button class="btn btn-primary" onclick="addStudent()">Student Add Karen</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- MODAL: Add Teacher -->
+<div class="form-overlay" id="modal-teacher">
+  <div class="form-box">
+    <div class="form-head">
+      <h3>New Teacher Add Karen</h3>
+      <button class="close-btn" onclick="closeForm('teacher')">×</button>
+    </div>
+    <div class="form-body">
+      <div class="form-row">
+        <div class="field"><label>Teacher ka naam</label><input type="text" id="t-name" placeholder="Full name"></div>
+        <div class="field"><label>Subject</label><input type="text" id="t-subject" placeholder="e.g. Mathematics"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Classes</label><input type="text" id="t-classes" placeholder="e.g. 7-A, 8-A, 9-B"></div>
+        <div class="field"><label>Contact</label><input type="tel" id="t-phone" placeholder="03xx-xxxxxxx"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Qualification</label><input type="text" id="t-qual" placeholder="e.g. M.Sc, B.Ed"></div>
+        <div class="field"><label>Salary (Rs)</label><input type="number" id="t-salary" placeholder="Monthly salary"></div>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeForm('teacher')">Cancel</button>
+      <button class="btn btn-primary" onclick="addTeacher()">Teacher Add Karen</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- MODAL: Add Notice -->
+<div class="form-overlay" id="modal-notice">
+  <div class="form-box">
+    <div class="form-head">
+      <h3>Notice Post Karen</h3>
+      <button class="close-btn" onclick="closeForm('notice')">×</button>
+    </div>
+    <div class="form-body">
+      <div class="field"><label>Notice ka title</label><input type="text" id="n-title" placeholder="e.g. Fee reminder"></div>
+      <div class="field"><label>Detail</label><input type="text" id="n-detail" placeholder="Notice ki detail likhen"></div>
+      <div class="form-row">
+        <div class="field"><label>Type</label>
+          <select id="n-type">
+            <option value="info">Info (Blue)</option>
+            <option value="warning">Warning (Amber)</option>
+            <option value="urgent">Urgent (Red)</option>
+            <option value="success">Good news (Green)</option>
+          </select>
         </div>
-    </aside>
-
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="main-content">
-
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-                <div class="topbar-title">
-                    <h3 id="topbarTitle">Admin Dashboard 🏛️</h3>
-                    <p id="topbarSub">Al-Noor Quran Academy — Control Center</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="topbar-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search students, teachers...">
-                </div>
-                <button class="topbar-btn" onclick="showPage('notifications')"><i class="fas fa-bell"></i><div class="topbar-notif">24</div></button>
-                <button class="topbar-btn" onclick="showPage('messages')"><i class="fas fa-envelope"></i><div class="topbar-notif">18</div></button>
-                <div class="admin-avatar-top" onclick="showPage('settings')">👨‍💼</div>
-            </div>
-        </header>
-
-        <div class="page-content">
-
-            <!-- ============================================
-                 PAGE: DASHBOARD
-                 ============================================ -->
-            <div class="dash-page active" id="page-dashboard">
-
-                <!-- Revenue Banner -->
-                <div class="revenue-banner">
-                    <div class="revenue-top">
-                        <div>
-                            <h3>💰 Total Revenue — July 2025</h3>
-                            <p>All subscription payments & enrollments</p>
-                        </div>
-                        <div style="display:flex; gap:8px">
-                            <button class="action-btn" style="background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2)" onclick="showPage('reports')"><i class="fas fa-download"></i> Export</button>
-                            <button class="action-btn" style="background:var(--secondary); color:var(--primary-dark)" onclick="showPage('payments')"><i class="fas fa-eye"></i> View All</button>
-                        </div>
-                    </div>
-                    <div style="display:flex; align-items:flex-end; gap:30px">
-                        <div>
-                            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-bottom:4px">Monthly Revenue</div>
-                            <div class="revenue-amount">$49,870 <span>/ month</span></div>
-                        </div>
-                        <div class="revenue-stats">
-                            <div class="rev-stat"><div class="label">Annual Target</div><div class="value">$598K</div></div>
-                            <div class="rev-stat"><div class="label">Achieved</div><div class="value" style="color:#68d391">$312K</div></div>
-                            <div class="rev-stat"><div class="label">Growth</div><div class="value" style="color:var(--secondary-light)">+18.4%</div></div>
-                            <div class="rev-stat"><div class="label">Pending</div><div class="value" style="color:#fc8181">$3,240</div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Row -->
-                <div class="stats-row">
-                    <div class="stat-card sc-green">
-                        <div class="stat-card-top"><div class="stat-icon si-green">👥</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +84</div></div>
-                        <h2>5,247</h2><p>Total Students</p>
-                    </div>
-                    <div class="stat-card sc-blue">
-                        <div class="stat-card-top"><div class="stat-icon si-blue">👨‍🏫</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +6</div></div>
-                        <h2>152</h2><p>Active Teachers</p>
-                    </div>
-                    <div class="stat-card sc-gold">
-                        <div class="stat-card-top"><div class="stat-icon si-gold">📅</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> 94%</div></div>
-                        <h2>1,840</h2><p>Classes This Month</p>
-                    </div>
-                    <div class="stat-card sc-purple">
-                        <div class="stat-card-top"><div class="stat-icon si-purple">🌍</div><div class="stat-trend trend-same">Stable</div></div>
-                        <h2>52</h2><p>Countries Served</p>
-                    </div>
-                    <div class="stat-card sc-teal">
-                        <div class="stat-card-top"><div class="stat-icon si-teal">🏆</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +42</div></div>
-                        <h2>534</h2><p>Hafiz Graduates</p>
-                    </div>
-                    <div class="stat-card sc-red">
-                        <div class="stat-card-top"><div class="stat-icon si-red">🔴</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i></div></div>
-                        <h2>12</h2><p>Live Classes Now</p>
-                    </div>
-                    <div class="stat-card sc-orange">
-                        <div class="stat-card-top"><div class="stat-icon si-orange">⭐</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i></div></div>
-                        <h2>4.92</h2><p>Avg. Rating</p>
-                    </div>
-                    <div class="stat-card sc-green">
-                        <div class="stat-card-top"><div class="stat-icon si-green">📈</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +18%</div></div>
-                        <h2>91%</h2><p>Retention Rate</p>
-                    </div>
-                </div>
-
-                <!-- Charts + Live Feed -->
-                <div class="grid-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-chart-bar"></i> Monthly Enrollments</h3>
-                            <button class="card-action" onclick="showPage('analytics')">Full Analytics</button>
-                        </div>
-                        <div class="card-body" style="padding:14px 18px 6px">
-                            <div class="chart-placeholder">
-                                <div class="chart-bar pf-green" style="height:60%" ><div class="tooltip">Jan: 380</div></div>
-                                <div class="chart-bar pf-green" style="height:72%"><div class="tooltip">Feb: 420</div></div>
-                                <div class="chart-bar pf-green" style="height:65%"><div class="tooltip">Mar: 395</div></div>
-                                <div class="chart-bar pf-blue"  style="height:85%"><div class="tooltip">Apr: 510</div></div>
-                                <div class="chart-bar pf-blue"  style="height:78%"><div class="tooltip">May: 465</div></div>
-                                <div class="chart-bar pf-gold"  style="height:90%"><div class="tooltip">Jun: 540</div></div>
-                                <div class="chart-bar pf-gold"  style="height:100%"><div class="tooltip">Jul: 612</div></div>
-                            </div>
-                            <div class="chart-labels">
-                                <div class="chart-label">Jan</div><div class="chart-label">Feb</div>
-                                <div class="chart-label">Mar</div><div class="chart-label">Apr</div>
-                                <div class="chart-label">May</div><div class="chart-label">Jun</div>
-                                <div class="chart-label">Jul</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-video"></i> Live Classes Feed</h3>
-                            <button class="card-action" onclick="showPage('liveclasses')">Monitor All</button>
-                        </div>
-                        <div class="card-body" style="padding:12px">
-                            <div class="live-feed-item">
-                                <div class="live-dot ld-live"></div>
-                                <div class="lf-info"><h4>Tajweed — Madd Rules</h4><p>Ustaz Ibrahim • 12 students</p></div>
-                                <span class="lf-count lfc-live">● LIVE</span>
-                            </div>
-                            <div class="live-feed-item">
-                                <div class="live-dot ld-live"></div>
-                                <div class="lf-info"><h4>Hifz — Juz Amma</h4><p>Ustaza Maryam • 8 students</p></div>
-                                <span class="lf-count lfc-live">● LIVE</span>
-                            </div>
-                            <div class="live-feed-item">
-                                <div class="live-dot ld-live"></div>
-                                <div class="lf-info"><h4>Arabic Beginners</h4><p>Ustaz Ahmed • 15 students</p></div>
-                                <span class="lf-count lfc-live">● LIVE</span>
-                            </div>
-                            <div class="live-feed-item">
-                                <div class="live-dot ld-soon"></div>
-                                <div class="lf-info"><h4>Kids Quran Program</h4><p>Ustaza Fatima • Starts 2:00 PM</p></div>
-                                <span class="lf-count lfc-soon">In 15m</span>
-                            </div>
-                            <div class="live-feed-item">
-                                <div class="live-dot ld-done"></div>
-                                <div class="lf-info"><h4>Islamic Studies</h4><p>Ustaza Zahra • Completed</p></div>
-                                <span class="lf-count lfc-done">Done</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Students + Top Teachers -->
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-user-plus"></i> Recent Enrollments</h3>
-                            <button class="card-action" onclick="openModal('Add New Student')">+ Add</button>
-                        </div>
-                        <div style="overflow-x:auto">
-                            <table class="data-table">
-                                <thead>
-                                    <tr><th>Student</th><th>Course</th><th>Country</th><th>Plan</th><th>Status</th><th>Action</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(26,92,56,0.1)">👦</div><div class="user-info"><h4>Omar Hassan</h4><p>Age 12</p></div></div></td>
-                                        <td>Tajweed + Hifz</td><td>🇨🇦 Canada</td>
-                                        <td><span class="badge b-primary">Family</span></td>
-                                        <td><span class="badge b-success">Active</span></td>
-                                        <td><button class="action-btn ab-blue" onclick="showPage('students')"><i class="fas fa-eye"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(107,70,193,0.1)">👧</div><div class="user-info"><h4>Aisha Khan</h4><p>Age 9</p></div></div></td>
-                                        <td>Quran Reading</td><td>🇺🇸 USA</td>
-                                        <td><span class="badge b-blue">Single</span></td>
-                                        <td><span class="badge b-success">Active</span></td>
-                                        <td><button class="action-btn ab-blue" onclick="showPage('students')"><i class="fas fa-eye"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(49,130,206,0.1)">👦</div><div class="user-info"><h4>Yusuf Rahman</h4><p>Age 14</p></div></div></td>
-                                        <td>Hifz Program</td><td>🇬🇧 UK</td>
-                                        <td><span class="badge b-purple">Premium</span></td>
-                                        <td><span class="badge b-warning">Trial</span></td>
-                                        <td><button class="action-btn ab-blue" onclick="showPage('students')"><i class="fas fa-eye"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(0,137,123,0.1)">👧</div><div class="user-info"><h4>Fatima Malik</h4><p>Age 7</p></div></div></td>
-                                        <td>Kids Program</td><td>🇦🇺 Australia</td>
-                                        <td><span class="badge b-primary">Family</span></td>
-                                        <td><span class="badge b-success">Active</span></td>
-                                        <td><button class="action-btn ab-blue" onclick="showPage('students')"><i class="fas fa-eye"></i></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-star"></i> Top Performing Teachers</h3>
-                            <button class="card-action" onclick="showPage('teachers')">View All</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="teacher-list-item">
-                                <div class="tli-avatar" style="background:linear-gradient(135deg,#0d3d25,#1a5c38)">👩‍🏫</div>
-                                <div class="tli-info">
-                                    <h4>Ustaza Fatima Zahra</h4>
-                                    <div class="tli-stars">★★★★★</div>
-                                    <p>Kids Specialist • 5.0 • 198 reviews • 42 students</p>
-                                </div>
-                                <span class="badge b-success">Top</span>
-                            </div>
-                            <div class="teacher-list-item">
-                                <div class="tli-avatar" style="background:linear-gradient(135deg,#1a3a6b,#2d5aa0)">👨‍🏫</div>
-                                <div class="tli-info">
-                                    <h4>Ustaz Ibrahim Al-Qari</h4>
-                                    <div class="tli-stars">★★★★★</div>
-                                    <p>Tajweed Expert • 4.9 • 230 reviews • 38 students</p>
-                                </div>
-                                <span class="badge b-primary">#2</span>
-                            </div>
-                            <div class="teacher-list-item">
-                                <div class="tli-avatar" style="background:linear-gradient(135deg,#004d40,#00897b)">👩‍🏫</div>
-                                <div class="tli-info">
-                                    <h4>Ustaza Maryam Hassan</h4>
-                                    <div class="tli-stars">★★★★★</div>
-                                    <p>Hifz Specialist • 4.9 • 185 reviews • 35 students</p>
-                                </div>
-                                <span class="badge b-blue">#3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Course + Revenue Progress -->
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-book-open"></i> Course Enrollment Stats</h3></div>
-                        <div class="card-body">
-                            <div style="margin-bottom:14px"><div style="display:flex; justify-content:space-between; margin-bottom:6px"><span style="font-size:13px; font-weight:600">🎤 Tajweed Course</span><span style="font-size:12px; font-weight:700; color:var(--primary)">1,840 students</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-green" style="width:85%"></div></div></div>
-                            <div style="margin-bottom:14px"><div style="display:flex; justify-content:space-between; margin-bottom:6px"><span style="font-size:13px; font-weight:600">🧠 Hifz Program</span><span style="font-size:12px; font-weight:700; color:var(--primary)">1,230 students</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-blue" style="width:65%"></div></div></div>
-                            <div style="margin-bottom:14px"><div style="display:flex; justify-content:space-between; margin-bottom:6px"><span style="font-size:13px; font-weight:600">👶 Kids Program</span><span style="font-size:12px; font-weight:700; color:var(--primary)">980 students</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-gold" style="width:55%"></div></div></div>
-                            <div style="margin-bottom:14px"><div style="display:flex; justify-content:space-between; margin-bottom:6px"><span style="font-size:13px; font-weight:600">🔤 Arabic Language</span><span style="font-size:12px; font-weight:700; color:var(--primary)">740 students</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-purple" style="width:45%"></div></div></div>
-                            <div><div style="display:flex; justify-content:space-between; margin-bottom:6px"><span style="font-size:13px; font-weight:600">☪️ Islamic Studies</span><span style="font-size:12px; font-weight:700; color:var(--primary)">457 students</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-teal" style="width:30%"></div></div></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-globe"></i> Students by Country</h3></div>
-                        <div class="card-body">
-                            <div style="display:flex; flex-direction:column; gap:10px">
-                                <div style="display:flex; align-items:center; gap:12px"><span style="font-size:20px">🇺🇸</span><div style="flex:1"><div style="display:flex; justify-content:space-between; margin-bottom:4px"><span style="font-size:12px; font-weight:600">United States</span><span style="font-size:12px; font-weight:700; color:var(--primary)">1,240</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-green" style="width:78%"></div></div></div></div>
-                                <div style="display:flex; align-items:center; gap:12px"><span style="font-size:20px">🇬🇧</span><div style="flex:1"><div style="display:flex; justify-content:space-between; margin-bottom:4px"><span style="font-size:12px; font-weight:600">United Kingdom</span><span style="font-size:12px; font-weight:700; color:var(--primary)">890</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-blue" style="width:62%"></div></div></div></div>
-                                <div style="display:flex; align-items:center; gap:12px"><span style="font-size:20px">🇨🇦</span><div style="flex:1"><div style="display:flex; justify-content:space-between; margin-bottom:4px"><span style="font-size:12px; font-weight:600">Canada</span><span style="font-size:12px; font-weight:700; color:var(--primary)">620</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-gold" style="width:48%"></div></div></div></div>
-                                <div style="display:flex; align-items:center; gap:12px"><span style="font-size:20px">🇦🇺</span><div style="flex:1"><div style="display:flex; justify-content:space-between; margin-bottom:4px"><span style="font-size:12px; font-weight:600">Australia</span><span style="font-size:12px; font-weight:700; color:var(--primary)">410</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-purple" style="width:35%"></div></div></div></div>
-                                <div style="display:flex; align-items:center; gap:12px"><span style="font-size:20px">🇵🇰</span><div style="flex:1"><div style="display:flex; justify-content:space-between; margin-bottom:4px"><span style="font-size:12px; font-weight:600">Pakistan</span><span style="font-size:12px; font-weight:700; color:var(--primary)">380</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-teal" style="width:30%"></div></div></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: ANALYTICS
-                 ============================================ -->
-            <div class="dash-page" id="page-analytics">
-                <div class="analytics-row">
-                    <div class="analytics-mini"><div class="icon">📈</div><h3>+18.4%</h3><p>Revenue Growth</p></div>
-                    <div class="analytics-mini"><div class="icon">👥</div><h3>+84</h3><p>New Students/Month</p></div>
-                    <div class="analytics-mini"><div class="icon">🔄</div><h3>91%</h3><p>Retention Rate</p></div>
-                    <div class="analytics-mini"><div class="icon">⭐</div><h3>4.92</h3><p>Average Rating</p></div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Revenue Trend (2025)</h3></div>
-                        <div class="card-body" style="padding:14px">
-                            <div class="chart-placeholder">
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#2d8653,#1a5c38); height:55%"><div class="tooltip">Jan: $38K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#2d8653,#1a5c38); height:62%"><div class="tooltip">Feb: $42K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#2d8653,#1a5c38); height:68%"><div class="tooltip">Mar: $44K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#3182ce,#63b3ed); height:75%"><div class="tooltip">Apr: $46K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#3182ce,#63b3ed); height:80%"><div class="tooltip">May: $47.5K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#f0a500,#ffc107); height:88%"><div class="tooltip">Jun: $48.2K</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#f0a500,#ffc107); height:100%"><div class="tooltip">Jul: $49.87K</div></div>
-                            </div>
-                            <div class="chart-labels">
-                                <div class="chart-label">Jan</div><div class="chart-label">Feb</div><div class="chart-label">Mar</div><div class="chart-label">Apr</div><div class="chart-label">May</div><div class="chart-label">Jun</div><div class="chart-label">Jul</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-users"></i> Student Growth</h3></div>
-                        <div class="card-body" style="padding:14px">
-                            <div class="chart-placeholder">
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#6b46c1,#9f7aea); height:45%"><div class="tooltip">Jan: 4,200</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#6b46c1,#9f7aea); height:52%"><div class="tooltip">Feb: 4,380</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#6b46c1,#9f7aea); height:60%"><div class="tooltip">Mar: 4,570</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#00897b,#26a69a); height:68%"><div class="tooltip">Apr: 4,720</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#00897b,#26a69a); height:75%"><div class="tooltip">May: 4,890</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#f0a500,#ffc107); height:88%"><div class="tooltip">Jun: 5,090</div></div>
-                                <div class="chart-bar" style="background:linear-gradient(180deg,#f0a500,#ffc107); height:100%"><div class="tooltip">Jul: 5,247</div></div>
-                            </div>
-                            <div class="chart-labels">
-                                <div class="chart-label">Jan</div><div class="chart-label">Feb</div><div class="chart-label">Mar</div><div class="chart-label">Apr</div><div class="chart-label">May</div><div class="chart-label">Jun</div><div class="chart-label">Jul</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-table"></i> Key Metrics Summary</h3></div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Metric</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Trend</th></tr></thead>
-                            <tbody>
-                                <tr><td><strong>New Students</strong></td><td>180</td><td>198</td><td>210</td><td>225</td><td>248</td><td>260</td><td>612</td><td><span class="badge b-success">↑ +18%</span></td></tr>
-                                <tr><td><strong>Revenue ($K)</strong></td><td>38</td><td>42</td><td>44</td><td>46</td><td>47.5</td><td>48.2</td><td>49.87</td><td><span class="badge b-success">↑ +3.4%</span></td></tr>
-                                <tr><td><strong>Classes Held</strong></td><td>1,240</td><td>1,380</td><td>1,450</td><td>1,560</td><td>1,620</td><td>1,740</td><td>1,840</td><td><span class="badge b-success">↑ +5.7%</span></td></tr>
-                                <tr><td><strong>Avg. Rating</strong></td><td>4.85</td><td>4.87</td><td>4.88</td><td>4.89</td><td>4.90</td><td>4.91</td><td>4.92</td><td><span class="badge b-success">↑ +0.01</span></td></tr>
-                                <tr><td><strong>Retention %</strong></td><td>88%</td><td>89%</td><td>89%</td><td>90%</td><td>90%</td><td>91%</td><td>91%</td><td><span class="badge b-success">↑ Stable</span></td></tr>
-                                <tr><td><strong>Dropout %</strong></td><td>12%</td><td>11%</td><td>11%</td><td>10%</td><td>10%</td><td>9%</td><td>9%</td><td><span class="badge b-success">↓ Good</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: LIVE CLASSES
-                 ============================================ -->
-            <div class="dash-page" id="page-liveclasses">
-                <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
-                    <div class="stat-card sc-red"><div class="stat-card-top"><div class="stat-icon si-red">🔴</div><div class="stat-trend trend-up">Live</div></div><h2>12</h2><p>Live Classes Now</p></div>
-                    <div class="stat-card sc-gold"><div class="stat-card-top"><div class="stat-icon si-gold">⏳</div></div><h2>8</h2><p>Starting Soon</p></div>
-                    <div class="stat-card sc-green"><div class="stat-card-top"><div class="stat-icon si-green">✅</div></div><h2>47</h2><p>Completed Today</p></div>
-                    <div class="stat-card sc-blue"><div class="stat-card-top"><div class="stat-icon si-blue">👥</div></div><h2>186</h2><p>Students In Class</p></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-broadcast-tower"></i> All Live & Upcoming Classes</h3><button class="card-action" onclick="showPage('schedule')">Full Schedule</button></div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Status</th><th>Course</th><th>Teacher</th><th>Students</th><th>Time</th><th>Duration</th><th>Action</th></tr></thead>
-                            <tbody>
-                                <tr><td><span class="badge b-live">● LIVE</span></td><td>Tajweed — Madd Rules</td><td>👨‍🏫 Ustaz Ibrahim</td><td>12</td><td>10:00 AM</td><td>45 min</td><td><button class="action-btn ab-danger" onclick="showToast('Joining class monitor...')"><i class="fas fa-eye"></i> Watch</button></td></tr>
-                                <tr><td><span class="badge b-live">● LIVE</span></td><td>Hifz — Juz Amma</td><td>👩‍🏫 Ustaza Maryam</td><td>8</td><td>10:15 AM</td><td>45 min</td><td><button class="action-btn ab-danger"><i class="fas fa-eye"></i> Watch</button></td></tr>
-                                <tr><td><span class="badge b-live">● LIVE</span></td><td>Arabic Beginners</td><td>👨‍🏫 Ustaz Ahmed</td><td>15</td><td>10:30 AM</td><td>30 min</td><td><button class="action-btn ab-danger"><i class="fas fa-eye"></i> Watch</button></td></tr>
-                                <tr><td><span class="badge b-warning">Soon</span></td><td>Kids Program</td><td>👩‍🏫 Ustaza Fatima</td><td>10</td><td>2:00 PM</td><td>30 min</td><td><button class="action-btn ab-outline">Scheduled</button></td></tr>
-                                <tr><td><span class="badge b-warning">Soon</span></td><td>Islamic Studies</td><td>👩‍🏫 Ustaza Zahra</td><td>20</td><td>3:00 PM</td><td>45 min</td><td><button class="action-btn ab-outline">Scheduled</button></td></tr>
-                                <tr><td><span class="badge b-success">Done</span></td><td>Quran Reading L1</td><td>👨‍🏫 Ustaz Bilal</td><td>14</td><td>8:00 AM</td><td>45 min</td><td><button class="action-btn ab-blue"><i class="fas fa-play"></i> Recording</button></td></tr>
-                                <tr><td><span class="badge b-success">Done</span></td><td>Tajweed Advanced</td><td>👨‍🏫 Ustaz Ibrahim</td><td>9</td><td>9:00 AM</td><td>60 min</td><td><button class="action-btn ab-blue"><i class="fas fa-play"></i> Recording</button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: STUDENTS
-                 ============================================ -->
-            <div class="dash-page" id="page-students">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-user-graduate"></i> All Students (5,247)</h3>
-                        <div style="display:flex; gap:8px">
-                            <button class="action-btn ab-outline"><i class="fas fa-filter"></i> Filter</button>
-                            <button class="action-btn ab-outline"><i class="fas fa-download"></i> Export</button>
-                            <button class="action-btn ab-primary" onclick="openModal('Add New Student')"><i class="fas fa-plus"></i> Add Student</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 18px; border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap">
-                        <input type="text" placeholder="🔍 Search students..." class="form-input" style="width:220px; padding:8px 13px; font-size:12px">
-                        <select class="form-input" style="width:160px; padding:8px 13px; font-size:12px"><option>All Courses</option><option>Tajweed</option><option>Hifz</option><option>Arabic</option><option>Islamic Studies</option><option>Kids Program</option></select>
-                        <select class="form-input" style="width:140px; padding:8px 13px; font-size:12px"><option>All Plans</option><option>Single Child</option><option>Family</option><option>Premium</option></select>
-                        <select class="form-input" style="width:130px; padding:8px 13px; font-size:12px"><option>All Status</option><option>Active</option><option>Trial</option><option>Inactive</option></select>
-                    </div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Student</th><th>Age</th><th>Course</th><th>Teacher</th><th>Country</th><th>Plan</th><th>Attendance</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(26,92,56,0.1)">👦</div><div class="user-info"><h4>Omar Hassan</h4><p>omar@email.com</p></div></div></td><td>12</td><td>Tajweed + Hifz</td><td>Ustaz Ibrahim</td><td>🇨🇦 CA</td><td><span class="badge b-primary">Family</span></td><td>92%</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue" onclick="showToast('Viewing student profile...')"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline" onclick="showToast('Editing student...')"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger" onclick="showToast('Are you sure?', 'error')"><i class="fas fa-trash"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(107,70,193,0.1)">👧</div><div class="user-info"><h4>Aisha Khan</h4><p>aisha@email.com</p></div></div></td><td>9</td><td>Quran Reading</td><td>Ustaza Fatima</td><td>🇺🇸 US</td><td><span class="badge b-blue">Single</span></td><td>88%</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger"><i class="fas fa-trash"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(49,130,206,0.1)">👦</div><div class="user-info"><h4>Yusuf Rahman</h4><p>yusuf@email.com</p></div></div></td><td>14</td><td>Hifz Program</td><td>Ustaza Maryam</td><td>🇬🇧 UK</td><td><span class="badge b-purple">Premium</span></td><td>75%</td><td><span class="badge b-warning">Trial</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger"><i class="fas fa-trash"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(0,137,123,0.1)">👧</div><div class="user-info"><h4>Fatima Malik</h4><p>fatima@email.com</p></div></div></td><td>7</td><td>Kids Program</td><td>Ustaza Fatima</td><td>🇦🇺 AU</td><td><span class="badge b-primary">Family</span></td><td>95%</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger"><i class="fas fa-trash"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(240,165,0,0.1)">👦</div><div class="user-info"><h4>Ahmad Siddiqui</h4><p>ahmad@email.com</p></div></div></td><td>16</td><td>Arabic + Tajweed</td><td>Ustaz Ahmed</td><td>🇵🇰 PK</td><td><span class="badge b-primary">Family</span></td><td>80%</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger"><i class="fas fa-trash"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(229,62,62,0.1)">👧</div><div class="user-info"><h4>Zainab Ali</h4><p>zainab@email.com</p></div></div></td><td>11</td><td>Islamic Studies</td><td>Ustaza Zahra</td><td>🇦🇪 UAE</td><td><span class="badge b-blue">Single</span></td><td>70%</td><td><span class="badge b-danger">Inactive</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button><button class="action-btn ab-danger"><i class="fas fa-trash"></i></button></div></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border)">
-                        <span style="font-size:12px; color:var(--text-light)">Showing 1-6 of 5,247 students</span>
-                        <div style="display:flex; gap:6px">
-                            <button class="action-btn ab-outline">← Prev</button>
-                            <button class="action-btn ab-primary">1</button>
-                            <button class="action-btn ab-outline">2</button>
-                            <button class="action-btn ab-outline">3</button>
-                            <button class="action-btn ab-outline">Next →</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: TEACHERS
-                 ============================================ -->
-            <div class="dash-page" id="page-teachers">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-chalkboard-teacher"></i> All Teachers (152)</h3>
-                        <div style="display:flex; gap:8px">
-                            <button class="action-btn ab-outline"><i class="fas fa-download"></i> Export</button>
-                            <button class="action-btn ab-primary" onclick="openModal('Add New Teacher')"><i class="fas fa-plus"></i> Add Teacher</button>
-                        </div>
-                    </div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Teacher</th><th>Specialization</th><th>Students</th><th>Classes/Week</th><th>Rating</th><th>Salary</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:linear-gradient(135deg,#0d3d25,#1a5c38)">👨‍🏫</div><div class="user-info"><h4>Ustaz Ibrahim Al-Qari</h4><p>Ijazah • 8 yrs exp</p></div></div></td><td>Tajweed</td><td>38</td><td>24</td><td>⭐ 4.9</td><td>$2,400</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue" onclick="showToast('Viewing teacher profile')"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline" onclick="showToast('Editing teacher')"><i class="fas fa-edit"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:linear-gradient(135deg,#1a3a6b,#2d5aa0)">👩‍🏫</div><div class="user-info"><h4>Ustaza Maryam Hassan</h4><p>Hafiza • 6 yrs exp</p></div></div></td><td>Hifz</td><td>35</td><td>20</td><td>⭐ 4.9</td><td>$2,200</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:linear-gradient(135deg,#004d40,#00897b)">👨‍🏫</div><div class="user-info"><h4>Ustaz Ahmed Siddiqui</h4><p>BA Arabic • 10 yrs exp</p></div></div></td><td>Arabic</td><td>42</td><td>28</td><td>⭐ 4.8</td><td>$2,600</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:linear-gradient(135deg,#2d1b69,#6b46c1)">👩‍🏫</div><div class="user-info"><h4>Ustaza Fatima Zahra</h4><p>Kids Certified • 7 yrs exp</p></div></div></td><td>Kids Program</td><td>45</td><td>30</td><td>⭐ 5.0</td><td>$2,800</td><td><span class="badge b-success">Active</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></div></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:linear-gradient(135deg,#7b4f00,#c07d00)">👨‍🏫</div><div class="user-info"><h4>Ustaz Bilal Qureshi</h4><p>Islamic Studies • 5 yrs</p></div></div></td><td>Islamic Studies</td><td>28</td><td>16</td><td>⭐ 4.7</td><td>$1,800</td><td><span class="badge b-warning">Part-time</span></td><td><div style="display:flex;gap:4px"><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></div></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: PARENTS
-                 ============================================ -->
-            <div class="dash-page" id="page-parents">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-users"></i> All Parents</h3>
-                        <button class="action-btn ab-primary" onclick="openModal('Add Parent Account')"><i class="fas fa-plus"></i> Add Parent</button>
-                    </div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Parent</th><th>Children</th><th>Plan</th><th>Country</th><th>Member Since</th><th>Total Paid</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(240,165,0,0.12)">👨</div><div class="user-info"><h4>Mr. Yusuf Ali</h4><p>yusuf@email.com</p></div></div></td><td>👦 Omar, 👧 Sara</td><td><span class="badge b-primary">Family</span></td><td>🇨🇦 Canada</td><td>Jan 2025</td><td style="color:var(--success); font-weight:700">$349.93</td><td><span class="badge b-success">Active</span></td><td><button class="action-btn ab-blue" onclick="showToast('Viewing parent account')"><i class="fas fa-eye"></i></button></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(49,130,206,0.12)">👩</div><div class="user-info"><h4>Mrs. Fatima Khan</h4><p>fatima.k@email.com</p></div></div></td><td>👦 Ahmed</td><td><span class="badge b-blue">Single</span></td><td>🇬🇧 UK</td><td>Mar 2025</td><td style="color:var(--success); font-weight:700">$149.95</td><td><span class="badge b-success">Active</span></td><td><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(107,70,193,0.12)">👨</div><div class="user-info"><h4>Brother Tariq Malik</h4><p>tariq@email.com</p></div></div></td><td>👧 Zainab, 👦 Hassan, 👧 Noor</td><td><span class="badge b-purple">Premium</span></td><td>🇦🇺 Australia</td><td>Feb 2025</td><td style="color:var(--success); font-weight:700">$479.94</td><td><span class="badge b-success">Active</span></td><td><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button></td></tr>
-                                <tr><td><div class="user-row"><div class="user-avatar-sm" style="background:rgba(229,62,62,0.12)">👩</div><div class="user-info"><h4>Sister Aisha Rahman</h4><p>aisha.r@email.com</p></div></div></td><td>👧 Mariam</td><td><span class="badge b-blue">Single</span></td><td>🇺🇸 USA</td><td>May 2025</td><td style="color:var(--success); font-weight:700">$59.98</td><td><span class="badge b-warning">Trial</span></td><td><button class="action-btn ab-blue"><i class="fas fa-eye"></i></button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: COURSES
-                 ============================================ -->
-            <div class="dash-page" id="page-courses">
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-book-open"></i> Course Management</h3><button class="action-btn ab-primary" onclick="openModal('Add New Course')"><i class="fas fa-plus"></i> Add Course</button></div>
-                        <div style="overflow-x:auto">
-                            <table class="data-table">
-                                <thead><tr><th>Course</th><th>Students</th><th>Teachers</th><th>Revenue</th><th>Rating</th><th>Status</th></tr></thead>
-                                <tbody>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🎤</span><strong>Tajweed Course</strong></div></td><td>1,840</td><td>28</td><td>$24.8K</td><td>⭐ 4.9</td><td><span class="badge b-success">Active</span></td></tr>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🧠</span><strong>Hifz Program</strong></div></td><td>1,230</td><td>22</td><td>$18.2K</td><td>⭐ 4.9</td><td><span class="badge b-success">Active</span></td></tr>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">👶</span><strong>Kids Program</strong></div></td><td>980</td><td>18</td><td>$14.7K</td><td>⭐ 5.0</td><td><span class="badge b-success">Active</span></td></tr>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔤</span><strong>Arabic Language</strong></div></td><td>740</td><td>15</td><td>$9.8K</td><td>⭐ 4.8</td><td><span class="badge b-success">Active</span></td></tr>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">☪️</span><strong>Islamic Studies</strong></div></td><td>457</td><td>12</td><td>$6.4K</td><td>⭐ 4.7</td><td><span class="badge b-success">Active</span></td></tr>
-                                    <tr><td><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">📖</span><strong>Quran Reading</strong></div></td><td>0</td><td>5</td><td>$0</td><td>—</td><td><span class="badge b-warning">Draft</span></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Course Revenue Share</h3></div>
-                        <div class="card-body">
-                            <div style="display:flex; flex-direction:column; gap:12px">
-                                <div><div style="display:flex; justify-content:space-between; margin-bottom:5px"><span style="font-size:13px; font-weight:600">🎤 Tajweed Course</span><span style="font-size:13px; font-weight:800; color:var(--primary)">$24.8K (42%)</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-green" style="width:85%"></div></div></div>
-                                <div><div style="display:flex; justify-content:space-between; margin-bottom:5px"><span style="font-size:13px; font-weight:600">🧠 Hifz Program</span><span style="font-size:13px; font-weight:800; color:var(--primary)">$18.2K (31%)</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-blue" style="width:65%"></div></div></div>
-                                <div><div style="display:flex; justify-content:space-between; margin-bottom:5px"><span style="font-size:13px; font-weight:600">👶 Kids Program</span><span style="font-size:13px; font-weight:800; color:var(--primary)">$14.7K (25%)</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-gold" style="width:52%"></div></div></div>
-                                <div><div style="display:flex; justify-content:space-between; margin-bottom:5px"><span style="font-size:13px; font-weight:600">🔤 Arabic Language</span><span style="font-size:13px; font-weight:800; color:var(--primary)">$9.8K (17%)</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-purple" style="width:38%"></div></div></div>
-                                <div><div style="display:flex; justify-content:space-between; margin-bottom:5px"><span style="font-size:13px; font-weight:600">☪️ Islamic Studies</span><span style="font-size:13px; font-weight:800; color:var(--primary)">$6.4K (11%)</span></div><div class="prog-bar-wrap"><div class="prog-fill pf-teal" style="width:25%"></div></div></div>
-                            </div>
-                            <div style="margin-top:18px; background:linear-gradient(135deg,#0d3d25,#1a5c38); border-radius:12px; padding:14px; color:white; text-align:center">
-                                <div style="font-size:28px; font-weight:800; color:var(--secondary-light)">$73.9K</div>
-                                <div style="font-size:12px; color:rgba(255,255,255,0.7)">Total Course Revenue — July 2025</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: SCHEDULE
-                 ============================================ -->
-            <div class="dash-page" id="page-schedule">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-calendar-alt"></i> Master Class Schedule</h3>
-                        <div style="display:flex;gap:8px">
-                            <button class="action-btn ab-outline"><i class="fas fa-filter"></i> Filter</button>
-                            <button class="action-btn ab-primary" onclick="openModal('Schedule New Class')"><i class="fas fa-plus"></i> Schedule Class</button>
-                        </div>
-                    </div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Day</th><th>Time</th><th>Course</th><th>Teacher</th><th>Students</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody>
-                                <tr><td><strong>Saturday</strong></td><td>10:00 AM</td><td>Tajweed — Madd Rules</td><td>Ustaz Ibrahim</td><td>12</td><td><span class="badge b-primary">1-on-1</span></td><td><span class="badge b-live">● Live</span></td><td><button class="action-btn ab-danger"><i class="fas fa-eye"></i></button></td></tr>
-                                <tr><td>Saturday</td><td>2:00 PM</td><td>Hifz — Juz Amma</td><td>Ustaza Maryam</td><td>8</td><td><span class="badge b-blue">Group</span></td><td><span class="badge b-warning">Upcoming</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                                <tr><td>Saturday</td><td>4:00 PM</td><td>Kids Program</td><td>Ustaza Fatima</td><td>10</td><td><span class="badge b-blue">Group</span></td><td><span class="badge b-warning">Upcoming</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                                <tr><td>Sunday</td><td>10:00 AM</td><td>Arabic Language</td><td>Ustaz Ahmed</td><td>15</td><td><span class="badge b-blue">Group</span></td><td><span class="badge b-primary">Scheduled</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                                <tr><td>Sunday</td><td>3:00 PM</td><td>Islamic Studies</td><td>Ustaza Zahra</td><td>20</td><td><span class="badge b-blue">Group</span></td><td><span class="badge b-primary">Scheduled</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                                <tr><td>Monday</td><td>10:00 AM</td><td>Tajweed Advanced</td><td>Ustaz Ibrahim</td><td>9</td><td><span class="badge b-primary">1-on-1</span></td><td><span class="badge b-primary">Scheduled</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                                <tr><td>Tuesday</td><td>2:00 PM</td><td>Hifz — Surah Al-Mulk</td><td>Ustaza Maryam</td><td>6</td><td><span class="badge b-primary">1-on-1</span></td><td><span class="badge b-primary">Scheduled</span></td><td><button class="action-btn ab-outline"><i class="fas fa-edit"></i></button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: PAYMENTS
-                 ============================================ -->
-            <div class="dash-page" id="page-payments">
-                <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
-                    <div class="stat-card sc-green"><div class="stat-card-top"><div class="stat-icon si-green">💰</div><div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +18%</div></div><h2>$49.8K</h2><p>Total Revenue (July)</p></div>
-                    <div class="stat-card sc-blue"><div class="stat-card-top"><div class="stat-icon si-blue">✅</div><div class="stat-trend trend-up">+5.2K</div></div><h2>5,120</h2><p>Paid Subscribers</p></div>
-                    <div class="stat-card sc-gold"><div class="stat-card-top"><div class="stat-icon si-gold">⏳</div></div><h2>$3,240</h2><p>Pending Payments</p></div>
-                    <div class="stat-card sc-red"><div class="stat-card-top"><div class="stat-icon si-red">❌</div></div><h2>$1,180</h2><p>Failed Payments</p></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-credit-card"></i> Payment Transactions</h3>
-                        <div style="display:flex;gap:8px">
-                            <button class="action-btn ab-outline"><i class="fas fa-download"></i> Export CSV</button>
-                            <button class="action-btn ab-success" onclick="showToast('Processing refund...')">Issue Refund</button>
-                        </div>
-                    </div>
-                    <div style="overflow-x:auto">
-                        <table class="data-table">
-                            <thead><tr><th>Transaction ID</th><th>Parent</th><th>Plan</th><th>Amount</th><th>Date</th><th>Method</th><th>Status</th><th>Action</th></tr></thead>
-                            <tbody>
-                                <tr><td style="font-family:monospace; font-size:11px">#TXN-2025-7841</td><td>Mr. Yusuf Ali</td><td>Family</td><td style="font-weight:700; color:var(--success)">$49.99</td><td>Jul 1, 2025</td><td>💳 Visa ••4242</td><td><span class="badge b-success">✓ Paid</span></td><td><button class="action-btn ab-blue" onclick="showToast('Viewing receipt...')"><i class="fas fa-receipt"></i></button></td></tr>
-                                <tr><td style="font-family:monospace; font-size:11px">#TXN-2025-7840</td><td>Brother Tariq</td><td>Premium</td><td style="font-weight:700; color:var(--success)">$79.99</td><td>Jul 1, 2025</td><td>💳 MC ••8821</td><td><span class="badge b-success">✓ Paid</span></td><td><button class="action-btn ab-blue"><i class="fas fa-receipt"></i></button></td></tr>
-                                <tr><td style="font-family:monospace; font-size:11px">#TXN-2025-7839</td><td>Mrs. Fatima Khan</td><td>Single</td><td style="font-weight:700; color:var(--success)">$29.99</td><td>Jul 1, 2025</td><td>💳 Visa ••6698</td><td><span class="badge b-success">✓ Paid</span></td><td><button class="action-btn ab-blue"><i class="fas fa-receipt"></i></button></td></tr>
-                                <tr><td style="font-family:monospace; font-size:11px">#TXN-2025-7838</td><td>Sister Aisha R.</td><td>Single</td><td style="font-weight:700; color:var(--warning)">$29.99</td><td>Jul 5, 2025</td><td>💳 Visa ••1122</td><td><span class="badge b-warning">⏳ Pending</span></td><td><button class="action-btn ab-success" onclick="showToast('Sending payment reminder...')"><i class="fas fa-bell"></i></button></td></tr>
-                                <tr><td style="font-family:monospace; font-size:11px">#TXN-2025-7837</td><td>Mr. Omar Farooq</td><td>Family</td><td style="font-weight:700; color:var(--danger)">$49.99</td><td>Jul 3, 2025</td><td>💳 MC ••3344</td><td><span class="badge b-danger">✗ Failed</span></td><td><button class="action-btn ab-danger" onclick="showToast('Retrying payment...')"><i class="fas fa-redo"></i></button></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: REPORTS
-                 ============================================ -->
-            <div class="dash-page" id="page-reports">
-                <div class="grid-2">
-                    <div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-green">📊</div>
-                                <div class="report-info"><h4>Monthly Revenue Report</h4><p>July 2025 — All payment transactions</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-green" style="width:83%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>Revenue Goal: $60K</span><span>$49.8K achieved (83%)</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-blue">👥</div>
-                                <div class="report-info"><h4>Student Enrollment Report</h4><p>July 2025 — New & active students</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-blue" style="width:72%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>Target: 6,000 students</span><span>5,247 enrolled (87%)</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-gold">📅</div>
-                                <div class="report-info"><h4>Attendance & Class Report</h4><p>July 2025 — All classes & attendance</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-gold" style="width:94%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>1,840 classes held</span><span>94% attendance rate</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-purple">👨‍🏫</div>
-                                <div class="report-info"><h4>Teacher Performance Report</h4><p>July 2025 — Ratings & reviews</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-purple" style="width:98%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>152 active teachers</span><span>Avg. rating: 4.92/5</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-teal">🏆</div>
-                                <div class="report-info"><h4>Hifz Graduation Report</h4><p>2025 — Graduates & certificates issued</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-teal" style="width:60%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>Target: 900 graduates</span><span>534 graduated (60%)</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                        <div class="report-card">
-                            <div class="report-card-top">
-                                <div class="report-icon si-red">❌</div>
-                                <div class="report-info"><h4>Dropout & Churn Report</h4><p>July 2025 — Cancellations & refunds</p></div>
-                            </div>
-                            <div class="prog-bar-wrap"><div class="prog-fill pf-red" style="width:9%"></div></div>
-                            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-light); margin-top:5px; margin-bottom:12px"><span>Churn rate: 9%</span><span>Target: Below 10% ✅</span></div>
-                            <button class="action-btn ab-primary" onclick="showToast('Downloading report...')"><i class="fas fa-download"></i> Download PDF</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: MESSAGES
-                 ============================================ -->
-            <div class="dash-page" id="page-messages">
-                <div class="grid-3r">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-inbox"></i> Admin Inbox</h3><span style="font-size:11px; color:var(--danger); font-weight:700">18 unread</span></div>
-                        <div style="padding:8px">
-                            <div class="notif-item unread"><div class="notif-icon ni-blue">👨</div><div class="notif-content"><h4>Mr. Yusuf Ali (Parent)</h4><p>Question about rescheduling Omar's class...</p><span class="notif-time">10:30 AM</span></div></div>
-                            <div class="notif-item unread"><div class="notif-icon ni-green">👨‍🏫</div><div class="notif-content"><h4>Ustaz Ibrahim (Teacher)</h4><p>Requesting 2-week leave in August...</p><span class="notif-time">9:15 AM</span></div></div>
-                            <div class="notif-item unread"><div class="notif-icon ni-purple">👩</div><div class="notif-content"><h4>Mrs. Fatima Khan (Parent)</h4><p>Complaint about missed class notification...</p><span class="notif-time">Yesterday</span></div></div>
-                            <div class="notif-item"><div class="notif-icon ni-gold">👩‍🏫</div><div class="notif-content"><h4>Ustaza Maryam (Teacher)</h4><p>Monthly salary payment confirmation...</p><span class="notif-time">Jul 4</span></div></div>
-                            <div class="notif-item"><div class="notif-icon ni-red">👦</div><div class="notif-content"><h4>New Student Inquiry</h4><p>Interested in Hifz program for age 10...</p><span class="notif-time">Jul 3</span></div></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <div style="display:flex;align-items:center;gap:10px">
-                                <div style="width:36px; height:36px; border-radius:50%; background:rgba(240,165,0,0.12); display:flex; align-items:center; justify-content:center; font-size:17px">👨</div>
-                                <div><div style="font-size:13px; font-weight:700">Mr. Yusuf Ali</div><div style="font-size:10px; color:var(--success)">🟢 Online • Parent</div></div>
-                            </div>
-                        </div>
-                        <div style="padding:14px; background:var(--bg); height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:10px">
-                            <div style="display:flex; gap:8px; align-items:flex-end">
-                                <div style="width:28px; height:28px; border-radius:50%; background:rgba(240,165,0,0.12); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0">👨</div>
-                                <div style="background:white; border-radius:14px; border-bottom-left-radius:4px; padding:10px 13px; font-size:13px; max-width:80%; box-shadow:0 2px 8px rgba(0,0,0,0.06)">Assalam Alaikum, can Omar's Saturday 2 PM Hifz class be rescheduled to Sunday? He has an appointment.<span style="display:block; font-size:10px; color:var(--text-light); margin-top:3px">10:30 AM</span></div>
-                            </div>
-                            <div style="display:flex; gap:8px; align-items:flex-end; flex-direction:row-reverse">
-                                <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--secondary),var(--secondary-light)); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0">👨‍💼</div>
-                                <div style="background:linear-gradient(135deg,var(--primary),var(--primary-light)); border-radius:14px; border-bottom-right-radius:4px; padding:10px 13px; font-size:13px; max-width:80%; color:white">Wa Alaikum Assalam! Of course, no problem. I'll reschedule Omar's class to Sunday 3 PM. Ustaza Maryam is available then. JazakAllah Khair!<span style="display:block; font-size:10px; color:rgba(255,255,255,0.7); margin-top:3px; text-align:right">10:45 AM</span></div>
-                            </div>
-                            <div style="display:flex; gap:8px; align-items:flex-end">
-                                <div style="width:28px; height:28px; border-radius:50%; background:rgba(240,165,0,0.12); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0">👨</div>
-                                <div style="background:white; border-radius:14px; border-bottom-left-radius:4px; padding:10px 13px; font-size:13px; max-width:80%; box-shadow:0 2px 8px rgba(0,0,0,0.06)">JazakAllah Khair! Sunday 3 PM is perfect. Thank you so much! 🤲<span style="display:block; font-size:10px; color:var(--text-light); margin-top:3px">10:50 AM</span></div>
-                            </div>
-                        </div>
-                        <div style="padding:12px; border-top:1px solid var(--border); display:flex; gap:8px">
-                            <div style="flex:1; background:var(--bg); border:1.5px solid var(--border); border-radius:20px; padding:9px 14px; font-size:12px; color:var(--text-light)">Type admin reply...</div>
-                            <button style="width:38px; height:38px; background:var(--primary); color:white; border:none; border-radius:50%; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center" onclick="showToast('Message sent! ✅')"><i class="fas fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: SUPPORT
-                 ============================================ -->
-            <div class="dash-page" id="page-support">
-                <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
-                    <div class="stat-card sc-red"><div class="stat-card-top"><div class="stat-icon si-red">🔴</div></div><h2>7</h2><p>Open Tickets</p></div>
-                    <div class="stat-card sc-gold"><div class="stat-card-top"><div class="stat-icon si-gold">⏳</div></div><h2>12</h2><p>In Progress</p></div>
-                    <div class="stat-card sc-green"><div class="stat-card-top"><div class="stat-icon si-green">✅</div></div><h2>284</h2><p>Resolved (July)</p></div>
-                    <div class="stat-card sc-blue"><div class="stat-card-top"><div class="stat-icon si-blue">⚡</div></div><h2>2.4h</h2><p>Avg. Response Time</p></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-headset"></i> Support Tickets</h3><button class="action-btn ab-primary" onclick="showToast('Creating new ticket...')"><i class="fas fa-plus"></i> New Ticket</button></div>
-                    <div class="card-body">
-                        <div class="ticket-item">
-                            <div class="ticket-priority tp-high"></div>
-                            <div class="ticket-info">
-                                <h4>Payment failed — Visa card declined</h4>
-                                <p>Parent: Mr. Omar Farooq • Family Plan • Cannot enroll children</p>
-                                <div class="ticket-meta"><span class="badge b-danger">High Priority</span><span class="badge b-warning">Open</span><span style="font-size:10px; color:var(--text-light)">Opened: Jul 5, 2025</span></div>
-                            </div>
-                            <button class="action-btn ab-primary" onclick="showToast('Opening ticket...')">Resolve</button>
-                        </div>
-                        <div class="ticket-item">
-                            <div class="ticket-priority tp-high"></div>
-                            <div class="ticket-info">
-                                <h4>Teacher not showing up for class</h4>
-                                <p>Parent: Mrs. Zainab Ahmed • 3 consecutive missed classes</p>
-                                <div class="ticket-meta"><span class="badge b-danger">High Priority</span><span class="badge b-warning">Open</span><span style="font-size:10px; color:var(--text-light)">Opened: Jul 4, 2025</span></div>
-                            </div>
-                            <button class="action-btn ab-primary" onclick="showToast('Opening ticket...')">Resolve</button>
-                        </div>
-                        <div class="ticket-item">
-                            <div class="ticket-priority tp-medium"></div>
-                            <div class="ticket-info">
-                                <h4>Request to change teacher</h4>
-                                <p>Parent: Brother Tariq Malik • Requesting female teacher for daughter</p>
-                                <div class="ticket-meta"><span class="badge b-warning">Medium</span><span class="badge b-blue">In Progress</span><span style="font-size:10px; color:var(--text-light)">Opened: Jul 3, 2025</span></div>
-                            </div>
-                            <button class="action-btn ab-success" onclick="showToast('Assigning new teacher...')">Assign</button>
-                        </div>
-                        <div class="ticket-item">
-                            <div class="ticket-priority tp-medium"></div>
-                            <div class="ticket-info">
-                                <h4>Class recording not available</h4>
-                                <p>Parent: Sister Aisha Rahman • Missing last week's recordings</p>
-                                <div class="ticket-meta"><span class="badge b-warning">Medium</span><span class="badge b-warning">Open</span><span style="font-size:10px; color:var(--text-light)">Opened: Jul 3, 2025</span></div>
-                            </div>
-                            <button class="action-btn ab-primary" onclick="showToast('Fixing issue...')">Fix</button>
-                        </div>
-                        <div class="ticket-item">
-                            <div class="ticket-priority tp-low"></div>
-                            <div class="ticket-info">
-                                <h4>Certificate not received</h4>
-                                <p>Student: Omar Hassan • Tajweed Level 1 certificate pending</p>
-                                <div class="ticket-meta"><span class="badge b-success">Low</span><span class="badge b-blue">In Progress</span><span style="font-size:10px; color:var(--text-light)">Opened: Jul 2, 2025</span></div>
-                            </div>
-                            <button class="action-btn ab-success" onclick="showToast('Sending certificate...')">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: NOTIFICATIONS
-                 ============================================ -->
-            <div class="dash-page" id="page-notifications">
-                <div class="card" style="max-width:720px; margin:0 auto">
-                    <div class="card-header"><h3><i class="fas fa-bell"></i> Admin Notifications</h3><button class="card-action">Mark All Read</button></div>
-                    <div>
-                        <div class="notif-item unread"><div class="notif-icon ni-red">🔴</div><div class="notif-content"><h4>12 Live Classes Running</h4><p>Currently 186 students in active classes. All teachers present.</p><span class="notif-time">Just now</span></div></div>
-                        <div class="notif-item unread"><div class="notif-icon ni-gold">💰</div><div class="notif-content"><h4>New Payment Received</h4><p>$49.99 from Mr. Yusuf Ali — Family Package July 2025</p><span class="notif-time">2 hours ago</span></div></div>
-                        <div class="notif-item unread"><div class="notif-icon ni-green">👥</div><div class="notif-content"><h4>New Student Enrolled</h4><p>Ahmad Malik (Age 8) enrolled in Kids Program from Pakistan.</p><span class="notif-time">3 hours ago</span></div></div>
-                        <div class="notif-item unread"><div class="notif-icon ni-red">❌</div><div class="notif-content"><h4>Payment Failed Alert</h4><p>$49.99 payment failed for Mr. Omar Farooq. Card declined. Action required.</p><span class="notif-time">4 hours ago</span></div></div>
-                        <div class="notif-item unread"><div class="notif-icon ni-blue">🏆</div><div class="notif-content"><h4>New Hafiz Graduate</h4><p>Fatima Ali from London has completed full Quran memorization! Ijazah to be issued.</p><span class="notif-time">Yesterday</span></div></div>
-                        <div class="notif-item"><div class="notif-icon ni-purple">👨‍🏫</div><div class="notif-content"><h4>New Teacher Application</h4><p>Ustaz Hamza Malik (Ijazah holder) applied to join as Tajweed teacher. Review pending.</p><span class="notif-time">Yesterday</span></div></div>
-                        <div class="notif-item"><div class="notif-icon ni-gold">⭐</div><div class="notif-content"><h4>Monthly Report Ready</h4><p>July 2025 analytics report is ready. Revenue: $49.8K | Students: 5,247</p><span class="notif-time">Jul 4, 2025</span></div></div>
-                        <div class="notif-item"><div class="notif-icon ni-green">📈</div><div class="notif-content"><h4>Milestone Achieved!</h4><p>Al-Noor Academy has crossed 5,000 active students! Alhamdulillah! 🎉</p><span class="notif-time">Jul 2, 2025</span></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PAGE: SETTINGS
-                 ============================================ -->
-            <div class="dash-page" id="page-settings">
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3><i class="fas fa-cog"></i> Academy Settings</h3></div>
-                        <div class="card-body">
-                            <div class="settings-section">
-                                <h3>🏛️ Academy Information</h3>
-                                <div class="form-grid">
-                                    <div class="form-group"><label>Academy Name</label><input type="text" class="form-input" value="Al-Noor Quran Academy"></div>
-                                    <div class="form-group"><label>Admin Email</label><input type="email" class="form-input" value="admin@alnooracademy.com"></div>
-                                    <div class="form-group"><label>Support Email</label><input type="email" class="form-input" value="info@alnooracademy.com"></div>
-                                    <div class="form-group"><label>WhatsApp</label><input type="tel" class="form-input" value="+1 (234) 567-8900"></div>
-                                    <div class="form-group"><label>Trial Period (days)</label><input type="number" class="form-input" value="3"></div>
-                                    <div class="form-group"><label>Max Class Size</label><input type="number" class="form-input" value="20"></div>
-                                </div>
-                                <button class="btn-save" onclick="showToast('Settings saved! ✅')"><i class="fas fa-save"></i> Save Settings</button>
-                            </div>
-
-                            <div class="settings-section">
-                                <h3>💰 Pricing Configuration</h3>
-                                <div class="form-grid">
-                                    <div class="form-group"><label>Single Child Plan</label><input type="text" class="form-input" value="$29.99/month"></div>
-                                    <div class="form-group"><label>Family Package</label><input type="text" class="form-input" value="$49.99/month"></div>
-                                    <div class="form-group"><label>Premium Plan</label><input type="text" class="form-input" value="$79.99/month"></div>
-                                    <div class="form-group"><label>Annual Discount</label><input type="text" class="form-input" value="20%"></div>
-                                </div>
-                                <button class="btn-save" onclick="showToast('Pricing updated! ✅')"><i class="fas fa-save"></i> Update Pricing</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="card" style="margin-bottom:18px">
-                            <div class="card-header"><h3><i class="fas fa-shield-alt"></i> System Settings</h3></div>
-                            <div class="card-body">
-                                <div class="setting-item"><div class="setting-info"><h4>Maintenance Mode</h4><p>Temporarily disable public access</p></div><div class="toggle-switch" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>New Registrations</h4><p>Allow new student signups</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>Auto Class Recordings</h4><p>Record all live sessions automatically</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>Email Notifications</h4><p>Send automated emails to users</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>Payment Auto-Retry</h4><p>Retry failed payments after 3 days</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>Parent Class Monitoring</h4><p>Allow parents to watch live classes</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                                <div class="setting-item"><div class="setting-info"><h4>Chatbot Active</h4><p>Website AI assistant enabled</p></div><div class="toggle-switch on" onclick="toggleSwitch(this)"></div></div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header"><h3><i class="fas fa-user-shield"></i> Admin Profile</h3></div>
-                            <div class="card-body">
-                                <div style="text-align:center; margin-bottom:18px">
-                                    <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,var(--secondary),var(--secondary-light)); display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 10px; border:4px solid rgba(240,165,0,0.2)">👨‍💼</div>
-                                    <button style="padding:6px 14px; background:var(--bg); border:1.5px solid var(--border); border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; color:var(--text-mid); font-family:'Poppins',sans-serif">📷 Change Photo</button>
-                                </div>
-                                <div class="form-grid">
-                                    <div class="form-group"><label>Full Name</label><input type="text" class="form-input" value="Dr. Khalid Admin"></div>
-                                    <div class="form-group"><label>Role</label><input type="text" class="form-input" value="Super Administrator" readonly></div>
-                                    <div class="form-group"><label>Email</label><input type="email" class="form-input" value="khalid@alnooracademy.com"></div>
-                                    <div class="form-group"><label>Phone</label><input type="tel" class="form-input" value="+1 (234) 567-0000"></div>
-                                </div>
-                                <button class="btn-save" onclick="showToast('Profile saved! ✅')"><i class="fas fa-save"></i> Save Profile</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- page-content -->
-    </div><!-- main-content -->
-</div><!-- dashboard-layout -->
-
+        <div class="field"><label>Target</label>
+          <select id="n-target"><option>All</option><option>Students</option><option>Teachers</option><option>Parents</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeForm('notice')">Cancel</button>
+      <button class="btn btn-primary" onclick="addNotice()">Post Karen</button>
+    </div>
+  </div>
+</div>
+ 
 <script>
-    // ===== PAGE NAVIGATION =====
-    const pageMeta = {
-        dashboard:   ['Admin Dashboard 🏛️',        'Al-Noor Quran Academy — Control Center'],
-        analytics:   ['Analytics & Reports 📊',    'Real-time data and performance metrics'],
-        liveclasses: ['Live Classes Monitor 🔴',   'Monitor all ongoing and upcoming classes'],
-        students:    ['Students Management 👥',    'Manage all enrolled students'],
-        teachers:    ['Teachers Management 👨‍🏫',   'Manage certified teachers'],
-        parents:     ['Parents Management 👨‍👩‍👧',    'Manage parent accounts'],
-        courses:     ['Course Management 📚',      'Manage academy courses and curriculum'],
-        schedule:    ['Master Schedule 📅',        'All classes schedule and timetable'],
-        payments:    ['Payments & Finance 💰',     'Revenue, transactions and billing'],
-        reports:     ['Reports & Downloads 📋',    'Generate and download reports'],
-        messages:    ['Admin Messages 💬',         'Communications with parents & teachers'],
-        support:     ['Support Tickets 🎧',        'Manage support requests'],
-        notifications:['Notifications 🔔',         'All system alerts and updates'],
-        settings:    ['System Settings ⚙️',        'Academy configuration and admin profile'],
-    };
-
-    function showPage(pageId) {
-        document.querySelectorAll('.dash-page').forEach(p => p.classList.remove('active'));
-        const t = document.getElementById('page-' + pageId);
-        if (t) t.classList.add('active');
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + pageId + "'")) {
-                item.classList.add('active');
-            }
-        });
-
-        if (pageMeta[pageId]) {
-            document.getElementById('topbarTitle').textContent = pageMeta[pageId][0];
-            document.getElementById('topbarSub').textContent   = pageMeta[pageId][1];
-        }
-
-        closeSidebar();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ===== SIDEBAR =====
-    function toggleSidebar() {
-        const s = document.getElementById('sidebar');
-        const o = document.getElementById('sidebarOverlay');
-        const open = s.classList.contains('mobile-open');
-        if (open) { s.classList.remove('mobile-open'); o.classList.remove('show'); }
-        else       { s.classList.add('mobile-open');    o.classList.add('show');    }
-    }
-
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('mobile-open');
-        document.getElementById('sidebarOverlay').classList.remove('show');
-    }
-
-    // ===== MODAL =====
-    function openModal(title) {
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('addModal').classList.add('show');
-    }
-
-    function closeModal() {
-        document.getElementById('addModal').classList.remove('show');
-    }
-
-    // ===== TOGGLE SWITCH =====
-    function toggleSwitch(el) { el.classList.toggle('on'); }
-
-    // ===== TOAST =====
-    function showToast(msg, type = 'success') {
-        const colors = { success: '#38a169', error: '#e53e3e', info: '#3182ce', warning: '#f0a500' };
-        const t = document.createElement('div');
-        t.style.cssText = `position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:${colors[type]||colors.success};color:white;padding:12px 22px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 8px 25px rgba(0,0,0,0.2);z-index:9999;font-family:'Poppins',sans-serif;white-space:nowrap;`;
-        t.textContent = msg;
-        document.body.appendChild(t);
-        setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 3000);
-    }
-
-    // ===== LIVE COUNTER =====
-    setInterval(() => {
-        const el = document.getElementById('sb-live');
-        if (el) el.textContent = Math.floor(Math.random() * 3) + 11;
-    }, 8000);
-
-    // ===== INIT =====
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            document.querySelectorAll('.prog-fill').forEach(b => {
-                const w = b.style.width; b.style.width = '0';
-                setTimeout(() => { b.style.width = w; }, 100);
-            });
-        }, 300);
-    });
-
-    // Close modal on overlay click
-    document.getElementById('addModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
+  let students = [], teachers = [], notices = [];
+  const avColors = ['av-g','av-b','av-a','av-r'];
+  const dotColors = { info:'#378ADD', warning:'#EF9F27', urgent:'#D85A30', success:'#1D9E75' };
+ 
+  function openForm(type){ document.getElementById('modal-'+type).classList.add('open'); }
+  function closeForm(type){ document.getElementById('modal-'+type).classList.remove('open'); }
+ 
+  function initials(name){ return name.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+ 
+  function updateStats(){
+    document.getElementById('stat-students').textContent = students.length || '—';
+    document.getElementById('stat-teachers').textContent = teachers.length || '—';
+  }
+ 
+  function renderStudents(){
+    const tb = document.getElementById('students-table');
+    if(!students.length){ tb.innerHTML='<tr><td colspan="3" class="empty">No students added yet.</td></tr>'; return; }
+    tb.innerHTML = students.slice(-6).reverse().map((s,i)=>`
+      <tr>
+        <td><div class="name-cell"><div class="av ${avColors[i%4]}">${initials(s.name)}</div>${s.name}</div></td>
+        <td>${s.cls}</td>
+        <td><span class="badge badge-${s.status==='Active'?'green':s.status==='Pending'?'amber':'red'}">${s.status}</span></td>
+      </tr>`).join('');
+    updateStats();
+  }
+ 
+  function renderTeachers(){
+    const tb = document.getElementById('teachers-table');
+    if(!teachers.length){ tb.innerHTML='<tr><td colspan="3" class="empty">No teachers added yet.</td></tr>'; return; }
+    tb.innerHTML = teachers.map((t,i)=>`
+      <tr>
+        <td><div class="name-cell"><div class="av ${avColors[i%4]}">${initials(t.name)}</div>${t.name}</div></td>
+        <td>${t.subject}</td>
+        <td style="color:#6b7280;font-size:12px">${t.classes}</td>
+      </tr>`).join('');
+    updateStats();
+  }
+ 
+  function renderNotices(){
+    const el = document.getElementById('notices-list');
+    if(!notices.length){ el.innerHTML='<div class="empty">No notices yet. Click + Add to create one.</div>'; return; }
+    el.innerHTML = notices.slice(-5).reverse().map(n=>`
+      <div class="notice-item">
+        <div class="n-dot" style="background:${dotColors[n.type]}"></div>
+        <div>
+          <div class="n-text">${n.detail}</div>
+          <div class="n-time">${n.title} • ${n.target} • Abhi</div>
+        </div>
+      </div>`).join('');
+  }
+ 
+  function addStudent(){
+    const name = document.getElementById('s-name').value.trim();
+    const cls = document.getElementById('s-class').value;
+    if(!name || !cls){ alert('Naam aur class zaroor bharen!'); return; }
+    students.push({ name, father: document.getElementById('s-father').value, cls, dob: document.getElementById('s-dob').value, phone: document.getElementById('s-phone').value, fee: document.getElementById('s-fee').value, addr: document.getElementById('s-addr').value, status: document.getElementById('s-status').value });
+    closeForm('student');
+    ['s-name','s-father','s-class','s-dob','s-phone','s-fee','s-addr'].forEach(id=>document.getElementById(id).value='');
+    renderStudents();
+  }
+ 
+  function addTeacher(){
+    const name = document.getElementById('t-name').value.trim();
+    const subject = document.getElementById('t-subject').value.trim();
+    if(!name || !subject){ alert('Naam aur subject zaroor bharen!'); return; }
+    teachers.push({ name, subject, classes: document.getElementById('t-classes').value, phone: document.getElementById('t-phone').value, qual: document.getElementById('t-qual').value, salary: document.getElementById('t-salary').value });
+    closeForm('teacher');
+    ['t-name','t-subject','t-classes','t-phone','t-qual','t-salary'].forEach(id=>document.getElementById(id).value='');
+    renderTeachers();
+  }
+ 
+  function addNotice(){
+    const title = document.getElementById('n-title').value.trim();
+    const detail = document.getElementById('n-detail').value.trim();
+    if(!title || !detail){ alert('Title aur detail zaroor bharen!'); return; }
+    notices.push({ title, detail, type: document.getElementById('n-type').value, target: document.getElementById('n-target').value });
+    closeForm('notice');
+    ['n-title','n-detail'].forEach(id=>document.getElementById(id).value='');
+    renderNotices();
+  }
+ 
+  // Close on backdrop click
+  document.querySelectorAll('.form-overlay').forEach(el=>{
+    el.addEventListener('click', e=>{ if(e.target===el) el.classList.remove('open'); });
+  });
 </script>
 </body>
 </html>
+ 
+
