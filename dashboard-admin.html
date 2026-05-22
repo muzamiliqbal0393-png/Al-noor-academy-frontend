@@ -1,323 +1,464 @@
-Claude finished the response
-
-noor acadmey klia admin klia ak dashboard chy ak student klia  ak parents klia ak teachers klia
-7:38 AM
-Reading frontend design skill
-
-Yeh rahe Noor Academy ke 4 dashboards! Upar buttons se switch karein:
-
-Admin — poori school ki overview: students, teachers, fee collection, hazri aur notices.
-
-Student — Ayesha ka portal: subjects ke marks, homework assignments aur aaj ka time table.
-
-Parents — walid/walida ka portal: fee details, teacher messages aur school events.
-
-Teacher — Ms. Amna ka portal: class schedule, hazri lena aur test results.
-
-Agar koi aur feature chahiye — jaise fee payment form, exam schedule, ya koi aur cheez — bata dein, add kar deta hoon!
-
-code do aur asa ho ky  without data ho q ky webite l  h ab
-7:42 AM
-Reading frontend design skill
-
-Bilkul! Yeh rahe 4 alag-alag HTML files — har ek portal ka apna code — without hardcoded data, forms ke sath taake website par use ho sake.
-Created 4 files, ran a command
-Done
-You are out of free messages until 12:30 PM
-Get more
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-Admin dashboard · HTML
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Noor Academy — Admin Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
-  :root {
-    --green: #0F6E56;
-    --green-light: #E1F5EE;
-    --green-mid: #1D9E75;
-    --amber: #EF9F27;
-    --amber-light: #FAEEDA;
-    --red: #D85A30;
-    --red-light: #FAECE7;
-    --blue: #378ADD;
-    --blue-light: #E6F1FB;
-    --text: #1a1a1a;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --bg: #f8faf9;
-    --white: #ffffff;
-    --radius: 10px;
-    --radius-lg: 14px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
- 
-  /* SIDEBAR */
-  .layout { display: flex; min-height: 100vh; }
-  .sidebar { width: 240px; background: var(--green); display: flex; flex-direction: column; padding: 0; flex-shrink: 0; }
-  .sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .sidebar-logo h1 { color: #fff; font-size: 17px; font-weight: 600; }
-  .sidebar-logo span { color: rgba(255,255,255,0.6); font-size: 12px; display: block; margin-top: 2px; }
-  .sidebar-nav { padding: 16px 12px; flex: 1; }
-  .nav-label { color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 8px; margin: 16px 0 6px; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; color: rgba(255,255,255,0.75); font-size: 13.5px; cursor: pointer; text-decoration: none; margin-bottom: 2px; transition: background 0.15s, color 0.15s; }
-  .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.15); color: #fff; }
-  .nav-item svg { width: 17px; height: 17px; flex-shrink: 0; }
-  .sidebar-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
-  .admin-chip { display: flex; align-items: center; gap: 10px; }
-  .admin-av { width: 34px; height: 34px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 600; }
-  .admin-info p { color: #fff; font-size: 13px; font-weight: 500; }
-  .admin-info span { color: rgba(255,255,255,0.5); font-size: 11px; }
- 
-  /* MAIN */
-  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-  .topbar { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 28px; height: 58px; display: flex; align-items: center; justify-content: space-between; }
-  .topbar h2 { font-size: 16px; font-weight: 600; }
-  .topbar-right { display: flex; align-items: center; gap: 12px; }
-  .btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: opacity 0.15s; }
-  .btn-primary { background: var(--green); color: #fff; }
-  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  .btn:hover { opacity: 0.85; }
-  .content { padding: 24px 28px; overflow-y: auto; flex: 1; }
- 
-  /* STATS */
-  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
-  .stat-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
-  .stat-box .label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-  .stat-box .value { font-size: 26px; font-weight: 600; color: var(--text); }
-  .stat-box .sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-  .stat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
- 
-  /* TABLES */
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .card-head h3 { font-size: 14px; font-weight: 600; }
-  .card-head a { font-size: 12px; color: var(--green); text-decoration: none; }
-  .card-body { padding: 0 18px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 10px 0 8px; color: var(--text-muted); font-weight: 500; font-size: 12px; border-bottom: 1px solid var(--border); }
-  td { padding: 10px 0; border-bottom: 1px solid #f3f4f6; color: var(--text); }
-  tr:last-child td { border-bottom: none; }
-  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
-  .badge-green { background: var(--green-light); color: var(--green); }
-  .badge-amber { background: var(--amber-light); color: #854F0B; }
-  .badge-red { background: var(--red-light); color: var(--red); }
-  .badge-blue { background: var(--blue-light); color: #185FA5; }
-  .av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
-  .av-g { background: var(--green-light); color: var(--green); }
-  .av-b { background: var(--blue-light); color: #185FA5; }
-  .av-a { background: var(--amber-light); color: #854F0B; }
-  .av-r { background: var(--red-light); color: var(--red); }
-  .name-cell { display: flex; align-items: center; gap: 8px; }
- 
-  /* FORM */
-  .form-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; }
-  .form-overlay.open { display: flex; }
-  .form-box { background: var(--white); border-radius: var(--radius-lg); width: 460px; max-width: 95vw; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
-  .form-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .form-head h3 { font-size: 15px; font-weight: 600; }
-  .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); line-height: 1; }
-  .form-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: 12px; font-weight: 500; color: var(--text-muted); }
-  .field input, .field select { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; color: var(--text); background: var(--white); }
-  .field input:focus, .field select:focus { border-color: var(--green); }
-  .form-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
- 
-  /* NOTICE LIST */
-  .notice-list { padding: 4px 0; }
-  .notice-item { display: flex; gap: 10px; padding: 11px 18px; border-bottom: 1px solid #f3f4f6; }
-  .notice-item:last-child { border-bottom: none; }
-  .n-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
-  .n-text { font-size: 13px; color: var(--text); }
-  .n-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
- 
-  /* EMPTY STATE */
-  .empty { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px; }
-  .empty svg { margin-bottom: 8px; opacity: 0.3; }
- 
-  @media (max-width: 900px) {
-    .sidebar { width: 60px; }
-    .sidebar-logo h1, .sidebar-logo span, .nav-label, .nav-item span, .admin-info { display: none; }
-    .nav-item { justify-content: center; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .grid2, .grid3 { grid-template-columns: 1fr; }
-  }
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #5a52d5;
+  --primary-glow: rgba(108,99,255,0.3);
+  --success: #00d4aa;
+  --warning: #ffa94d;
+  --danger: #ff6b6b;
+  --info: #74c0fc;
+  --bg: #0d0e1a;
+  --bg2: #12131f;
+  --bg3: #1a1b2e;
+  --card: rgba(255,255,255,0.04);
+  --card-border: rgba(255,255,255,0.08);
+  --text: #e8eaf6;
+  --text-muted: #8b8fa8;
+  --sidebar-w: 250px;
+  --topbar-h: 64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* Animated background */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 20%,rgba(108,99,255,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse at 80% 80%,rgba(0,212,170,0.05) 0%,transparent 60%);
+  pointer-events:none;z-index:0
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);
+  background:rgba(18,19,31,0.98);
+  border-right:1px solid var(--card-border);
+  backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;z-index:100;
+  transition:transform 0.3s ease
+}
+.sidebar-brand{
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--card-border);
+  display:flex;align-items:center;gap:12px
+}
+.brand-icon{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--primary),var(--success));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;box-shadow:0 4px 15px var(--primary-glow);
+  flex-shrink:0
+}
+.brand-text h1{font-size:15px;font-weight:700;color:var(--text)}
+.brand-text span{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em}
+.sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto}
+.nav-section{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;padding:12px 10px 6px}
+.nav-link{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:10px;
+  color:var(--text-muted);font-size:13.5px;font-weight:500;
+  cursor:pointer;text-decoration:none;margin-bottom:2px;
+  transition:all 0.2s ease;position:relative;overflow:hidden
+}
+.nav-link i{width:18px;text-align:center;font-size:14px;flex-shrink:0}
+.nav-link:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.nav-link.active{background:rgba(108,99,255,0.15);color:var(--primary)}
+.nav-link.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--primary),var(--success));
+  border-radius:0 3px 3px 0
+}
+.sidebar-footer{
+  padding:16px;border-top:1px solid var(--card-border)
+}
+.user-profile{
+  display:flex;align-items:center;gap:10px;
+  padding:10px;border-radius:10px;background:var(--card);
+  border:1px solid var(--card-border)
+}
+.user-av{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--primary),var(--success));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;flex-shrink:0
+}
+.user-info p{font-size:13px;font-weight:600;color:var(--text)}
+.user-info span{font-size:11px;color:var(--text-muted)}
+
+/* TOPBAR */
+.topbar{
+  position:fixed;left:var(--sidebar-w);right:0;top:0;height:var(--topbar-h);
+  background:rgba(13,14,26,0.95);
+  border-bottom:1px solid var(--card-border);
+  backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;z-index:90
+}
+.topbar-left h2{font-size:16px;font-weight:600;color:var(--text)}
+.topbar-left p{font-size:12px;color:var(--text-muted);margin-top:1px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.btn{
+  padding:9px 18px;border-radius:10px;font-size:13px;font-weight:600;
+  cursor:pointer;border:none;font-family:inherit;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:all 0.2s ease
+}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 4px 15px var(--primary-glow)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--primary-glow)}
+.btn-ghost{background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--card-border)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.notif-btn{
+  width:38px;height:38px;border-radius:10px;background:var(--card);
+  border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);cursor:pointer;font-size:15px;position:relative;transition:all 0.2s
+}
+.notif-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.notif-badge{
+  position:absolute;top:6px;right:6px;
+  width:8px;height:8px;border-radius:50%;background:var(--danger);
+  border:2px solid var(--bg)
+}
+
+/* MAIN CONTENT */
+.main{margin-left:var(--sidebar-w);margin-top:var(--topbar-h);padding:28px;position:relative;z-index:1}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:16px;
+  padding:20px;position:relative;overflow:hidden;
+  transition:transform 0.2s,box-shadow 0.2s;cursor:default
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.stat-card::after{
+  content:'';position:absolute;right:-20px;bottom:-20px;
+  width:100px;height:100px;border-radius:50%;
+  opacity:0.06
+}
+.stat-card.purple::after{background:var(--primary)}
+.stat-card.teal::after{background:var(--success)}
+.stat-card.orange::after{background:var(--warning)}
+.stat-card.pink::after{background:var(--danger)}
+.stat-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:14px
+}
+.stat-card.purple .stat-icon{background:rgba(108,99,255,0.15);color:var(--primary)}
+.stat-card.teal .stat-icon{background:rgba(0,212,170,0.15);color:var(--success)}
+.stat-card.orange .stat-icon{background:rgba(255,169,77,0.15);color:var(--warning)}
+.stat-card.pink .stat-icon{background:rgba(255,107,107,0.15);color:var(--danger)}
+.stat-value{font-size:28px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.stat-label{font-size:12px;color:var(--text-muted);font-weight:500}
+.stat-trend{display:flex;align-items:center;gap:4px;margin-top:8px;font-size:11px}
+.trend-up{color:var(--success)}.trend-down{color:var(--danger)}
+
+/* GRID LAYOUTS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+
+/* CARDS */
+.card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:16px;
+  overflow:hidden;transition:box-shadow 0.2s
+}
+.card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+.card-header{
+  padding:16px 20px;border-bottom:1px solid var(--card-border);
+  display:flex;align-items:center;justify-content:space-between
+}
+.card-header h3{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+.card-header h3 i{color:var(--primary);font-size:13px}
+.card-link{font-size:12px;color:var(--primary);cursor:pointer;font-weight:500;transition:opacity 0.2s}
+.card-link:hover{opacity:0.7}
+.card-body{padding:4px 0 8px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{
+  text-align:left;padding:10px 20px;font-size:11px;font-weight:600;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;
+  border-bottom:1px solid var(--card-border)
+}
+.tbl td{padding:11px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,0.03)}
+.avatar{
+  width:32px;height:32px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0
+}
+.av-purple{background:rgba(108,99,255,0.2);color:var(--primary)}
+.av-teal{background:rgba(0,212,170,0.2);color:var(--success)}
+.av-orange{background:rgba(255,169,77,0.2);color:var(--warning)}
+.av-pink{background:rgba(255,107,107,0.2);color:var(--danger)}
+.cell-name{display:flex;align-items:center;gap:10px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-success{background:rgba(0,212,170,0.15);color:var(--success)}
+.badge-warning{background:rgba(255,169,77,0.15);color:var(--warning)}
+.badge-danger{background:rgba(255,107,107,0.15);color:var(--danger)}
+.badge-info{background:rgba(116,192,252,0.15);color:var(--info)}
+.badge-purple{background:rgba(108,99,255,0.15);color:var(--primary)}
+
+/* NOTICES */
+.notice-list{padding:8px 0}
+.notice-item{
+  display:flex;gap:12px;padding:12px 20px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background 0.15s;cursor:default
+}
+.notice-item:last-child{border-bottom:none}
+.notice-item:hover{background:rgba(255,255,255,0.03)}
+.n-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0
+}
+.n-icon.info{background:rgba(116,192,252,0.15);color:var(--info)}
+.n-icon.warning{background:rgba(255,169,77,0.15);color:var(--warning)}
+.n-icon.urgent{background:rgba(255,107,107,0.15);color:var(--danger)}
+.n-icon.success{background:rgba(0,212,170,0.15);color:var(--success)}
+.n-text{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.n-meta{font-size:11px;color:var(--text-muted)}
+
+/* PROGRESS BAR */
+.progress-wrap{margin:4px 0}
+.progress-bar{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width 0.8s ease}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:32px 20px;color:var(--text-muted)}
+.empty-state i{font-size:36px;margin-bottom:10px;opacity:0.3;display:block}
+.empty-state p{font-size:13px}
+
+/* MODAL */
+.modal-bg{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  z-index:200;align-items:center;justify-content:center;
+  animation:fadeIn 0.2s ease
+}
+.modal-bg.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--bg3);border:1px solid var(--card-border);
+  border-radius:20px;width:480px;max-width:95vw;
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  animation:slideUp 0.3s ease
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{
+  padding:20px 24px;border-bottom:1px solid var(--card-border);
+  display:flex;justify-content:space-between;align-items:center
+}
+.modal-head h3{font-size:16px;font-weight:600}
+.close-btn{
+  width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.06);
+  border:none;color:var(--text-muted);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s
+}
+.close-btn:hover{background:rgba(255,107,107,0.2);color:var(--danger)}
+.modal-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em}
+.field input,.field select{
+  background:rgba(255,255,255,0.06);border:1px solid var(--card-border);
+  border-radius:10px;padding:10px 14px;font-size:13px;
+  font-family:inherit;color:var(--text);outline:none;transition:border 0.2s
+}
+.field input:focus,.field select:focus{border-color:var(--primary)}
+.field input::placeholder{color:var(--text-muted)}
+.field select option{background:var(--bg3);color:var(--text)}
+.modal-foot{
+  padding:16px 24px;border-top:1px solid var(--card-border);
+  display:flex;justify-content:flex-end;gap:10px
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.2)}
+
+@media(max-width:1024px){.stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .main{margin-left:0}
+  .topbar{left:0}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
- 
-<div class="layout">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-logo">
-      <h1>🌙 Noor Academy</h1>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">🌙</div>
+    <div class="brand-text">
+      <h1>Noor Academy</h1>
       <span>Admin Panel</span>
     </div>
-    <nav class="sidebar-nav">
-      <div class="nav-label">Main</div>
-      <a href="#" class="nav-item active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        <span>Dashboard</span>
-      </a>
-      <a href="#" class="nav-item" onclick="openForm('student')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span>Students</span>
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Teachers</span>
-      </a>
-      <div class="nav-label">Management</div>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <span>Fee</span>
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <span>Timetable</span>
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-        <span>Results</span>
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span>Notices</span>
-      </a>
-      <div class="nav-label">System</div>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        <span>Settings</span>
-      </a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="admin-chip">
-        <div class="admin-av">A</div>
-        <div class="admin-info">
-          <p>Admin</p>
-          <span>Administrator</span>
-        </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Main</div>
+    <a href="#" class="nav-link active"><i class="fas fa-th-large"></i> Dashboard</a>
+    <a href="#" class="nav-link" onclick="openForm('student')"><i class="fas fa-user-graduate"></i> Students</a>
+    <a href="#" class="nav-link" onclick="openForm('teacher')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+    <div class="nav-section">Management</div>
+    <a href="#" class="nav-link"><i class="fas fa-money-bill-wave"></i> Fee</a>
+    <a href="#" class="nav-link"><i class="fas fa-calendar-alt"></i> Timetable</a>
+    <a href="#" class="nav-link"><i class="fas fa-poll"></i> Results</a>
+    <a href="#" class="nav-link" onclick="openForm('notice')"><i class="fas fa-bullhorn"></i> Notices</a>
+    <div class="nav-section">System</div>
+    <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Website</a>
+    <a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-av">A</div>
+      <div class="user-info">
+        <p>Admin User</p>
+        <span>Administrator</span>
       </div>
     </div>
   </div>
- 
-  <!-- MAIN CONTENT -->
-  <div class="main">
-    <div class="topbar">
-      <h2>Overview Dashboard</h2>
-      <div class="topbar-right">
-        <button class="btn btn-outline" onclick="openForm('notice')">+ Notice</button>
-        <button class="btn btn-primary" onclick="openForm('student')">+ New Student</button>
+</aside>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <h2>Overview Dashboard</h2>
+    <p id="current-date"></p>
+  </div>
+  <div class="topbar-right">
+    <div class="notif-btn"><i class="fas fa-bell"></i><span class="notif-badge"></span></div>
+    <button class="btn btn-ghost" onclick="openForm('notice')"><i class="fas fa-plus"></i> Notice</button>
+    <button class="btn btn-primary" onclick="openForm('student')"><i class="fas fa-plus"></i> New Student</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card purple">
+      <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+      <div class="stat-value" id="stat-students">0</div>
+      <div class="stat-label">Total Students</div>
+      <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> Registered</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <div class="stat-value" id="stat-teachers">0</div>
+      <div class="stat-label">Active Teachers</div>
+      <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> Staff</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
+      <div class="stat-value" id="stat-fee">—</div>
+      <div class="stat-label">Fee Collected %</div>
+      <div class="stat-trend"><i class="fas fa-clock"></i> This month</div>
+    </div>
+    <div class="stat-card pink">
+      <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
+      <div class="stat-value" id="stat-notices">0</div>
+      <div class="stat-label">Notices Posted</div>
+      <div class="stat-trend"><i class="fas fa-dot-circle"></i> Active</div>
+    </div>
+  </div>
+
+  <!-- ROW 1 -->
+  <div class="grid-2">
+    <!-- Students Table -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-user-graduate"></i> Recent Students</h3>
+        <span class="card-link" onclick="openForm('student')">+ Add New</span>
+      </div>
+      <div class="card-body">
+        <table class="tbl">
+          <thead><tr><th>Name</th><th>Class</th><th>Status</th></tr></thead>
+          <tbody id="students-table">
+            <tr><td colspan="3"><div class="empty-state"><i class="fas fa-user-graduate"></i><p>No students added yet</p></div></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
- 
-    <div class="content">
-      <!-- STATS -->
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="label">Total Students</div>
-          <div class="value" id="stat-students">—</div>
-          <div class="sub">Registered students</div>
-        </div>
-        <div class="stat-box">
-          <div class="label">Teachers</div>
-          <div class="value" id="stat-teachers">—</div>
-          <div class="sub">Active staff</div>
-        </div>
-        <div class="stat-box">
-          <div class="label">Fee Collection</div>
-          <div class="value" id="stat-fee">—%</div>
-          <div class="sub">This month</div>
-        </div>
-        <div class="stat-box">
-          <div class="label">Attendance Today</div>
-          <div class="value" id="stat-att">—%</div>
-          <div class="sub"><span class="stat-dot" style="background:var(--green-mid)"></span>Present</div>
-        </div>
+
+    <!-- Notices -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-bullhorn"></i> Notices & Alerts</h3>
+        <span class="card-link" onclick="openForm('notice')">+ Post</span>
       </div>
- 
-      <!-- TABLES ROW -->
-      <div class="grid2" style="margin-bottom:16px">
-        <div class="card">
-          <div class="card-head">
-            <h3>Recent Students</h3>
-            <a href="#">View all</a>
-          </div>
-          <div class="card-body">
-            <table>
-              <thead><tr><th>Name</th><th>Class</th><th>Status</th></tr></thead>
-              <tbody id="students-table">
-                <tr><td colspan="3" class="empty">No students added yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <h3>Notices & Alerts</h3>
-            <a href="#" onclick="openForm('notice')">+ Add</a>
-          </div>
-          <div class="notice-list" id="notices-list">
-            <div class="empty">No notices yet. Click + Add to create one.</div>
-          </div>
-        </div>
-      </div>
- 
-      <div class="grid2">
-        <div class="card">
-          <div class="card-head">
-            <h3>Fee Summary</h3>
-            <a href="#">Details</a>
-          </div>
-          <div class="card-body">
-            <table>
-              <thead><tr><th>Class</th><th>Collected</th><th>Due</th><th>Status</th></tr></thead>
-              <tbody id="fee-table">
-                <tr><td colspan="4" class="empty">No fee data added yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <h3>Teachers</h3>
-            <a href="#" onclick="openForm('teacher')">+ Add</a>
-          </div>
-          <div class="card-body">
-            <table>
-              <thead><tr><th>Name</th><th>Subject</th><th>Classes</th></tr></thead>
-              <tbody id="teachers-table">
-                <tr><td colspan="3" class="empty">No teachers added yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="notice-list" id="notices-list">
+        <div class="empty-state"><i class="fas fa-bullhorn"></i><p>No notices posted yet</p></div>
       </div>
     </div>
   </div>
-</div>
- 
+
+  <!-- ROW 2 -->
+  <div class="grid-2">
+    <!-- Fee Summary -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-money-bill-wave"></i> Fee Summary</h3>
+        <span class="card-link">Details</span>
+      </div>
+      <div class="card-body">
+        <table class="tbl">
+          <thead><tr><th>Class</th><th>Collected</th><th>Due</th><th>Status</th></tr></thead>
+          <tbody id="fee-table">
+            <tr><td colspan="4"><div class="empty-state"><i class="fas fa-rupee-sign"></i><p>No fee data yet</p></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Teachers -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-chalkboard-teacher"></i> Teachers</h3>
+        <span class="card-link" onclick="openForm('teacher')">+ Add</span>
+      </div>
+      <div class="card-body">
+        <table class="tbl">
+          <thead><tr><th>Name</th><th>Subject</th><th>Classes</th></tr></thead>
+          <tbody id="teachers-table">
+            <tr><td colspan="3"><div class="empty-state"><i class="fas fa-chalkboard-teacher"></i><p>No teachers added yet</p></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
 <!-- MODAL: Add Student -->
-<div class="form-overlay" id="modal-student">
-  <div class="form-box">
-    <div class="form-head">
-      <h3>New Student Add Karen</h3>
-      <button class="close-btn" onclick="closeForm('student')">×</button>
+<div class="modal-bg" id="modal-student">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Add New Student</h3>
+      <button class="close-btn" onclick="closeForm('student')"><i class="fas fa-times"></i></button>
     </div>
-    <div class="form-body">
+    <div class="modal-body">
       <div class="form-row">
-        <div class="field"><label>Student ka naam</label><input type="text" id="s-name" placeholder="Full name"></div>
-        <div class="field"><label>Father ka naam</label><input type="text" id="s-father" placeholder="Father name"></div>
+        <div class="field"><label>Student Name</label><input id="s-name" placeholder="Full name"></div>
+        <div class="field"><label>Father's Name</label><input id="s-father" placeholder="Father name"></div>
       </div>
       <div class="form-row">
         <div class="field"><label>Class</label>
@@ -333,10 +474,9 @@ Admin dashboard · HTML
         <div class="field"><label>Date of Birth</label><input type="date" id="s-dob"></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>Contact number</label><input type="tel" id="s-phone" placeholder="03xx-xxxxxxx"></div>
-        <div class="field"><label>Monthly fee (Rs)</label><input type="number" id="s-fee" placeholder="e.g. 3500"></div>
+        <div class="field"><label>Contact</label><input type="tel" id="s-phone" placeholder="03xx-xxxxxxx"></div>
+        <div class="field"><label>Monthly Fee (Rs)</label><input type="number" id="s-fee" placeholder="e.g. 3500"></div>
       </div>
-      <div class="field"><label>Address</label><input type="text" id="s-addr" placeholder="Ghar ka pata"></div>
       <div class="form-row">
         <div class="field"><label>Gender</label>
           <select id="s-gender"><option value="">Select</option><option>Male</option><option>Female</option></select>
@@ -346,58 +486,58 @@ Admin dashboard · HTML
         </div>
       </div>
     </div>
-    <div class="form-footer">
-      <button class="btn btn-outline" onclick="closeForm('student')">Cancel</button>
-      <button class="btn btn-primary" onclick="addStudent()">Student Add Karen</button>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeForm('student')">Cancel</button>
+      <button class="btn btn-primary" onclick="addStudent()"><i class="fas fa-plus"></i> Add Student</button>
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Add Teacher -->
-<div class="form-overlay" id="modal-teacher">
-  <div class="form-box">
-    <div class="form-head">
-      <h3>New Teacher Add Karen</h3>
-      <button class="close-btn" onclick="closeForm('teacher')">×</button>
+<div class="modal-bg" id="modal-teacher">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Add New Teacher</h3>
+      <button class="close-btn" onclick="closeForm('teacher')"><i class="fas fa-times"></i></button>
     </div>
-    <div class="form-body">
+    <div class="modal-body">
       <div class="form-row">
-        <div class="field"><label>Teacher ka naam</label><input type="text" id="t-name" placeholder="Full name"></div>
-        <div class="field"><label>Subject</label><input type="text" id="t-subject" placeholder="e.g. Mathematics"></div>
+        <div class="field"><label>Teacher Name</label><input id="t-name" placeholder="Full name"></div>
+        <div class="field"><label>Subject</label><input id="t-subject" placeholder="e.g. Mathematics"></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>Classes</label><input type="text" id="t-classes" placeholder="e.g. 7-A, 8-A, 9-B"></div>
+        <div class="field"><label>Classes</label><input id="t-classes" placeholder="e.g. 7-A, 8-A"></div>
         <div class="field"><label>Contact</label><input type="tel" id="t-phone" placeholder="03xx-xxxxxxx"></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>Qualification</label><input type="text" id="t-qual" placeholder="e.g. M.Sc, B.Ed"></div>
+        <div class="field"><label>Qualification</label><input id="t-qual" placeholder="e.g. M.Sc, B.Ed"></div>
         <div class="field"><label>Salary (Rs)</label><input type="number" id="t-salary" placeholder="Monthly salary"></div>
       </div>
     </div>
-    <div class="form-footer">
-      <button class="btn btn-outline" onclick="closeForm('teacher')">Cancel</button>
-      <button class="btn btn-primary" onclick="addTeacher()">Teacher Add Karen</button>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeForm('teacher')">Cancel</button>
+      <button class="btn btn-primary" onclick="addTeacher()"><i class="fas fa-plus"></i> Add Teacher</button>
     </div>
   </div>
 </div>
- 
-<!-- MODAL: Add Notice -->
-<div class="form-overlay" id="modal-notice">
-  <div class="form-box">
-    <div class="form-head">
-      <h3>Notice Post Karen</h3>
-      <button class="close-btn" onclick="closeForm('notice')">×</button>
+
+<!-- MODAL: Post Notice -->
+<div class="modal-bg" id="modal-notice">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Post Notice</h3>
+      <button class="close-btn" onclick="closeForm('notice')"><i class="fas fa-times"></i></button>
     </div>
-    <div class="form-body">
-      <div class="field"><label>Notice ka title</label><input type="text" id="n-title" placeholder="e.g. Fee reminder"></div>
-      <div class="field"><label>Detail</label><input type="text" id="n-detail" placeholder="Notice ki detail likhen"></div>
+    <div class="modal-body">
+      <div class="field"><label>Title</label><input id="n-title" placeholder="e.g. Fee Reminder"></div>
+      <div class="field"><label>Detail</label><input id="n-detail" placeholder="Notice detail..."></div>
       <div class="form-row">
         <div class="field"><label>Type</label>
           <select id="n-type">
             <option value="info">Info (Blue)</option>
-            <option value="warning">Warning (Amber)</option>
+            <option value="warning">Warning (Orange)</option>
             <option value="urgent">Urgent (Red)</option>
-            <option value="success">Good news (Green)</option>
+            <option value="success">Good News (Green)</option>
           </select>
         </div>
         <div class="field"><label>Target</label>
@@ -405,101 +545,102 @@ Admin dashboard · HTML
         </div>
       </div>
     </div>
-    <div class="form-footer">
-      <button class="btn btn-outline" onclick="closeForm('notice')">Cancel</button>
-      <button class="btn btn-primary" onclick="addNotice()">Post Karen</button>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeForm('notice')">Cancel</button>
+      <button class="btn btn-primary" onclick="addNotice()"><i class="fas fa-bullhorn"></i> Post Notice</button>
     </div>
   </div>
 </div>
- 
+
 <script>
-  let students = [], teachers = [], notices = [];
-  const avColors = ['av-g','av-b','av-a','av-r'];
-  const dotColors = { info:'#378ADD', warning:'#EF9F27', urgent:'#D85A30', success:'#1D9E75' };
- 
-  function openForm(type){ document.getElementById('modal-'+type).classList.add('open'); }
-  function closeForm(type){ document.getElementById('modal-'+type).classList.remove('open'); }
- 
-  function initials(name){ return name.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
- 
-  function updateStats(){
-    document.getElementById('stat-students').textContent = students.length || '—';
-    document.getElementById('stat-teachers').textContent = teachers.length || '—';
+let students=[], teachers=[], notices=[];
+const avClasses=['av-purple','av-teal','av-orange','av-pink'];
+const iconMap={info:'fa-info-circle',warning:'fa-exclamation-triangle',urgent:'fa-fire',success:'fa-check-circle'};
+
+// Set date
+document.getElementById('current-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function openForm(t){document.getElementById('modal-'+t).classList.add('open')}
+function closeForm(t){document.getElementById('modal-'+t).classList.remove('open')}
+document.querySelectorAll('.modal-bg').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')}));
+
+function initials(name){return name.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}
+
+function updateStats(){
+  document.getElementById('stat-students').textContent=students.length||0;
+  document.getElementById('stat-teachers').textContent=teachers.length||0;
+  document.getElementById('stat-notices').textContent=notices.length||0;
+}
+
+function addStudent(){
+  const name=document.getElementById('s-name').value.trim();
+  const cls=document.getElementById('s-class').value;
+  if(!name||!cls){alert('Name and class are required!');return}
+  students.push({name,father:document.getElementById('s-father').value,cls,dob:document.getElementById('s-dob').value,phone:document.getElementById('s-phone').value,fee:document.getElementById('s-fee').value,status:document.getElementById('s-status').value});
+  closeForm('student');
+  ['s-name','s-father','s-dob','s-phone','s-fee'].forEach(id=>document.getElementById(id).value='');
+  renderStudents();updateStats();
+}
+
+function renderStudents(){
+  const tb=document.getElementById('students-table');
+  if(!students.length){
+    tb.innerHTML='<tr><td colspan="3"><div class="empty-state"><i class="fas fa-user-graduate"></i><p>No students added yet</p></div></td></tr>';return;
   }
- 
-  function renderStudents(){
-    const tb = document.getElementById('students-table');
-    if(!students.length){ tb.innerHTML='<tr><td colspan="3" class="empty">No students added yet.</td></tr>'; return; }
-    tb.innerHTML = students.slice(-6).reverse().map((s,i)=>`
-      <tr>
-        <td><div class="name-cell"><div class="av ${avColors[i%4]}">${initials(s.name)}</div>${s.name}</div></td>
-        <td>${s.cls}</td>
-        <td><span class="badge badge-${s.status==='Active'?'green':s.status==='Pending'?'amber':'red'}">${s.status}</span></td>
-      </tr>`).join('');
-    updateStats();
+  const bMap={Active:'badge-success',Pending:'badge-warning',Left:'badge-danger'};
+  tb.innerHTML=students.slice(-6).reverse().map((s,i)=>`
+    <tr>
+      <td><div class="cell-name"><div class="avatar ${avClasses[i%4]}">${initials(s.name)}</div>${s.name}</div></td>
+      <td>${s.cls}</td>
+      <td><span class="badge ${bMap[s.status]||'badge-info'}">${s.status}</span></td>
+    </tr>`).join('');
+}
+
+function addTeacher(){
+  const name=document.getElementById('t-name').value.trim();
+  const subject=document.getElementById('t-subject').value.trim();
+  if(!name||!subject){alert('Name and subject required!');return}
+  teachers.push({name,subject,classes:document.getElementById('t-classes').value,phone:document.getElementById('t-phone').value,qual:document.getElementById('t-qual').value,salary:document.getElementById('t-salary').value});
+  closeForm('teacher');
+  ['t-name','t-subject','t-classes','t-phone','t-qual','t-salary'].forEach(id=>document.getElementById(id).value='');
+  renderTeachers();updateStats();
+}
+
+function renderTeachers(){
+  const tb=document.getElementById('teachers-table');
+  if(!teachers.length){
+    tb.innerHTML='<tr><td colspan="3"><div class="empty-state"><i class="fas fa-chalkboard-teacher"></i><p>No teachers added yet</p></div></td></tr>';return;
   }
- 
-  function renderTeachers(){
-    const tb = document.getElementById('teachers-table');
-    if(!teachers.length){ tb.innerHTML='<tr><td colspan="3" class="empty">No teachers added yet.</td></tr>'; return; }
-    tb.innerHTML = teachers.map((t,i)=>`
-      <tr>
-        <td><div class="name-cell"><div class="av ${avColors[i%4]}">${initials(t.name)}</div>${t.name}</div></td>
-        <td>${t.subject}</td>
-        <td style="color:#6b7280;font-size:12px">${t.classes}</td>
-      </tr>`).join('');
-    updateStats();
-  }
- 
-  function renderNotices(){
-    const el = document.getElementById('notices-list');
-    if(!notices.length){ el.innerHTML='<div class="empty">No notices yet. Click + Add to create one.</div>'; return; }
-    el.innerHTML = notices.slice(-5).reverse().map(n=>`
-      <div class="notice-item">
-        <div class="n-dot" style="background:${dotColors[n.type]}"></div>
-        <div>
-          <div class="n-text">${n.detail}</div>
-          <div class="n-time">${n.title} • ${n.target} • Abhi</div>
-        </div>
-      </div>`).join('');
-  }
- 
-  function addStudent(){
-    const name = document.getElementById('s-name').value.trim();
-    const cls = document.getElementById('s-class').value;
-    if(!name || !cls){ alert('Naam aur class zaroor bharen!'); return; }
-    students.push({ name, father: document.getElementById('s-father').value, cls, dob: document.getElementById('s-dob').value, phone: document.getElementById('s-phone').value, fee: document.getElementById('s-fee').value, addr: document.getElementById('s-addr').value, status: document.getElementById('s-status').value });
-    closeForm('student');
-    ['s-name','s-father','s-class','s-dob','s-phone','s-fee','s-addr'].forEach(id=>document.getElementById(id).value='');
-    renderStudents();
-  }
- 
-  function addTeacher(){
-    const name = document.getElementById('t-name').value.trim();
-    const subject = document.getElementById('t-subject').value.trim();
-    if(!name || !subject){ alert('Naam aur subject zaroor bharen!'); return; }
-    teachers.push({ name, subject, classes: document.getElementById('t-classes').value, phone: document.getElementById('t-phone').value, qual: document.getElementById('t-qual').value, salary: document.getElementById('t-salary').value });
-    closeForm('teacher');
-    ['t-name','t-subject','t-classes','t-phone','t-qual','t-salary'].forEach(id=>document.getElementById(id).value='');
-    renderTeachers();
-  }
- 
-  function addNotice(){
-    const title = document.getElementById('n-title').value.trim();
-    const detail = document.getElementById('n-detail').value.trim();
-    if(!title || !detail){ alert('Title aur detail zaroor bharen!'); return; }
-    notices.push({ title, detail, type: document.getElementById('n-type').value, target: document.getElementById('n-target').value });
-    closeForm('notice');
-    ['n-title','n-detail'].forEach(id=>document.getElementById(id).value='');
-    renderNotices();
-  }
- 
-  // Close on backdrop click
-  document.querySelectorAll('.form-overlay').forEach(el=>{
-    el.addEventListener('click', e=>{ if(e.target===el) el.classList.remove('open'); });
-  });
+  tb.innerHTML=teachers.map((t,i)=>`
+    <tr>
+      <td><div class="cell-name"><div class="avatar ${avClasses[i%4]}">${initials(t.name)}</div>${t.name}</div></td>
+      <td><span class="badge badge-purple">${t.subject}</span></td>
+      <td style="color:var(--text-muted);font-size:12px">${t.classes||'—'}</td>
+    </tr>`).join('');
+}
+
+function addNotice(){
+  const title=document.getElementById('n-title').value.trim();
+  const detail=document.getElementById('n-detail').value.trim();
+  if(!title||!detail){alert('Title and detail required!');return}
+  notices.push({title,detail,type:document.getElementById('n-type').value,target:document.getElementById('n-target').value});
+  closeForm('notice');
+  ['n-title','n-detail'].forEach(id=>document.getElementById(id).value='');
+  renderNotices();updateStats();
+}
+
+function renderNotices(){
+  const el=document.getElementById('notices-list');
+  if(!notices.length){el.innerHTML='<div class="empty-state"><i class="fas fa-bullhorn"></i><p>No notices posted yet</p></div>';return}
+  el.innerHTML='<div class="notice-list">'+notices.slice(-5).reverse().map(n=>`
+    <div class="notice-item">
+      <div class="n-icon ${n.type}"><i class="fas ${iconMap[n.type]}"></i></div>
+      <div>
+        <div class="n-text">${n.title}</div>
+        <div class="n-meta">${n.detail} &bull; ${n.target} &bull; Just now</div>
+      </div>
+    </div>`).join('')+'</div>';
+}
 </script>
 </body>
 </html>
- 
-
