@@ -7,95 +7,100 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #0F6E56; --green-light: #E1F5EE; --green-mid: #1D9E75;
-    --blue: #378ADD; --blue-light: #E6F1FB;
-    --amber: #EF9F27; --amber-light: #FAEEDA;
-    --red: #D85A30; --red-light: #FAECE7;
-    --purple: #534AB7; --purple-light: #EEEDFE;
-    --text: #1a1a1a; --muted: #6b7280; --border: #e5e7eb;
-    --bg: #f5f0ff; --white: #fff; --radius: 10px; --radius-lg: 14px;
+    --green: #0F6E56; --green-light: #E3F5EE; --green-mid: #1D9E75;
+    --blue: #2F5CAC; --blue-light: #E9F1FF;
+    --amber: #D48B17; --amber-light: #FDF1D4;
+    --red: #C94235; --red-light: #FBE8E4;
+    --purple: #5C46B2; --purple-light: #F0E8FF;
+    --text: #111827; --muted: #6B7280; --border: #E5E7EB;
+    --bg: #F6F8FF; --white: #ffffff; --radius: 12px; --radius-lg: 18px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); }
- 
-  .header { background: #2d2066; padding: 0 28px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-  .header h1 { color: #fff; font-size: 16px; font-weight: 600; }
-  .user-chip { background: rgba(255,255,255,0.15); padding: 5px 14px; border-radius: 20px; color: #fff; font-size: 13px; }
-  .setup-bar { background: #fff3cd; border-bottom: 1px solid #ffc107; padding: 10px 28px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #856404; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-height: 100vh; font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(180deg, #f8f9ff 0%, #eef2ff 100%); color: var(--text); }
+  button, input, select, textarea { font: inherit; }
+  button { border: none; outline: none; cursor: pointer; }
+
+  .header { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 28px; min-height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { margin: 0; font-size: 18px; font-weight: 700; }
+  .user-chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: rgba(92, 70, 178, 0.12); color: var(--purple); font-size: 13px; }
+  .setup-bar { background: #fff7e6; border-bottom: 1px solid #f5d7af; padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #7e5b18; font-size: 13px; }
   .setup-bar.hidden { display: none; }
-  .btn-sm { padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: none; font-family: inherit; background: #856404; color: #fff; }
- 
-  .layout { display: flex; }
-  .sidebar { width: 210px; background: var(--white); border-right: 1px solid var(--border); min-height: calc(100vh - 60px); padding: 16px 12px; flex-shrink: 0; }
-  .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 12px; border-radius: 8px; font-size: 13px; color: var(--muted); cursor: pointer; margin-bottom: 2px; transition: all 0.15s; }
-  .nav-item:hover, .nav-item.active { background: var(--purple-light); color: var(--purple); font-weight: 500; }
-  .sec-label { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; padding: 12px 12px 4px; }
- 
+  .btn-sm { padding: 8px 14px; border-radius: 999px; background: var(--purple); color: #fff; transition: transform 0.15s ease, opacity 0.15s ease; }
+  .btn-sm:hover { opacity: 0.95; transform: translateY(-1px); }
+
+  .layout { display: flex; width: 100%; min-height: calc(100vh - 60px); }
+  .sidebar { width: 220px; background: var(--white); border-right: 1px solid var(--border); padding: 24px 18px 24px 20px; flex-shrink: 0; }
+  .sidebar-logo { margin-bottom: 26px; }
+  .sidebar-logo h1 { margin: 0 0 6px; font-size: 16px; font-weight: 700; }
+  .sidebar-logo span { color: var(--muted); font-size: 12px; }
+  .sec-label { margin-bottom: 12px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 14px; color: var(--muted); font-size: 13px; margin-bottom: 6px; transition: all 0.2s ease; }
+  .nav-item:hover, .nav-item.active { background: rgba(92, 70, 178, 0.12); color: var(--purple); }
+
   .main { flex: 1; padding: 24px 28px; overflow-y: auto; }
-  .page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .page-head h2 { font-size: 18px; font-weight: 600; }
-  .btn { padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; }
-  .btn-primary { background: #2d2066; color: #fff; }
+  .page-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+  .page-head h2 { margin: 0; font-size: 20px; font-weight: 700; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; padding: 11px 18px; transition: opacity 0.15s ease, transform 0.15s ease; }
+  .btn:hover { opacity: 0.94; transform: translateY(-1px); }
+  .btn-primary { background: var(--purple); color: #fff; }
   .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  .btn:hover { opacity: 0.85; }
   .btn-danger { background: var(--red); color: #fff; }
- 
-  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
-  .stat-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
-  .stat-box .sl { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-  .stat-box .sv { font-size: 22px; font-weight: 600; }
- 
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 16px; }
-  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .card-head h3 { font-size: 14px; font-weight: 600; }
-  .card-head a { font-size: 12px; color: var(--purple); cursor: pointer; }
-  .card-body { padding: 4px 18px 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 9px 0 7px; font-size: 12px; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--border); }
-  td { padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
-  tr:last-child td { border-bottom: none; }
-  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+  .stat-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 14px 36px rgba(15,23,42,0.05); }
+  .stat-box .sl { margin: 0 0 8px; font-size: 11px; letter-spacing: 0.08em; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+  .stat-box .sv { margin: 0; font-size: 28px; font-weight: 700; color: var(--text); }
+
+  .grid2, .grid3 { display: grid; gap: 16px; margin-bottom: 16px; }
+  .grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 18px 42px rgba(15,23,42,0.06); }
+  .card-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .card-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
+  .card-head a { color: var(--purple); font-size: 13px; text-decoration: none; }
+  .card-body { padding: 16px 20px; }
+  .row-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: var(--text); }
+  .row-item:last-child { border-bottom: none; }
+  .badge { display: inline-flex; align-items: center; justify-content: center; padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
   .badge-green { background: var(--green-light); color: var(--green); }
-  .badge-amber { background: var(--amber-light); color: #854F0B; }
+  .badge-amber { background: var(--amber-light); color: #8f5f10; }
   .badge-red { background: var(--red-light); color: var(--red); }
-  .badge-blue { background: var(--blue-light); color: #185FA5; }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
   .badge-gray { background: #f3f4f6; color: var(--muted); }
   .badge-purple { background: var(--purple-light); color: var(--purple); }
-  .row-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px; }
-  .row-item:last-child { border-bottom: none; }
-  .av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
-  .name-cell { display: flex; align-items: center; gap: 8px; }
- 
-  .prog-bar { height: 6px; background: #f3f4f6; border-radius: 3px; margin-top: 5px; }
-  .prog-fill { height: 100%; border-radius: 3px; }
- 
-  .att-toggle { display: flex; gap: 8px; }
-  .att-btn { padding: 5px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid var(--border); background: var(--white); font-family: inherit; color: var(--muted); }
-  .att-btn.present { background: var(--green-light); color: var(--green); border-color: var(--green-mid); }
-  .att-btn.absent { background: var(--red-light); color: var(--red); border-color: var(--red); }
- 
-  .empty-state { text-align: center; padding: 32px 20px; color: var(--muted); }
-  .empty-state .big { font-size: 34px; margin-bottom: 8px; }
- 
-  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+
+  .prog-bar { height: 6px; border-radius: 999px; background: #eef1f7; margin-top: 8px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 999px; }
+
+  .att-toggle { display: flex; gap: 10px; flex-wrap: wrap; }
+  .att-btn { padding: 8px 14px; border-radius: 999px; font-size: 12px; color: var(--text); border: 1px solid var(--border); background: var(--white); }
+  .att-btn.present { border-color: var(--green-mid); background: var(--green-light); color: var(--green); }
+  .att-btn.absent { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  .empty-state { text-align: center; padding: 34px 22px; color: var(--muted); }
+  .empty-state .big { font-size: 34px; margin-bottom: 10px; }
+
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.3); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
   .overlay.open { display: flex; }
-  .modal { background: var(--white); border-radius: var(--radius-lg); width: 460px; max-width: 95vw; }
-  .modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .modal-head h3 { font-size: 15px; font-weight: 600; }
-  .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); }
-  .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-  .field { display: flex; flex-direction: column; gap: 4px; }
-  .field label { font-size: 12px; font-weight: 500; color: var(--muted); }
-  .field input, .field select, .field textarea { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; }
-  .field input:focus, .field select:focus { border-color: var(--purple); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
- 
-  @media (max-width: 700px) {
-    .sidebar { display: none; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .grid2 { grid-template-columns: 1fr; }
+  .modal { width: 460px; max-width: 100%; background: var(--white); border-radius: var(--radius-lg); box-shadow: 0 28px 90px rgba(15,23,42,0.16); }
+  .modal-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .modal-head h3 { margin: 0; font-size: 16px; font-weight: 700; }
+  .modal-body { padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .field input, .field select, .field textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border); background: var(--white); color: var(--text); }
+  .field input:focus, .field select:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(92, 70, 178, 0.1); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .modal-foot { padding: 18px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 12px; }
+
+  @media (max-width: 880px) {
+    .layout { flex-direction: column; min-height: auto; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+    .main { padding: 18px; }
+    .page-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .stats-row, .grid2, .grid3 { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -120,6 +125,9 @@
     <div class="nav-item" data-target="marks" onclick="showSec('marks')">📊 Marks</div>
     <div class="nav-item" data-target="homework" onclick="showSec('homework')">📝 Homework</div>
     <div class="nav-item" data-target="schedule" onclick="showSec('schedule')">🕐 Schedule</div>
+    <div class="sec-label">Finance & Comms</div>
+    <div class="nav-item" data-target="wallet" onclick="showSec('wallet')">💰 Wallet & Earnings</div>
+    <div class="nav-item" data-target="messages" onclick="showSec('messages')">💬 Messages</div>
     <div class="sec-label">Other</div>
     <div class="nav-item" data-target="notices" onclick="showSec('notices')">📢 Notices</div>
     <div class="nav-item" onclick="openM('profile')">⚙️ Settings</div>
@@ -233,13 +241,88 @@
         </div>
       </div>
     </div>
- 
+
+    <!-- WALLET SECTION -->
+    <div id="sec-wallet" style="display:none">
+      <div class="page-head">
+        <h2>💰 Wallet &amp; Earnings</h2>
+        <button class="btn btn-primary" onclick="openM('withdraw');document.getElementById('wd-balance').textContent='PKR '+Number(walletBalance).toLocaleString()">💸 Request Withdrawal</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box" style="border-top:3px solid var(--green-mid)"><div class="sl">Total Earnings</div><div class="sv" id="w-total" style="color:var(--green-mid)">PKR 0</div></div>
+        <div class="stat-box" style="border-top:3px solid var(--blue)"><div class="sl">This Month</div><div class="sv" id="w-month" style="color:var(--blue)">PKR 0</div></div>
+        <div class="stat-box" style="border-top:3px solid var(--amber)"><div class="sl">Pending Withdrawals</div><div class="sv" id="w-pending" style="color:var(--amber)">0</div></div>
+        <div class="stat-box" style="border-top:3px solid var(--purple)"><div class="sl">Paid Out</div><div class="sv" id="w-paidout" style="color:var(--purple)">PKR 0</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><h3>📜 Payments from Students</h3></div>
+          <div class="card-body">
+            <table><thead><tr><th>Date</th><th>Student</th><th>Total Paid</th><th>Your Share (80%)</th></tr></thead>
+            <tbody id="w-txn-table"><tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No transactions yet.</td></tr></tbody></table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>💸 Withdrawal History</h3></div>
+          <div class="card-body">
+            <table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+            <tbody id="w-withdraw-table"><tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No withdrawals yet.</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGES SECTION -->
+    <div id="sec-messages" style="display:none">
+      <div class="page-head"><h2>💬 Messages</h2><p style="color:var(--muted);font-size:13px;margin:0">Chat with students and admin.</p></div>
+      <div style="display:grid;grid-template-columns:250px 1fr;gap:0;background:var(--white);border:1px solid var(--border);border-radius:18px;overflow:hidden;min-height:520px;box-shadow:0 4px 20px rgba(15,23,42,0.05)">
+        <div style="border-right:1px solid var(--border);display:flex;flex-direction:column">
+          <div style="padding:16px;border-bottom:1px solid var(--border)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:10px">Conversations</div>
+            <input id="t-contact-search" type="text" placeholder="Search contacts…" style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border);font-size:12px;box-sizing:border-box" oninput="filterTContacts(this.value)">
+          </div>
+          <div style="overflow-y:auto;flex:1" id="t-contacts-list"><div style="padding:20px;text-align:center;color:var(--muted);font-size:13px">Loading…</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column" id="t-chat-area">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted);padding:40px">
+            <div style="font-size:44px">💬</div><p style="font-size:13px">Select a contact to start chatting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
  
+<!-- ══ WALLET SECTION (injected via JS) ══ -->
+<!-- Wallet and Messages sections are rendered inside main by JS below -->
+
 <!-- MODALS -->
- 
-<!-- Profile -->
+
+<!-- Withdrawal Modal -->
+<div class="overlay" id="modal-withdraw">
+  <div class="modal">
+    <div class="modal-head"><h3>💸 Request Withdrawal</h3><button class="close-btn" onclick="closeM('withdraw')">×</button></div>
+    <div class="modal-body">
+      <div style="background:var(--green-light);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;color:var(--green)">
+        📊 Your wallet balance: <strong id="wd-balance">Loading...</strong>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Amount (PKR) *</label><input id="wd-amount" type="number" placeholder="e.g. 5000" min="500"></div>
+        <div class="field"><label>Method *</label>
+          <select id="wd-method"><option value="easypaisa">EasyPaisa</option><option value="jazzcash">JazzCash</option><option value="bank_transfer">Bank Transfer</option></select>
+        </div>
+      </div>
+      <div class="field"><label>Account Number / IBAN *</label><input id="wd-account" placeholder="EasyPaisa/JazzCash number or IBAN"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeM('withdraw')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitWithdrawal()">💸 Submit Request</button>
+    </div>
+  </div>
+</div>
+
+
 <div class="overlay" id="modal-profile">
   <div class="modal">
     <div class="modal-head"><h3>Teacher Profile Setup</h3><button class="close-btn" onclick="closeM('profile')">×</button></div>
@@ -558,17 +641,246 @@ function updateStats(){
   document.getElementById('ds-hw').textContent = pending;
 }
 
+// ══════════════════════════════════════
+//   API INTEGRATION
+// ══════════════════════════════════════
+const API = 'http://localhost:5000/api';
+let token = localStorage.getItem('token');
+let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+
+if (!token || !currentUser || currentUser.role !== 'teacher') {
+  window.location.href = 'login.html';
+}
+
+async function fetchTeacherData() {
+  try {
+    const res = await fetch(`${API}/teachers/dashboard`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    
+    if (!data.success && data.message === 'Teacher verification pending') {
+      document.getElementById('verification-block').style.display = 'block';
+      document.getElementById('dashboard-content').style.display = 'none';
+      return;
+    }
+
+    if (data.success) {
+      document.getElementById('t-name-display').textContent = currentUser.name;
+      
+      const dashStats = data.data.stats;
+      document.getElementById('ds-students').textContent = dashStats.totalStudents || 0;
+      // You can populate other stats similarly...
+
+      fetchStudents();
+    }
+  } catch (err) {
+    console.error('Error fetching teacher data:', err);
+  }
+}
+
+async function fetchStudents() {
+  try {
+    const res = await fetch(`${API}/teachers/students`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (data.success) {
+      students = data.data.map(s => ({
+        name: s.user.name,
+        cls: s.enrolledCourses?.[0]?.course?.name || 'Unassigned',
+        roll: s.level || '-',
+        father: s.parent?.user?.name || '-',
+        phone: s.user.phone || '-'
+      }));
+      renderStudents();
+      updateStats();
+    }
+  } catch (err) {
+    console.error('Error fetching students:', err);
+  }
+}
+
 // Initialize UI on page load
 document.addEventListener('DOMContentLoaded', ()=>{
-  renderStudents();
-  renderAttendance();
-  updateStats();
+  fetchTeacherData();
   // Preserve teacher display if set
   if(teacher && teacher.name) document.getElementById('t-name-display').textContent = teacher.name + (teacher.sub? ' — '+teacher.sub : '');
   // Ensure initial active section is shown
   const init = document.querySelector('.nav-item.active')?.getAttribute('data-target') || 'dashboard';
   showSec(init);
 });
+
+// ══════════════════════════════════════════
+// WALLET API
+// ══════════════════════════════════════════
+let walletBalance = 0;
+
+async function loadWallet() {
+  try {
+    const res = await fetch(`${API}/wallet/my-withdrawals`, { headers: { Authorization: 'Bearer ' + token } });
+    const data = await res.json();
+    if (data.success) {
+      walletBalance = data.balance || 0;
+      document.getElementById('w-total').textContent = 'PKR ' + Number(walletBalance).toLocaleString();
+      document.getElementById('wd-balance') && (document.getElementById('wd-balance').textContent = 'PKR ' + Number(walletBalance).toLocaleString());
+      const pending = (data.data||[]).filter(w=>w.status==='pending').length;
+      document.getElementById('w-pending').textContent = pending;
+      const paidOut = (data.data||[]).filter(w=>w.status==='approved').reduce((s,w)=>s+w.amount,0);
+      document.getElementById('w-paidout').textContent = 'PKR ' + paidOut.toLocaleString();
+      // Render withdrawals table
+      const tbody = document.getElementById('w-withdraw-table');
+      if (tbody) {
+        tbody.innerHTML = (data.data||[]).length ? (data.data||[]).map(w=>`
+          <tr><td style="font-size:12px">${new Date(w.createdAt).toLocaleDateString()}</td>
+          <td style="font-weight:700">PKR ${Number(w.amount).toLocaleString()}</td>
+          <td>${w.method||'—'}</td>
+          <td><span style="padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;background:${w.status==='approved'?'#E3F5EE':w.status==='rejected'?'#FBE8E4':'#FDF1D4'};color:${w.status==='approved'?'#0F6E56':w.status==='rejected'?'#C94235':'#8f5f10'}">${w.status}</span></td></tr>`).join('')
+          : '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No withdrawals yet.</td></tr>';
+      }
+    }
+  } catch(e) {}
+
+  // Load transactions (payments from students)
+  try {
+    const res2 = await fetch(`${API}/wallet/my-transactions`, { headers: { Authorization: 'Bearer ' + token } });
+    const data2 = await res2.json();
+    if (data2.success) {
+      const tbody2 = document.getElementById('w-txn-table');
+      if (tbody2) {
+        tbody2.innerHTML = (data2.data||[]).length ? (data2.data||[]).map(t=>`
+          <tr><td style="font-size:12px">${new Date(t.createdAt).toLocaleDateString()}</td>
+          <td>${t.student?.name||'Student'}</td>
+          <td>PKR ${Number(t.amount||0).toLocaleString()}</td>
+          <td style="color:var(--green-mid);font-weight:700">PKR ${Number(t.teacherEarning||0).toLocaleString()}</td></tr>`).join('')
+          : '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No transactions yet.</td></tr>';
+      }
+      document.getElementById('w-month').textContent = 'PKR ' + (data2.data||[])
+        .filter(t=>{ const d=new Date(t.createdAt); const n=new Date(); return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear(); })
+        .reduce((s,t)=>s+(t.teacherEarning||0),0).toLocaleString();
+    }
+  } catch(e) {}
+}
+
+async function submitWithdrawal() {
+  const amount = parseFloat(document.getElementById('wd-amount').value);
+  const method = document.getElementById('wd-method').value;
+  const accountDetails = document.getElementById('wd-account').value.trim();
+  if (!amount || amount < 500) { alert('Minimum withdrawal is PKR 500'); return; }
+  if (!accountDetails) { alert('Account details required'); return; }
+  if (amount > walletBalance) { alert('Insufficient balance! Available: PKR ' + walletBalance); return; }
+  try {
+    const res = await fetch(`${API}/wallet/withdraw`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ amount, method, accountDetails })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert('✅ Withdrawal request submitted! Admin will process within 24-48 hours.');
+      closeM('withdraw');
+      loadWallet();
+    } else { alert(data.message || 'Failed'); }
+  } catch { alert('Server offline. Please try again.'); }
+}
+
+// Override showSec to load wallet when navigating to wallet section
+const _origShowSec = showSec;
+showSec = function(id) {
+  _origShowSec(id);
+  if (id === 'wallet') loadWallet();
+  if (id === 'messages') loadTContacts();
+};
+
+// ══════════════════════════════════════════
+// TEACHER MESSAGING
+// ══════════════════════════════════════════
+let tAllContacts = [], tCurrentChat = null, tPollInterval = null;
+
+async function loadTContacts() {
+  try {
+    const res = await fetch(`${API}/messages/contacts`, { headers: { Authorization: 'Bearer ' + token } });
+    const data = await res.json();
+    tAllContacts = data.data || [];
+    renderTContacts(tAllContacts);
+  } catch { renderTContacts([]); }
+}
+
+function renderTContacts(contacts) {
+  const el = document.getElementById('t-contacts-list');
+  if (!el) return;
+  if (!contacts.length) { el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:13px">No contacts yet.</div>'; return; }
+  el.innerHTML = contacts.map(c => `
+    <div onclick="openTChat('${c._id}','${c.name}','${c.role}')" id="tc-${c._id}"
+      style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;border-bottom:1px solid #f3f4f6;transition:background 0.15s"
+      onmouseover="this.style.background='rgba(92,70,178,0.08)'" onmouseout="this.style.background=''">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple),#7c5ccf);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">${initials(c.name||'?')}</div>
+      <div><div style="font-size:13px;font-weight:700">${c.name}</div><div style="font-size:11px;color:var(--muted)">${c.role==='student'?'👤 Student':c.role==='admin'?'🔑 Admin':'👤 '+c.role}</div></div>
+    </div>`).join('');
+}
+
+function filterTContacts(q) {
+  if (!q) { renderTContacts(tAllContacts); return; }
+  renderTContacts(tAllContacts.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())));
+}
+
+async function openTChat(userId, name, role) {
+  tCurrentChat = { userId, name, role };
+  const area = document.getElementById('t-chat-area');
+  if (!area) return;
+  area.innerHTML = `
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple),#7c5ccf);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${initials(name)}</div>
+      <div><div style="font-weight:700;font-size:14px">${name}</div><div style="font-size:11px;color:var(--muted)">${role==='student'?'👤 Student':role==='admin'?'🔑 Admin':'👤 '+role}</div></div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;background:#f8f9ff" id="t-chat-msgs"></div>
+    <div style="padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;background:var(--white)">
+      <input id="t-chat-input" placeholder="Type a message…" style="flex:1;padding:11px 16px;border-radius:14px;border:1.5px solid var(--border);font-size:13px" onkeydown="if(event.key==='Enter')sendTMsg()">
+      <button onclick="sendTMsg()" style="width:42px;height:42px;border-radius:50%;background:var(--purple);color:#fff;border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">➤</button>
+    </div>`;
+  loadTMessages(userId);
+  if (tPollInterval) clearInterval(tPollInterval);
+  tPollInterval = setInterval(()=>loadTMessages(userId), 5000);
+}
+
+async function loadTMessages(userId) {
+  try {
+    const res = await fetch(`${API}/messages/conversation/${userId}`, { headers: { Authorization: 'Bearer ' + token } });
+    const data = await res.json();
+    const msgs = data.data || [];
+    const container = document.getElementById('t-chat-msgs');
+    if (!container) return;
+    const myId = currentUser?._id;
+    container.innerHTML = msgs.length ? msgs.map(m => {
+      const out = m.sender?._id===myId || m.sender===myId;
+      return `<div style="max-width:70%;padding:11px 16px;border-radius:18px;font-size:13px;line-height:1.6;${out?'align-self:flex-end;background:linear-gradient(135deg,var(--purple),#7c5ccf);color:#fff;border-bottom-right-radius:5px':'align-self:flex-start;background:#fff;border:1px solid var(--border);border-bottom-left-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.06)'}">${m.text}<span style="font-size:10px;opacity:.6;margin-top:4px;display:block;text-align:${out?'right':'left'}">${new Date(m.createdAt).toLocaleTimeString()}</span></div>`;
+    }).join('') : '<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;padding:40px">No messages yet. Say hello!</div>';
+    container.scrollTop = container.scrollHeight;
+  } catch {}
+}
+
+async function sendTMsg() {
+  if (!tCurrentChat) return;
+  const input = document.getElementById('t-chat-input');
+  const text = input?.value.trim();
+  if (!text) return;
+  input.value = '';
+  const container = document.getElementById('t-chat-msgs');
+  if (container) {
+    const bubble = document.createElement('div');
+    bubble.style.cssText = 'max-width:70%;padding:11px 16px;border-radius:18px;border-bottom-right-radius:5px;font-size:13px;line-height:1.6;align-self:flex-end;background:linear-gradient(135deg,var(--purple),#7c5ccf);color:#fff';
+    bubble.textContent = text;
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+  }
+  try {
+    await fetch(`${API}/messages/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ receiverId: tCurrentChat.userId, text })
+    });
+  } catch {}
+}
 </script>
 </body>
 </html>

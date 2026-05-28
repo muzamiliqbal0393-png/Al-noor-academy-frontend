@@ -1384,6 +1384,151 @@ window.addEventListener('load', () => {
     setTimeout(() => { b.style.height = h; }, 400);
   });
 });
+
+// ══════════════════════════════════════
+//   API INTEGRATION
+// ══════════════════════════════════════
+const API = 'http://localhost:5000/api';
+let token = localStorage.getItem('token');
+let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+
+if (!token || !currentUser || currentUser.role !== 'admin') {
+  // Not logged in or not admin
+  window.location.href = 'login.html';
+}
+
+async function fetchAdminData() {
+  try {
+    // 1. Fetch Dashboard Stats
+    const statsRes = await fetch(`${API}/admin/dashboard`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const statsData = await statsRes.json();
+    if(statsData.success) {
+      // Basic population (can expand later)
+      console.log('Admin Stats:', statsData.data);
+    }
+
+    // 2. Fetch Pending Teachers
+    fetchPendingTeachers();
+  } catch (err) {
+    console.error('API Error:', err);
+  }
+}
+
+async function fetchPendingTeachers() {
+  try {
+    const res = await fetch(`${API}/admin/teachers/pending`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if(data.success && data.data.length > 0) {
+      const pageTeachers = document.getElementById('page-teachers');
+      // Append a pending teachers section
+      let pendingHtml = `
+      <div class="card" style="margin-bottom:20px; border-left: 4px solid var(--accent2);">
+        <div class="card-header">
+          <div><h2>Pending Teacher Approvals</h2><p>Review and approve new teacher applications</p></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Specialization</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="pending-teachers-list">
+              ${data.data.map(t => `
+                <tr>
+                  <td><strong>${t.user.name}</strong></td>
+                  <td>${t.user.email}</td>
+                  <td>${t.specializations.join(', ')}</td>
+                  <td>
+                    <button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="approveTeacher('${t._id}')">Approve</button>
+                    <button class="btn btn-danger" style="background:var(--red);color:#fff;padding:5px 12px;font-size:12px;border:none;border-radius:10px;cursor:pointer;" onclick="rejectTeacher('${t._id}')">Reject</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      `;
+      // Insert right after the stats grid in teachers page
+      const statsGrid = pageTeachers.querySelector('.stats-grid');
+      const existingPending = document.getElementById('pending-teachers-section');
+      if (existingPending) existingPending.remove();
+      
+      const wrap = document.createElement('div');
+      wrap.id = 'pending-teachers-section';
+      wrap.innerHTML = pendingHtml;
+      statsGrid.parentNode.insertBefore(wrap, statsGrid.nextSibling);
+    }
+  } catch (err) {
+    console.error('Error fetching pending teachers:', err);
+  }
+}
+
+async function approveTeacher(id) {
+  try {
+    const res = await fetch(`${API}/admin/teachers/${id}/verify`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if(data.success) {
+      alert('Teacher approved successfully!');
+      fetchPendingTeachers(); // Refresh list
+    } else {
+      alert(data.message || 'Failed to approve teacher');
+    }
+  } catch (err) {
+    alert('Server error while approving');
+  }
+}
+
+async function rejectTeacher(id) {
+  if(!confirm('Are you sure you want to reject this application?')) return;
+  try {
+    const res = await fetch(`${API}/admin/teachers/${id}/reject`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if(data.success) {
+      alert('Teacher rejected');
+      fetchPendingTeachers(); // Refresh list
+    }
+  } catch (err) {
+    alert('Server error while rejecting');
+  }
+}
+
+async function assignTeacherPrompt(studentId) {
+  const teacherId = prompt("Enter the Teacher ID to assign to this student:");
+  if (!teacherId) return;
+  const courseId = prompt("Enter the Course ID:");
+  if (!courseId) return;
+
+  try {
+    const res = await fetch(`${API}/admin/assign-teacher`, {
+      method: 'POST',
+      headers: { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ teacherId, studentId, courseId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert('Teacher assigned successfully!');
+    } else {
+      alert(data.message || 'Assignment failed');
+    }
+  } catch (err) {
+    alert('Server error during assignment');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', fetchAdminData);
 </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a013d02dcac849a0',t:'MTc3OTcwNDQ4Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
