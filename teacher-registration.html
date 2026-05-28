@@ -1,209 +1,602 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Al-Noor Academy — Teacher Registration</title>
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap"
+    rel="stylesheet" />
 
   <style>
-    :root{
-      --primary:#1a5c38;
-      --primary-light:#2d8653;
-      --primary-dark:#0d3d25;
-      --secondary:#f0a500;
-      --accent:#00897b;
-      --blue:#3182ce;
-      --purple:#6b46c1;
+    :root {
+      --primary: #1a5c38;
+      --primary-light: #2d8653;
+      --primary-dark: #0d3d25;
+      --secondary: #f0a500;
+      --accent: #00897b;
+      --blue: #3182ce;
+      --purple: #6b46c1;
 
-      --bg:#0d1b2e;
-      --card:rgba(255,255,255,.08);
-      --card-border:rgba(255,255,255,.14);
-      --text:#e8eef8;
-      --muted:rgba(232,238,248,.7);
-      --border:rgba(255,255,255,.14);
+      --bg: #0d1b2e;
+      --card: rgba(255, 255, 255, .08);
+      --card-border: rgba(255, 255, 255, .14);
+      --text: #e8eef8;
+      --muted: rgba(232, 238, 248, .7);
+      --border: rgba(255, 255, 255, .14);
 
-      --success:#38a169;
-      --danger:#e53e3e;
-      --shadow: 0 25px 70px rgba(0,0,0,.28);
-      --radius:18px;
-      --radius-lg:22px;
+      --success: #38a169;
+      --danger: #e53e3e;
+      --shadow: 0 25px 70px rgba(0, 0, 0, .28);
+      --radius: 18px;
+      --radius-lg: 22px;
     }
 
-    [data-theme="light"]{
-      --bg:#f0f4f8;
-      --card:rgba(255,255,255,.7);
-      --card-border:rgba(15,23,42,.12);
-      --text:#0f172a;
-      --muted:rgba(15,23,42,.64);
-      --border:rgba(15,23,42,.14);
-      --shadow: 0 25px 70px rgba(2,6,23,.12);
+    [data-theme="light"] {
+      --bg: #f0f4f8;
+      --card: rgba(255, 255, 255, .7);
+      --card-border: rgba(15, 23, 42, .12);
+      --text: #0f172a;
+      --muted: rgba(15, 23, 42, .64);
+      --border: rgba(15, 23, 42, .14);
+      --shadow: 0 25px 70px rgba(2, 6, 23, .12);
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    * {
+      box-sizing: border-box
+    }
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:'Poppins',sans-serif;
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-x:hidden;
-      position:relative;
+      overflow-x: hidden;
+      position: relative;
     }
 
     /* Background */
-    .bg-animated{position:fixed; inset:0; z-index:0; pointer-events:none;}
-    .bg-gradient{position:absolute; inset:0; background:linear-gradient(135deg,#0d1b2e 0%,#0d3d25 35%,#1a5c38 65%,#0d2a4a 100%)}
-    [data-theme="light"] .bg-gradient{background:linear-gradient(135deg,#0ea5e9 0%,#22c55e 35%,#84cc16 65%,#1d4ed8 100%); opacity:.15; filter:saturate(0.8)}
+    .bg-animated {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-    .floating-shapes{position:absolute; inset:0; overflow:hidden}
-    .shape{position:absolute; border-radius:50%; opacity:.10; animation: float 26s linear infinite;}
-    .shape.s1{width:360px;height:360px; background:rgba(240,165,0,.9); top:-140px; left:-140px; animation-duration:28s;}
-    .shape.s2{width:250px;height:250px; background:rgba(45,134,83,.9); top:38%; right:-110px; animation-duration:22s; animation-delay:-6s;}
-    .shape.s3{width:200px;height:200px; background:rgba(49,130,206,.9); bottom:10%; left:18%; animation-duration:18s; animation-delay:-10s;}
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d1b2e 0%, #0d3d25 35%, #1a5c38 65%, #0d2a4a 100%)
+    }
 
-    @keyframes float{0%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-24px) rotate(180deg)} 100%{transform:translateY(0) rotate(360deg)}}
+    [data-theme="light"] .bg-gradient {
+      background: linear-gradient(135deg, #0ea5e9 0%, #22c55e 35%, #84cc16 65%, #1d4ed8 100%);
+      opacity: .15;
+      filter: saturate(0.8)
+    }
 
-    .pattern-overlay{position:absolute; inset:0; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,.07) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(255,255,255,.07) 1px, transparent 1px); background-size:55px 55px; opacity:.35}
+    .floating-shapes {
+      position: absolute;
+      inset: 0;
+      overflow: hidden
+    }
 
-    .toast-wrap{position:fixed; bottom:26px; right:26px; z-index:9999; display:flex; flex-direction:column; gap:10px;}
-    .toast{background:rgba(255,255,255,.92); color:#0f172a; border-radius:14px; padding:12px 16px; box-shadow:0 10px 35px rgba(0,0,0,.18); border-left:5px solid; min-width:260px; display:flex; gap:10px; align-items:flex-start; animation: toastIn .25s ease;}
-    @keyframes toastIn{from{opacity:0; transform:translateX(16px)} to{opacity:1; transform:translateX(0)}}
-    .toast.success{border-left-color:var(--success)}
-    .toast.error{border-left-color:var(--danger)}
-    .toast.info{border-left-color:var(--blue)}
-    .toast .tmsg{font-size:13px; line-height:1.4;}
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .10;
+      animation: float 26s linear infinite;
+    }
+
+    .shape.s1 {
+      width: 360px;
+      height: 360px;
+      background: rgba(240, 165, 0, .9);
+      top: -140px;
+      left: -140px;
+      animation-duration: 28s;
+    }
+
+    .shape.s2 {
+      width: 250px;
+      height: 250px;
+      background: rgba(45, 134, 83, .9);
+      top: 38%;
+      right: -110px;
+      animation-duration: 22s;
+      animation-delay: -6s;
+    }
+
+    .shape.s3 {
+      width: 200px;
+      height: 200px;
+      background: rgba(49, 130, 206, .9);
+      bottom: 10%;
+      left: 18%;
+      animation-duration: 18s;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(-24px) rotate(180deg)
+      }
+
+      100% {
+        transform: translateY(0) rotate(360deg)
+      }
+    }
+
+    .pattern-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, .07) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(255, 255, 255, .07) 1px, transparent 1px);
+      background-size: 55px 55px;
+      opacity: .35
+    }
+
+    .toast-wrap {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: rgba(255, 255, 255, .92);
+      color: #0f172a;
+      border-radius: 14px;
+      padding: 12px 16px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .18);
+      border-left: 5px solid;
+      min-width: 260px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      animation: toastIn .25s ease;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .toast.success {
+      border-left-color: var(--success)
+    }
+
+    .toast.error {
+      border-left-color: var(--danger)
+    }
+
+    .toast.info {
+      border-left-color: var(--blue)
+    }
+
+    .toast .tmsg {
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
     /* Layout */
-    .page-wrapper{position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:26px 18px 60px;}
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 26px 18px 60px;
+    }
 
     /* Header */
-    .top-header{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:18px;}
-    .brand{display:flex; align-items:center; gap:12px;}
-    .logo{width:56px;height:56px;border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:26px; background:rgba(255,255,255,.10); border:1px solid var(--border); backdrop-filter: blur(10px);}
-    .brand h1{font-size:16px; margin:0; line-height:1.2;}
-    .brand p{margin:0; color:var(--muted); font-size:12px; font-family:'Amiri',serif;}
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
 
-    .nav{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;}
-    .nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size:13px; padding:10px 12px; border-radius:12px; border:1px solid transparent; transition: all .2s ease;}
-    .nav a:hover{color:var(--text); border-color:var(--border); background:rgba(255,255,255,.06)}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    .theme-toggle{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.06); cursor:pointer; user-select:none; transition:all .2s ease;}
-    .theme-toggle:hover{transform:translateY(-1px)}
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: 'Amiri', serif;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: all .2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, .06)
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .06);
+      cursor: pointer;
+      user-select: none;
+      transition: all .2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px)
+    }
 
     /* Card */
-    .glass-card{background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow: var(--shadow); backdrop-filter: blur(14px); overflow:hidden;}
-    .card-head{padding:18px 18px; border-bottom:1px solid var(--card-border); display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
-    .card-head .title{display:flex; flex-direction:column; gap:6px;}
-    .card-head h2{margin:0; font-size:18px}
-    .card-head .sub{margin:0; color:var(--muted); font-size:13px;}
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
 
-    .status-pill{padding:8px 12px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.06); font-size:12px; color:var(--muted); font-weight:700; display:inline-flex; align-items:center; gap:8px;}
-    .status-dot{width:8px;height:8px;border-radius:50%; background:var(--secondary); box-shadow:0 0 0 4px rgba(240,165,0,.15)}
+    .card-head {
+      padding: 18px 18px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-    .card-body{padding:18px;}
+    .card-head .title {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-head h2 {
+      margin: 0;
+      font-size: 18px
+    }
+
+    .card-head .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .06);
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(240, 165, 0, .15)
+    }
+
+    .card-body {
+      padding: 18px;
+    }
 
     /* Form */
-    form{display:flex; flex-direction:column; gap:14px;}
-
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
-
-    @media (max-width: 900px){
-      .grid2,.grid3{grid-template-columns:1fr}
-      .top-header{flex-direction:column; align-items:flex-start}
-      .nav{justify-content:flex-start}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    .field{display:flex; flex-direction:column; gap:7px;}
-    label{font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.2px}
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
 
-    .control{position:relative}
-    .icon{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,.65); font-size:14px;}
-    [data-theme="light"] .icon{color:rgba(15,23,42,.55)}
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
 
-    input, select, textarea{
-      width:100%;
-      padding:12px 14px 12px 42px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.07);
+    @media (max-width: 900px) {
+
+      .grid2,
+      .grid3 {
+        grid-template-columns: 1fr
+      }
+
+      .top-header {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .nav {
+        justify-content: flex-start
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .2px
+    }
+
+    .control {
+      position: relative
+    }
+
+    .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, .65);
+      font-size: 14px;
+    }
+
+    [data-theme="light"] .icon {
+      color: rgba(15, 23, 42, .55)
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .07);
       color: var(--text);
-      outline:none;
+      outline: none;
       transition: all .2s ease;
     }
 
-    textarea{min-height:110px; padding-top:12px}
-
-    input::placeholder, textarea::placeholder{color:rgba(232,238,248,.45)}
-    [data-theme="light"] input::placeholder, [data-theme="light"] textarea::placeholder{color:rgba(15,23,42,.35)}
-
-    input:focus, select:focus, textarea:focus{border-color: rgba(240,165,0,.65); box-shadow:0 0 0 4px rgba(240,165,0,.12)}
-
-    input[type="file"]{padding:10px 14px 10px 14px}
-    input[type="file"]:focus{box-shadow:none}
-    input[type="file"]::file-selector-button{background:rgba(255,255,255,.12); color:var(--text); border:1px solid var(--border); border-radius:12px; padding:8px 10px; margin-right:10px; cursor:pointer}
-
-    .multi-select{display:flex; flex-direction:column; gap:10px}
-    .chips{display:flex; flex-wrap:wrap; gap:8px}
-    .chip{
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.06);
-      color:var(--muted);
-      padding:9px 11px;
-      border-radius:999px;
-      cursor:pointer;
-      font-size:12px;
-      font-weight:700;
-      transition: all .2s ease;
-      user-select:none;
+    textarea {
+      min-height: 110px;
+      padding-top: 12px
     }
-    .chip:hover{transform:translateY(-1px); color:var(--text)}
-    .chip.active{border-color:rgba(240,165,0,.8); background:rgba(240,165,0,.14); color:var(--text)}
 
-    .submit-row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:4px;}
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(232, 238, 248, .45)
+    }
 
-    .btn{
-      border:none; outline:none; cursor:pointer;
-      border-radius:16px;
-      padding:13px 16px;
-      font-size:15px;
-      font-weight:800;
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    [data-theme="light"] input::placeholder,
+    [data-theme="light"] textarea::placeholder {
+      color: rgba(15, 23, 42, .35)
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(240, 165, 0, .65);
+      box-shadow: 0 0 0 4px rgba(240, 165, 0, .12)
+    }
+
+    input[type="file"] {
+      padding: 10px 14px 10px 14px
+    }
+
+    input[type="file"]:focus {
+      box-shadow: none
+    }
+
+    input[type="file"]::file-selector-button {
+      background: rgba(255, 255, 255, .12);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 10px;
+      margin-right: 10px;
+      cursor: pointer
+    }
+
+    .multi-select {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .06);
+      color: var(--muted);
+      padding: 9px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all .2s ease;
+      user-select: none;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      color: var(--text)
+    }
+
+    .chip.active {
+      border-color: rgba(240, 165, 0, .8);
+      background: rgba(240, 165, 0, .14);
+      color: var(--text)
+    }
+
+    .submit-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       transition: all .25s ease;
-      color:white;
-      background:linear-gradient(135deg, #1a3a6b 0%, #3182ce 55%, #6b46c1 100%);
-      box-shadow:0 14px 40px rgba(49,130,206,.22);
-      min-width:240px;
-    }
-    .btn:hover{transform:translateY(-2px); opacity:.95}
-    .btn:active{transform:translateY(0)}
-    .btn:disabled{opacity:.6; cursor:not-allowed; transform:none}
-
-    .btn-secondary{
-      min-width:180px;
-      color:var(--text);
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--border);
-      box-shadow:none;
+      color: white;
+      background: linear-gradient(135deg, #1a3a6b 0%, #3182ce 55%, #6b46c1 100%);
+      box-shadow: 0 14px 40px rgba(49, 130, 206, .22);
+      min-width: 240px;
     }
 
-    .help{color:var(--muted); font-size:12px; line-height:1.4}
-    .req{color:rgba(240,165,0,.95)}
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: .95
+    }
 
-    .section-title{margin-top:6px; font-size:13px; font-weight:900; letter-spacing:.3px; color:var(--text)}
-    .divider{height:1px; background:var(--card-border); margin:10px 0 2px}
+    .btn:active {
+      transform: translateY(0)
+    }
+
+    .btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .btn-secondary {
+      min-width: 180px;
+      color: var(--text);
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4
+    }
+
+    .req {
+      color: rgba(240, 165, 0, .95)
+    }
+
+    .section-title {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .3px;
+      color: var(--text)
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--card-border);
+      margin: 10px 0 2px
+    }
 
     /* Smooth hover for glass */
-    .glass-card{transition: transform .2s ease}
-    .glass-card:hover{transform: translateY(-1px)}
+    .glass-card {
+      transition: transform .2s ease
+    }
+
+    .glass-card:hover {
+      transform: translateY(-1px)
+    }
 
     /* Dark/light indicator */
-    .small-txt{font-size:12px;color:var(--muted)}
+    .small-txt {
+      font-size: 12px;
+      color: var(--muted)
+    }
   </style>
 </head>
 
@@ -248,7 +641,8 @@
           <h2>✨ Apply as Teacher</h2>
           <p class="sub">Submit your details and documents. Admin approval required.</p>
         </div>
-        <div class="status-pill"><span class="status-dot"></span>Application Status: <span id="localStatus">Pending</span></div>
+        <div class="status-pill"><span class="status-dot"></span>Application Status: <span
+            id="localStatus">Pending</span></div>
       </div>
 
       <div class="card-body">
@@ -256,22 +650,26 @@
           <div class="grid2">
             <div class="field">
               <label><span class="req">*</span> Full Name</label>
-              <div class="control"><i class="icon fa-solid fa-user"></i><input name="fullName" required placeholder="e.g. Ahmad Farooq" /></div>
+              <div class="control"><i class="icon fa-solid fa-user"></i><input name="fullName" required
+                  placeholder="e.g. Ahmad Farooq" /></div>
             </div>
             <div class="field">
               <label><span class="req">*</span> Email Address</label>
-              <div class="control"><i class="icon fa-solid fa-envelope"></i><input type="email" name="email" required placeholder="you@example.com" /></div>
+              <div class="control"><i class="icon fa-solid fa-envelope"></i><input type="email" name="email" required
+                  placeholder="you@example.com" /></div>
             </div>
           </div>
 
           <div class="grid2">
             <div class="field">
               <label><span class="req">*</span> Phone Number</label>
-              <div class="control"><i class="icon fa-solid fa-phone"></i><input name="phone" required placeholder="e.g. +1 234 567 8900" /></div>
+              <div class="control"><i class="icon fa-solid fa-phone"></i><input name="phone" required
+                  placeholder="e.g. +1 234 567 8900" /></div>
             </div>
             <div class="field">
               <label><span class="req">*</span> WhatsApp Number</label>
-              <div class="control"><i class="icon fa-brands fa-whatsapp"></i><input name="whatsapp" required placeholder="e.g. +1 234 567 8900" /></div>
+              <div class="control"><i class="icon fa-brands fa-whatsapp"></i><input name="whatsapp" required
+                  placeholder="e.g. +1 234 567 8900" /></div>
             </div>
           </div>
 
@@ -290,14 +688,16 @@
 
             <div class="field">
               <label><span class="req">*</span> Date of Birth</label>
-              <div class="control"><i class="icon fa-solid fa-calendar"></i><input type="date" name="dob" required /></div>
+              <div class="control"><i class="icon fa-solid fa-calendar"></i><input type="date" name="dob" required />
+              </div>
             </div>
           </div>
 
           <div class="grid2">
             <div class="field">
               <label>Country & City</label>
-              <div class="control"><i class="icon fa-solid fa-location-dot"></i><input name="countryCity" placeholder="e.g. Pakistan, Lahore" /></div>
+              <div class="control"><i class="icon fa-solid fa-location-dot"></i><input name="countryCity"
+                  placeholder="e.g. Pakistan, Lahore" /></div>
             </div>
 
             <div class="field">
@@ -319,22 +719,26 @@
           <div class="grid2">
             <div class="field">
               <label><span class="req">*</span> Teaching Experience (years)</label>
-              <div class="control"><i class="icon fa-solid fa-graduation-cap"></i><input type="number" min="0" name="experience" required placeholder="e.g. 5" /></div>
+              <div class="control"><i class="icon fa-solid fa-graduation-cap"></i><input type="number" min="0"
+                  name="experience" required placeholder="e.g. 5" /></div>
             </div>
             <div class="field">
               <label>Qualification</label>
-              <div class="control"><i class="icon fa-solid fa-certificate"></i><input name="qualification" placeholder="e.g. B.Ed, M.Sc" /></div>
+              <div class="control"><i class="icon fa-solid fa-certificate"></i><input name="qualification"
+                  placeholder="e.g. B.Ed, M.Sc" /></div>
             </div>
           </div>
 
           <div class="grid2">
             <div class="field">
               <label>Languages Spoken</label>
-              <div class="control"><i class="icon fa-solid fa-language"></i><input name="languages" placeholder="e.g. Urdu, English" /></div>
+              <div class="control"><i class="icon fa-solid fa-language"></i><input name="languages"
+                  placeholder="e.g. Urdu, English" /></div>
             </div>
             <div class="field">
               <label>Available Time Schedule</label>
-              <div class="control"><i class="icon fa-solid fa-clock"></i><input name="schedule" placeholder="e.g. Mon-Thu 4pm-7pm" /></div>
+              <div class="control"><i class="icon fa-solid fa-clock"></i><input name="schedule"
+                  placeholder="e.g. Mon-Thu 4pm-7pm" /></div>
             </div>
           </div>
 
@@ -367,7 +771,8 @@
 
           <div class="field">
             <label>About Yourself</label>
-            <textarea name="about" placeholder="Write a short introduction about your teaching experience, strengths, and teaching style..."></textarea>
+            <textarea name="about"
+              placeholder="Write a short introduction about your teaching experience, strengths, and teaching style..."></textarea>
           </div>
 
           <div class="divider"></div>
@@ -391,7 +796,8 @@
           </div>
 
           <div class="submit-row">
-            <div class="help">By applying, you agree to our <b>terms</b> and <b>privacy policy</b>. Admin will review your documents.</div>
+            <div class="help">By applying, you agree to our <b>terms</b> and <b>privacy policy</b>. Admin will review
+              your documents.</div>
             <button class="btn" id="applyBtn" type="submit">
               <i class="fa-solid fa-paper-plane"></i> Apply as Teacher
             </button>
@@ -407,140 +813,143 @@
   </div>
 
   <script>
-    // APIs live on backend at /api
-    const API = (function(){
+    const API = (function () {
       const hostname = window.location.hostname;
-      if(!hostname || hostname === 'localhost' || hostname === '127.0.0.1') return 'http://localhost:5000/api';
-      return 'https://noor-academy-backend.vercel.app/api';
-    })();
 
 
-    const themeToggle = document.getElementById('themeToggle');
-    const themeLabel = document.getElementById('themeLabel');
+      if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:5001/api';
 
-    function setTheme(t){
-      document.body.setAttribute('data-theme', t);
-      themeLabel.textContent = t === 'light' ? 'Light' : 'Dark';
-    }
+        return 'https://Al-noor-academy-backend.vercel.app/api';
+      }) ();
 
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme) setTheme(savedTheme);
-    else setTheme('dark');
 
-    themeToggle.addEventListener('click', ()=>{
-      const cur = document.body.getAttribute('data-theme') || 'dark';
-      const next = cur === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', next);
-      setTheme(next);
-    });
+      const themeToggle = document.getElementById('themeToggle');
+      const themeLabel = document.getElementById('themeLabel');
 
-    // Course chips
-    const chips = document.querySelectorAll('#courseChips .chip');
-    const subjectsInput = document.getElementById('subjectsInput');
+      function setTheme(t) {
+        document.body.setAttribute('data-theme', t);
+        themeLabel.textContent = t === 'light' ? 'Light' : 'Dark';
+      }
 
-    function syncSubjects(){
-      const vals = Array.from(chips).filter(c=>c.classList.contains('active')).map(c=>c.getAttribute('data-val'));
-      subjectsInput.value = vals.join(',');
-    }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) setTheme(savedTheme);
+      else setTheme('dark');
 
-    chips.forEach(chip=>{
-      chip.addEventListener('click', ()=>{
-        chip.classList.toggle('active');
-        syncSubjects();
+      themeToggle.addEventListener('click', () => {
+        const cur = document.body.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        setTheme(next);
       });
-    });
 
-    syncSubjects();
+      // Course chips
+      const chips = document.querySelectorAll('#courseChips .chip');
+      const subjectsInput = document.getElementById('subjectsInput');
 
-    // Toasts
-    const toastWrap = document.getElementById('toastWrap');
-    function toast(msg, type='info'){
-      const icons = {success:'✅', error:'❌', info:'ℹ️'};
-      const t = document.createElement('div');
-      t.className = 'toast ' + type;
-      t.innerHTML = `<div style="font-size:18px; line-height:1">${icons[type]||'ℹ️'}</div><div class="tmsg">${msg}</div>`;
-      toastWrap.appendChild(t);
-      setTimeout(()=>{ t.remove(); }, 3600);
-    }
+      function syncSubjects() {
+        const vals = Array.from(chips).filter(c => c.classList.contains('active')).map(c => c.getAttribute('data-val'));
+        subjectsInput.value = vals.join(',');
+      }
 
-    function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-
-    const form = document.getElementById('teacherForm');
-    const applyBtn = document.getElementById('applyBtn');
-
-    form.addEventListener('submit', async (ev)=>{
-      ev.preventDefault();
-
-      const fd = new FormData(form);
-      const fullName = fd.get('fullName')?.toString().trim();
-      const email = fd.get('email')?.toString().trim();
-      const password = fd.get('password')?.toString();
-      const confirmPassword = fd.get('confirmPassword')?.toString();
-      const subjects = fd.get('subjects')?.toString();
-
-      if(!fullName) return toast('Full name is required', 'error');
-      if(!email || !validEmail(email)) return toast('Valid email is required', 'error');
-      if(!password || password.length < 6) return toast('Password must be at least 6 characters', 'error');
-      if(password !== confirmPassword) return toast('Passwords do not match', 'error');
-      if(!subjects || !subjects.trim()) return toast('Please select at least one subject/course', 'error');
-
-      applyBtn.disabled = true;
-      const oldTxt = applyBtn.innerHTML;
-      applyBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Applying...`;
-
-      try {
-        // Step 1: Register the user
-        const regRes = await fetch(`${API}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: fullName,
-            email: email,
-            password: password,
-            phone: fd.get('phone')?.toString() || '',
-            role: 'teacher'
-          })
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('active');
+          syncSubjects();
         });
-        const regData = await regRes.json().catch(()=>({success:false, message:'Registration error'}));
+      });
 
-        if (!regData.success) {
+      syncSubjects();
+
+      // Toasts
+      const toastWrap = document.getElementById('toastWrap');
+      function toast(msg, type = 'info') {
+        const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+        const t = document.createElement('div');
+        t.className = 'toast ' + type;
+        t.innerHTML = `<div style="font-size:18px; line-height:1">${icons[type] || 'ℹ️'}</div><div class="tmsg">${msg}</div>`;
+        toastWrap.appendChild(t);
+        setTimeout(() => { t.remove(); }, 3600);
+      }
+
+      function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+      const form = document.getElementById('teacherForm');
+      const applyBtn = document.getElementById('applyBtn');
+
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+
+        const fd = new FormData(form);
+        const fullName = fd.get('fullName')?.toString().trim();
+        const email = fd.get('email')?.toString().trim();
+        const password = fd.get('password')?.toString();
+        const confirmPassword = fd.get('confirmPassword')?.toString();
+        const subjects = fd.get('subjects')?.toString();
+
+        if (!fullName) return toast('Full name is required', 'error');
+        if (!email || !validEmail(email)) return toast('Valid email is required', 'error');
+        if (!password || password.length < 6) return toast('Password must be at least 6 characters', 'error');
+        if (password !== confirmPassword) return toast('Passwords do not match', 'error');
+        if (!subjects || !subjects.trim()) return toast('Please select at least one subject/course', 'error');
+
+        applyBtn.disabled = true;
+        const oldTxt = applyBtn.innerHTML;
+        applyBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Applying...`;
+
+        try {
+          // Step 1: Register the user
+          const regRes = await fetch(`${API}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: fullName,
+              email: email,
+              password: password,
+              phone: fd.get('phone')?.toString() || '',
+              role: 'teacher'
+            })
+          });
+          const regData = await regRes.json().catch(() => ({ success: false, message: 'Registration error' }));
+
+          if (!regData.success) {
             applyBtn.disabled = false;
             applyBtn.innerHTML = oldTxt;
             return toast(regData.message || (regData.errors && regData.errors[0]?.msg) || 'Registration failed.', 'error');
+          }
+
+          // Save token so we can upload files as logged-in teacher
+          const token = regData.token;
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(regData.user));
+
+          // Step 2: Submit multipart form data (files + extra info) to /api/admin/teacher-apply
+          const res = await fetch(`${API}/admin/teacher-apply`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: fd
+          });
+          const data = await res.json().catch(() => ({ success: false, message: 'Server error' }));
+
+          if (data.success) {
+            toast('Application submitted successfully! Pending admin approval.', 'success');
+            setTimeout(() => {
+              window.location.href = '/frontend/dashboard-teacher.html';
+            }, 1500);
+          } else {
+            toast(data.message || 'Failed to submit application details.', 'error');
+          }
+        } catch (err) {
+          toast('Cannot connect to server. Try again later.', 'error');
+        } finally {
+          applyBtn.disabled = false;
+          applyBtn.innerHTML = oldTxt;
         }
-
-        // Save token so we can upload files as logged-in teacher
-        const token = regData.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(regData.user));
-
-        // Step 2: Submit multipart form data (files + extra info) to /api/admin/teacher-apply
-        const res = await fetch(`${API}/admin/teacher-apply`, { 
-          method:'POST', 
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          body: fd 
-        });
-        const data = await res.json().catch(()=>({success:false, message:'Server error'}));
-
-        if (data.success) {
-          toast('Application submitted successfully! Pending admin approval.', 'success');
-          setTimeout(() => {
-            window.location.href = '/frontend/dashboard-teacher.html';
-          }, 1500);
-        } else {
-          toast(data.message || 'Failed to submit application details.', 'error');
-        }
-      } catch (err) {
-        toast('Cannot connect to server. Try again later.', 'error');
-      }finally{
-        applyBtn.disabled = false;
-        applyBtn.innerHTML = oldTxt;
-      }
-    });
+      });
 
   </script>
 </body>
-</html>
 
+</html>

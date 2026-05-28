@@ -1418,15 +1418,17 @@
         // ===== CONFIG =====
         const API = (function () {
             const hostname = window.location.hostname;
+
             if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1') {
-                return 'http://localhost:5000/api';
+                return 'http://localhost:5001/api';
             }
-            return 'https://noor-academy-backend.vercel.app/api';
+
+            return 'https://Al-noor-academy-backend.vercel.app/api';
         })();
-        let activeRole = 'parent'; // Yeh default role hai, isay mat cherain
-        let regRole = 'parent';    // Yeh bhi default registration role hai
+
+        let activeRole = 'parent';
+        let regRole = 'parent';
         let activeTab = 'login';
-        // Role configs
         const ROLES = {
             parent: {
                 theme: 'parent-theme', btnCls: 'btn-parent',
